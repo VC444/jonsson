@@ -5,7 +5,7 @@
  */
 import React, { Component } from 'react';
 import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { TabNavigator, StackNavigator } from "react-navigation";
+import { TabNavigator, StackNavigator, createSwitchNavigator } from "react-navigation";
 import { Container, Header, Content, Card, CardItem, Thumbnail, Icon, Text, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
 //import ComputerScience from './tabs/ComputerScience'
 //import Profile from './tabs/Profile'
@@ -82,7 +82,8 @@ export const AppScreenNavigator = TabNavigator({
   }
 });
 
-const AppNavigator = StackNavigator({
+// Main navigator for the app
+const AppNavigator = createSwitchNavigator({
   Login:{screen: Login,
     navigationOptions:({navigation}) => ({
      header: null
