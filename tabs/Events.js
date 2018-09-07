@@ -105,7 +105,7 @@
             source={{ uri: 'https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8ccfcc13bfcdfca6f54a8e043ffbe075&auto=format&fit=crop&w=1650&q=80'}}
             >
               <View style={styles.backdropView}>
-                <Text style={{ fontSize: 35, fontWeight: '200', color: '#FFFFFF'}}>Comet Calender</Text>
+                <Text style={{ fontSize: 35, fontWeight: '200', color: '#FFFFFF'}}>Comet Calendar</Text>
               </View>
           </ImageBackground>
         </View>
