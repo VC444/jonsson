@@ -194,7 +194,7 @@ export default class Login extends React.Component {
                 linkText=""
                 clientID="86c3k9s35z8di0"
                 clientSecret="ptaW1pqjV26iefkz"
-                redirectUri="https://github.com/mendoza-git/JonssonConnect"
+                redirectUri="https://github.com/mendoza-git/JonssonConnect" // HAVE TO CHANGE
                 onSuccess= {
                   data => this.getUser(data)
                 }
