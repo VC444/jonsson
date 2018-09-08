@@ -32,67 +32,72 @@ export const firebaseApp = firebase.initializeApp(config);
 export const HomeFeedStack = StackNavigator({
   Home: {
     screen: Home,
-    navigationOptions:({navigation}) => ({
-     title: "News Feed",
-     headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1},
-     headerTitleStyle: { fontSize: 18, fontWeight: '100'},
-   })
+    navigationOptions: ({ navigation }) => ({
+      title: "News Feed",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+    })
   },
-  ArticleDetails: {screen: ArticleDetails},
+  ArticleDetails: { screen: ArticleDetails },
 });
 
 export const EventsFeedStack = StackNavigator({
   EventsTab: {
     screen: Events,
-    navigationOptions:({navigation}) => ({
-     title: "Event Listings",
-     headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1},
-     headerTitleStyle: { fontSize: 18, fontWeight: '100' },
-   })
+    navigationOptions: ({ navigation }) => ({
+      title: "Event Listings",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+    })
   },
-  EventDetails: {screen: EventDetails},
+  EventDetails: { screen: EventDetails },
 });
 
 export const JobsFeedStack = StackNavigator({
   JobsTab: {
     screen: Jobs,
-    navigationOptions:({navigation}) => ({
-     title: "Job Listings",
-     headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1},
-     headerTitleStyle: { fontSize: 18, fontWeight: '100' },
-   })
+    navigationOptions: ({ navigation }) => ({
+      title: "Job Listings",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+    })
   },
-  JobsDetails: {screen: JobsDetails},
+  JobsDetails: { screen: JobsDetails },
 });
 
 export const AppScreenNavigator = TabNavigator({
-  HomeFeedStack: {screen: HomeFeedStack},
-  JobsTab: {screen: JobsFeedStack},
-  EventsTab: {screen: EventsFeedStack},
- },
- {
-  tabBarPosition: 'bottom',
-  swipeEnabled: false,
-  animationEnabled: false,
-  tabBarOptions: {
-    activeTintColor: '#3e9876',
-    activeBackgroundColor: '#ffffff',
-    inactiveBackgroundColor: '#ffffff',
-    inactiveTintColor: '#B7C3D0',
-  }
-});
+  HomeFeedStack: { screen: HomeFeedStack },
+  JobsTab: { screen: JobsFeedStack },
+  EventsTab: { screen: EventsFeedStack },
+},
+  {
+    tabBarPosition: 'bottom',
+    swipeEnabled: true,
+    animationEnabled: false,
+    tabBarOptions: {
+      activeTintColor: '#3e9876',
+      activeBackgroundColor: '#ffffff',
+      inactiveBackgroundColor: '#ffffff',
+      inactiveTintColor: '#B7C3D0',
+    }
+  });
 
 // Main navigator for the app
 const AppNavigator = createSwitchNavigator({
-  Login:{screen: Login,
-    navigationOptions:({navigation}) => ({
-     header: null
-   })},
-  AppScreenNavigator:{screen: AppScreenNavigator,
-   navigationOptions:({navigation}) => ({
-     gesturesEnabled: false,
-     header: null})
-}});
+  Login: {
+    screen: Login,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  AppScreenNavigator: {
+    screen: AppScreenNavigator,
+    navigationOptions: ({ navigation }) => ({
+      gesturesEnabled: false,
+      header: null
+    })
+  }
+});
 
 AppScreenNavigator.navigationOptions = {
   title: "App"
