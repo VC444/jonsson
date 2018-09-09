@@ -120,7 +120,6 @@ export default class EventsCalendar extends Component {
                     refreshControl={null}
                     // agenda theme
                     theme={{
-                        ...calendarTheme,
                         agendaDayTextColor: 'yellow',
                         agendaDayNumColor: 'green',
                         agendaTodayColor: 'red',
