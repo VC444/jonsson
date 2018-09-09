@@ -16,6 +16,7 @@ import Login from './tabs/Login';
 import EventDetails from './tabs/EventDetails';
 import JobsDetails from './tabs/JobsDetails';
 import ArticleDetails from './tabs/ArticleDetails';
+import EventsCalendar from './tabs/EventsCalendar';
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -51,6 +52,7 @@ export const EventsFeedStack = StackNavigator({
     })
   },
   EventDetails: { screen: EventDetails },
+  EventsCalendar: { screen: EventsCalendar },
 });
 
 export const JobsFeedStack = StackNavigator({
