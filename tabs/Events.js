@@ -1,16 +1,15 @@
 /**
  * JonssonConnect Events Page
- * https://github.com/mendoza-git/JonssonConnect
- * @flow
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
  */
  import React, { Component } from 'react';
  import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight } from 'react-native';
- import { TabNavigator, StackNavigator } from "react-navigation";
+ //import { TabNavigator, StackNavigator } from "react-navigation";
  import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
- import * as firebase from 'firebase';
+ //import * as firebase from 'firebase';
 
- import firebaseApp from './EventDetails';
- import config from './EventDetails';
+ //import firebaseApp from './EventDetails';
+ //import config from './EventDetails';
 
  export default class Events extends Component {
 

@@ -1,5 +1,5 @@
 /**
- * JonssonConnect Application -- REALLY?
+ * JonssonConnect Application
  * https://github.com/facebook/react-native
  * @flow
  */
