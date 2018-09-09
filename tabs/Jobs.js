@@ -1,7 +1,6 @@
 /**
  * JonssonConnect Jobs Page
- * https://github.com/mendoza-git/JonssonConnect
- * @flow
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
  */
  import React, { Component } from 'react';
  import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground } from 'react-native';
