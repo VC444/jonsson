@@ -4,9 +4,10 @@
  * @flow
  */
 import React, { Component } from 'react';
-import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { TabNavigator, StackNavigator, createSwitchNavigator } from "react-navigation";
+import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from "react-navigation";
 import { Container, Header, Content, Card, CardItem, Thumbnail, Icon, Text, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
+
 //import ComputerScience from './tabs/ComputerScience'
 //import Profile from './tabs/Profile'
 import Home from './tabs/Home';
@@ -17,6 +18,7 @@ import EventDetails from './tabs/EventDetails';
 import JobsDetails from './tabs/JobsDetails';
 import ArticleDetails from './tabs/ArticleDetails';
 import EventsCalendar from './tabs/EventsCalendar';
+import DrawerScreen from './tabs/DrawerScreen'
 import * as firebase from 'firebase';
 
 // Initialize Firebase
@@ -30,7 +32,7 @@ export var config = {
 
 export const firebaseApp = firebase.initializeApp(config);
 
-export const HomeFeedStack = StackNavigator({
+export const HomeFeedStack = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions: ({ navigation }) => ({
@@ -42,7 +44,7 @@ export const HomeFeedStack = StackNavigator({
   ArticleDetails: { screen: ArticleDetails },
 });
 
-export const EventsFeedStack = StackNavigator({
+export const EventsFeedStack = createStackNavigator({
   EventsTab: {
     screen: Events,
     navigationOptions: ({ navigation }) => ({
@@ -55,7 +57,7 @@ export const EventsFeedStack = StackNavigator({
   EventsCalendar: { screen: EventsCalendar },
 });
 
-export const JobsFeedStack = StackNavigator({
+export const JobsFeedStack = createStackNavigator({
   JobsTab: {
     screen: Jobs,
     navigationOptions: ({ navigation }) => ({
@@ -67,7 +69,7 @@ export const JobsFeedStack = StackNavigator({
   JobsDetails: { screen: JobsDetails },
 });
 
-export const AppScreenNavigator = TabNavigator({
+export const AppScreenNavigator = createMaterialTopTabNavigator({
   HomeFeedStack: { screen: HomeFeedStack },
   JobsTab: { screen: JobsFeedStack },
   EventsTab: { screen: EventsFeedStack },
@@ -84,6 +86,24 @@ export const AppScreenNavigator = TabNavigator({
     }
   });
 
+export const DrawerNavigator = createDrawerNavigator({
+  AppScreenNavigator: {
+    screen: AppScreenNavigator
+  }
+}, {
+    //initialRouteName: 'HomeFeedStack',
+    contentComponent: DrawerScreen,
+    drawerWidth: 300
+  });
+
+const MenuImage = ({ navigation }) => {
+  if (!navigation.state.isDrawerOpen) {
+    return <Text>Not Open</Text>
+  } else {
+    return <Text>Drawer is Open</Text>
+  }
+}
+
 // Main navigator for the app
 const AppNavigator = createSwitchNavigator({
   Login: {
@@ -92,14 +112,26 @@ const AppNavigator = createSwitchNavigator({
       header: null
     })
   },
-  AppScreenNavigator: {
-    screen: AppScreenNavigator,
-    navigationOptions: ({ navigation }) => ({
-      gesturesEnabled: false,
-      header: null
-    })
+  DrawerNavigator: {
+    screen: DrawerNavigator
   }
-});
+}, {
+    navigationOptions: ({ navigation }) => ({
+      title: 'ReactNavigation',  // Title to appear in status bar
+      headerLeft:
+        <TouchableOpacity onPress={() => { navigation.dispatch(DrawerActions.toggleDrawer()) }}>
+          <MenuImage style="styles.bar" navigation={navigation} />
+        </TouchableOpacity>,
+      headerStyle: {
+        backgroundColor: '#333',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+
+    })
+  });
 
 AppScreenNavigator.navigationOptions = {
   title: "App"

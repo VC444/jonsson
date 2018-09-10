@@ -5,7 +5,7 @@
  */
  import React, { Component } from 'react';
  import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, View } from 'react-native';
- import { TabNavigator, StackNavigator } from "react-navigation";
+ import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
  import { Container, Header, Content, Card, Col, CardItem, Grid, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Button, Left, Body, Right, Row, H1, H2, H3 } from 'native-base';
  import * as firebase from 'firebase';
 
