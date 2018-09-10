@@ -5,8 +5,9 @@
  */
 import React, { Component } from 'react';
 import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from "react-navigation";
+import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from "react-navigation";
 import { Container, Header, Content, Card, CardItem, Thumbnail, Icon, Text, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
+
 //import ComputerScience from './tabs/ComputerScience'
 //import Profile from './tabs/Profile'
 import Home from './tabs/Home';
@@ -67,7 +68,7 @@ export const JobsFeedStack = createStackNavigator({
   JobsDetails: { screen: JobsDetails },
 });
 
-export const AppScreenNavigator = createBottomTabNavigator({
+export const AppScreenNavigator = createMaterialTopTabNavigator({
   HomeFeedStack: { screen: HomeFeedStack },
   JobsTab: { screen: JobsFeedStack },
   EventsTab: { screen: EventsFeedStack },
