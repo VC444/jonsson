@@ -5,7 +5,7 @@
  */
 import React, { Component } from 'react';
 import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { TabNavigator, StackNavigator, createSwitchNavigator } from "react-navigation";
+import { createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from "react-navigation";
 import { Container, Header, Content, Card, CardItem, Thumbnail, Icon, Text, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
 //import ComputerScience from './tabs/ComputerScience'
 //import Profile from './tabs/Profile'
@@ -30,7 +30,7 @@ export var config = {
 
 export const firebaseApp = firebase.initializeApp(config);
 
-export const HomeFeedStack = StackNavigator({
+export const HomeFeedStack = createStackNavigator({
   Home: {
     screen: Home,
     navigationOptions: ({ navigation }) => ({
@@ -42,7 +42,7 @@ export const HomeFeedStack = StackNavigator({
   ArticleDetails: { screen: ArticleDetails },
 });
 
-export const EventsFeedStack = StackNavigator({
+export const EventsFeedStack = createStackNavigator({
   EventsTab: {
     screen: Events,
     navigationOptions: ({ navigation }) => ({
@@ -55,7 +55,7 @@ export const EventsFeedStack = StackNavigator({
   EventsCalendar: { screen: EventsCalendar },
 });
 
-export const JobsFeedStack = StackNavigator({
+export const JobsFeedStack = createStackNavigator({
   JobsTab: {
     screen: Jobs,
     navigationOptions: ({ navigation }) => ({
@@ -67,7 +67,7 @@ export const JobsFeedStack = StackNavigator({
   JobsDetails: { screen: JobsDetails },
 });
 
-export const AppScreenNavigator = TabNavigator({
+export const AppScreenNavigator = createBottomTabNavigator({
   HomeFeedStack: { screen: HomeFeedStack },
   JobsTab: { screen: JobsFeedStack },
   EventsTab: { screen: EventsFeedStack },
