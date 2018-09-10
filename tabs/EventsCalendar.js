@@ -3,6 +3,7 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput } from 'react-native';
 
+//The below 3 imports were used to fix the iterator error
 import 'core-js/es6/map'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
