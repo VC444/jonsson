@@ -10,13 +10,27 @@ export default class DrawerScreen extends Component {
   }
 
   render() {
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ]
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+      "Saturday"
+    ]
+
+    const date = new Date();
+    let day = days[date.getDay()]
+    var month = monthNames[date.getMonth()]
+    var dateNum = date.getDate()
+    console.log(month + ' ' + dateNum);
+
     return (
       <View>
         <ScrollView>
           <View>
             <View style={styles.sidebar}>
-              <Text onPress={this.navigateToScreen()}>
-                Today's Date
+              <Text style={styles.date} onPress={this.navigateToScreen()}>
+                {month + ' ' + dateNum}
               </Text>
             </View>
             <View style={styles.sidebar}>
@@ -57,9 +71,12 @@ DrawerScreen.propTypes = {
 
 const styles = {
   sidebar: {
-    padding: 10,
+    padding: 20,
     borderWidth: 0.5,
     borderColor: '#d6d7da'
+  },
+  date: {
+    fontWeight: 'bold',
+    fontSize: 20
   }
-
 }
