@@ -70,16 +70,16 @@ export const JobsFeedStack = createStackNavigator({
 });
 
 export const AppScreenNavigator = createMaterialTopTabNavigator({
-  HomeFeedStack: { screen: HomeFeedStack },
-  JobsTab: { screen: JobsFeedStack },
-  EventsTab: { screen: EventsFeedStack },
+  Home: { screen: HomeFeedStack },
+  Jobs: { screen: JobsFeedStack },
+  Events: { screen: EventsFeedStack },
 },
   {
     tabBarPosition: 'bottom',
     swipeEnabled: true,
     animationEnabled: false,
     tabBarOptions: {
-      activeTintColor: '#3e9876',
+      activeTintColor: '#b7c3d0',
       activeBackgroundColor: '#ffffff',
       inactiveBackgroundColor: '#ffffff',
       inactiveTintColor: '#B7C3D0',
