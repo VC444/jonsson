@@ -16,17 +16,32 @@ export default class DrawerScreen extends Component {
           <View>
             <View>
               <Text onPress={this.navigateToScreen()}>
-                Home
+                Today's Date
               </Text>
             </View>
             <View>
               <Text onPress={this.navigateToScreen()}>
-               Jobs
+               Rewards
               </Text>
             </View>
             <View>
               <Text onPress={this.navigateToScreen()}>
-              Events
+              Donate
+              </Text>
+            </View>
+            <View>
+              <Text onPress={this.navigateToScreen()}>
+              Settings
+              </Text>
+            </View>
+            <View>
+              <Text onPress={this.navigateToScreen()}>
+              Help and Feedback
+              </Text>
+            </View>
+            <View>
+              <Text onPress={this.navigateToScreen()}>
+              Log Out
               </Text>
             </View>
           </View>
