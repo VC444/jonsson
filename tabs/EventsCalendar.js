@@ -85,8 +85,6 @@ export default class EventsCalendar extends Component {
                     futureScrollRange={6}
                     // Enable or disable scrolling of calendar list
                     scrollEnabled={true}
-                    // Enable or disable vertical scroll indicator. Default = false
-                    showScrollIndicator={true}
                 />
 
                 <Agenda
@@ -115,7 +113,7 @@ export default class EventsCalendar extends Component {
                     // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
                     maxDate={'2012-05-30'}
                     // Max amount of months allowed to scroll to the past. Default = 50
-                    pastScrollRange={1}
+                    pastScrollRange={0}
                     // Max amount of months allowed to scroll to the future. Default = 50
                     futureScrollRange={6}
                     // specify how each item should be rendered in agenda
