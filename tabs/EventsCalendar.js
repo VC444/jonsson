@@ -17,6 +17,21 @@ export default class EventsCalendar extends Component {
     }
 
     render() {
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ]
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+            "Saturday"
+        ]
+
+        const date = new Date();
+        let day = days[date.getDay()]
+        var month = monthNames[date.getMonth()]
+        var dateNum = date.getDate()
+        var year = date.getFullYear()
+        console.log(year + ' ' + month + ' ' + dateNum);
+
         return (
             <View>
                 <CalendarList
@@ -25,7 +40,7 @@ export default class EventsCalendar extends Component {
                     // Max amount of months allowed to scroll to the past. Default = 50
                     pastScrollRange={0}
                     // Max amount of months allowed to scroll to the future. Default = 50
-                    futureScrollRange={12}
+                    futureScrollRange={6}
                     // Enable or disable scrolling of calendar list
                     scrollEnabled={true}
                     // Enable or disable vertical scroll indicator. Default = false
@@ -52,7 +67,7 @@ export default class EventsCalendar extends Component {
                     // callback that gets called when day changes while scrolling agenda list
                     onDayChange={(day) => { console.log('day changed') }}
                     // initially selected day
-                    selected={'2012-05-16'}
+                    selected={year + '-' + month + '-' + dateNum}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
                     minDate={'2012-05-10'}
                     // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
@@ -60,7 +75,7 @@ export default class EventsCalendar extends Component {
                     // Max amount of months allowed to scroll to the past. Default = 50
                     pastScrollRange={1}
                     // Max amount of months allowed to scroll to the future. Default = 50
-                    futureScrollRange={12}
+                    futureScrollRange={6}
                     // specify how each item should be rendered in agenda
                     renderItem={(item, firstItemInDay) => { return (<View />); }}
                     // specify how each date should be rendered. day can be undefined if the item is not first in that day.
@@ -77,7 +92,7 @@ export default class EventsCalendar extends Component {
                     hideKnob={true}
                     // By default, agenda dates are marked if they have at least one item, but you can override this if needed
                     markedDates={{
-                        '2012-05-16': { selected: true, marked: true },
+                        '2018-09-09': { selected: true, marked: true },
                         '2012-05-17': { marked: true },
                         '2012-05-18': { disabled: true }
                     }}
