@@ -54,7 +54,7 @@ export default class DrawerScreen extends Component {
               </Text>
             </View>
             <View style={styles.sidebar}>
-              <Text onPress={this.navigateToScreen()}>
+              <Text style={styles.logOut} onPress={this.navigateToScreen()}>
                 Log Out
               </Text>
             </View>
@@ -78,5 +78,8 @@ const styles = {
   date: {
     fontWeight: 'bold',
     fontSize: 20
+  },
+  logOut: {
+    color: 'red'
   }
 }
