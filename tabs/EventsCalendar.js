@@ -3,6 +3,9 @@ import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput } from 'react-native';
 
+import * as firebase from 'firebase';
+
+
 //The below 3 imports were used to fix the iterator error
 import 'core-js/es6/map'
 import 'core-js/es6/symbol'
@@ -11,9 +14,48 @@ import 'core-js/fn/symbol/iterator'
 
 export default class EventsCalendar extends Component {
     constructor(props) {
+
+
+        // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
+
+    /******************************************************************************************************** */
+    var dateOfEvent = firebase.database().ref("Events/");
+    dateOfEvent.on('value',gotData,errData)
+
+    function gotData(data)
+    {
+      var dates = data.val()
+      var keys = Object.keys(dates)
+      var formattedDate = []
+
+      for(var i=0; i < keys.length; i++)
+      {
+        var k = keys[i];
+        var date_of_event = dates[k].eventDate;
+
+        var format_res = date_of_event.substring(0, 10);
+
+        formattedDate[i] = format_res
+        
+      }
+      console.log(formattedDate)
+
+      
+    }
+
+    function errData(err)
+    {
+      console.log(err)
+    }
+    /************************************************************************************************** */
+
+
+
         super(props);
         this.state = {
         }
+
+        
     }
 
     render() {
