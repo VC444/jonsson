@@ -106,12 +106,12 @@ const MenuImage = ({ navigation }) => {
 
 // Main navigator for the app
 const AppNavigator = createSwitchNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  },
+  // Login: {
+  //   screen: Login,
+  //   navigationOptions: ({ navigation }) => ({
+  //     header: null
+  //   })
+  // },
   DrawerNavigator: {
     screen: DrawerNavigator
   }
