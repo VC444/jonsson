@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { ScrollView, Text, View, Linking, TouchableOpacity} from 'react-native';
 import { DrawerActions } from 'react-navigation';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, Icon, ListItem, Item, Input, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
-//import Icon from 'react-native-vector-icons';
+
 
 export default class DrawerScreen extends Component {
   navigateToScreen = (route) => () => {
