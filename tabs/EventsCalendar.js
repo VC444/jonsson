@@ -18,36 +18,33 @@ export default class EventsCalendar extends Component {
 
         // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
 
-    /******************************************************************************************************** */
-    var dateOfEvent = firebase.database().ref("Events/");
-    dateOfEvent.on('value',gotData,errData)
+        /******************************************************************************************************** */
+        var dateOfEvent = firebase.database().ref("Events/");
+        dateOfEvent.on('value', gotData, errData)
 
-    function gotData(data)
-    {
-      var dates = data.val()
-      var keys = Object.keys(dates)
-      var formattedDate = []
+        function gotData(data) {
+            var dates = data.val()
+            var keys = Object.keys(dates)
+            var formattedDate = []
 
-      for(var i=0; i < keys.length; i++)
-      {
-        var k = keys[i];
-        var date_of_event = dates[k].eventDate;
+            for (var i = 0; i < keys.length; i++) {
+                var k = keys[i];
+                var date_of_event = dates[k].eventDate;
 
-        var format_res = date_of_event.substring(0, 10);
+                var format_res = date_of_event.substring(0, 10);
 
-        formattedDate[i] = format_res
-        
-      }
-      console.log(formattedDate)
+                formattedDate[i] = format_res
 
-      
-    }
+            }
+            console.log(formattedDate)
 
-    function errData(err)
-    {
-      console.log(err)
-    }
-    /************************************************************************************************** */
+
+        }
+
+        function errData(err) {
+            console.log(err)
+        }
+        /************************************************************************************************** */
 
 
 
@@ -55,52 +52,86 @@ export default class EventsCalendar extends Component {
         this.state = {
         }
 
-        
+
     }
 
     render() {
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ]
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+            "Saturday"
+        ]
+
+        const date = new Date()
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear()
+        var day = date.getDate()
+        var fullDate = year + '-' + month + '-' + day;
+        console.log(fullDate);
+        let fullDateString = fullDate.toString();
+
         return (
             <View>
                 <CalendarList
-                    // Callback which gets executed when visible months change in scroll view. Default = undefined
-                    onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
                     // Max amount of months allowed to scroll to the past. Default = 50
                     pastScrollRange={0}
                     // Max amount of months allowed to scroll to the future. Default = 50
-                    futureScrollRange={12}
+                    futureScrollRange={6}
                     // Enable or disable scrolling of calendar list
                     scrollEnabled={true}
+                    // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+                    minDate={fullDate}
+                    // By default, agenda dates are marked if they have at least one item, but you can override this if needed
+                    //*********************************************************************************************************************************************
+                    markedDates={{
+                        fullDate: { selected: true, marked: true }, //NOT YET WORKING!!!!
+                        '2018-09-13': { marked: true },
+                        '2018-09-14': { marked: true },
+                        '2018-09-15': { marked: true }
+                    }}
+                    // callback that gets called on day press
+                    onDayPress={(day) => { }}
+                    // the list of items that have to be displayed in agenda. If you want to render item as empty date
+                    // the value of date key kas to be an empty array []. If there exists no value for date key it is
+                    // considered that the date in question is not yet loaded
+                    //*********************************************************************************************************************************************
+                    items={ //NOT YET WORKING!!!!
+                        {
+                            '2018-09-12': [{ text: 'item 1 - any js object' }],
+                            '2018-09-13': [{ text: 'item 2 - any js object' }],
+                            '2018-09-14': [],
+                            '2018-09-15': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
+                        }}
                 />
 
-                <Agenda
+                {/* <Agenda
                     // the list of items that have to be displayed in agenda. If you want to render item as empty date
                     // the value of date key kas to be an empty array []. If there exists no value for date key it is
                     // considered that the date in question is not yet loaded
                     items={
                         {
-                            '2012-05-22': [{ text: 'item 1 - any js object' }],
-                            '2012-05-23': [{ text: 'item 2 - any js object' }],
-                            '2012-05-24': [],
-                            '2012-05-25': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
+                            // '2018-09-12': [{ text: 'item 1 - any js object' }],
+                            // '2018-09-13': [{ text: 'item 2 - any js object' }],
+                            // '2018-09-14': [],
+                            // '2018-09-15': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
                         }}
                     // callback that gets called when items for a certain month should be loaded (month became visible)
                     loadItemsForMonth={(month) => { console.log('trigger items loading') }}
                     // callback that fires when the calendar is opened or closed
                     onCalendarToggled={(calendarOpened) => { console.log(calendarOpened) }}
-                    // callback that gets called on day press
-                    onDayPress={(day) => { console.log('day pressed') }}
+
                     // callback that gets called when day changes while scrolling agenda list
                     onDayChange={(day) => { console.log('day changed') }}
-                    // initially selected day
-                    selected={'2012-05-16'}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                    minDate={'2012-05-10'}
+                    minDate={'2018-08-12'}
                     // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                    maxDate={'2012-05-30'}
+                    maxDate={'2018-12-31'}
                     // Max amount of months allowed to scroll to the past. Default = 50
                     pastScrollRange={0}
                     // Max amount of months allowed to scroll to the future. Default = 50
-                    futureScrollRange={12}
+                    futureScrollRange={6}
                     // specify how each item should be rendered in agenda
                     renderItem={(item, firstItemInDay) => { return (<View />); }}
                     // specify how each date should be rendered. day can be undefined if the item is not first in that day.
@@ -136,7 +167,7 @@ export default class EventsCalendar extends Component {
                     }}
                     // agenda container style
                     style={{}}
-                />
+                /> */}
             </View>
         )
     }
