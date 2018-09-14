@@ -50,12 +50,27 @@ export default class EventsCalendar extends Component {
 
         super(props);
         this.state = {
+            marked: false,
         }
+    } // End of constructor
 
+    // call function after you successfully get value in nextDay array
 
+    anotherFunc = () => {
+        var nextDay = ['2018-09-13',
+            '2018-09-14',
+            '2018-09-15'];
+
+        var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: { selected: true, marked: true } }), {});
+        this.setState({ marked: obj });
+
+    }
+    componentDidMount() {
+        this.anotherFunc();
     }
 
     render() {
+
 
         const monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
@@ -72,6 +87,12 @@ export default class EventsCalendar extends Component {
         console.log(fullDate);
         let fullDateString = fullDate.toString();
 
+
+
+
+
+
+
         return (
             <View>
                 <CalendarList
@@ -85,12 +106,7 @@ export default class EventsCalendar extends Component {
                     minDate={fullDate}
                     // By default, agenda dates are marked if they have at least one item, but you can override this if needed
                     //*********************************************************************************************************************************************
-                    markedDates={{
-                        fullDate: { selected: true, marked: true }, //NOT YET WORKING!!!!
-                        '2018-09-13': { marked: true },
-                        '2018-09-14': { marked: true },
-                        '2018-09-15': { marked: true }
-                    }}
+                    markedDates={this.state.marked}
                     // callback that gets called on day press
                     onDayPress={(day) => { }}
                     // the list of items that have to be displayed in agenda. If you want to render item as empty date
