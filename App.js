@@ -20,6 +20,8 @@ import ArticleDetails from './tabs/ArticleDetails';
 import EventsCalendar from './tabs/EventsCalendar';
 import DrawerScreen from './tabs/DrawerScreen';
 import Rewards from './tabs/Rewards';
+import Settings from './tabs/Settings';
+
 import * as firebase from 'firebase';
 
 console.disableYellowBox = true
@@ -45,7 +47,8 @@ export const HomeFeedStack = createStackNavigator({
     })
   },
   ArticleDetails: { screen: ArticleDetails },
-  Rewards: { screen: Rewards }
+  Rewards: { screen: Rewards },
+  Settings: { screen: Settings }
 });
 
 export const EventsFeedStack = createStackNavigator({
