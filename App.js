@@ -21,6 +21,8 @@ import EventsCalendar from './tabs/EventsCalendar';
 import DrawerScreen from './tabs/DrawerScreen'
 import * as firebase from 'firebase';
 
+console.disableYellowBox = true
+
 // Initialize Firebase
 export var config = {
   apiKey: "TODO",
@@ -77,12 +79,15 @@ export const AppScreenNavigator = createMaterialTopTabNavigator({
   {
     tabBarPosition: 'bottom',
     swipeEnabled: true,
-    animationEnabled: false,
+    animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: '#b7c3d0',
-      activeBackgroundColor: '#ffffff',
-      inactiveBackgroundColor: '#ffffff',
-      inactiveTintColor: '#B7C3D0',
+      activeTintColor: '#FFFFFF',
+      labelStyle: {
+        fontSize: 15,
+      },
+      style: {
+        backgroundColor: '#C75B12', // UTD Color
+      },
     }
   });
 
