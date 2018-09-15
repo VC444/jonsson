@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { ScrollView, Text, View, Linking, TouchableOpacity} from 'react-native';
 import { DrawerActions } from 'react-navigation';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, Icon, ListItem, Item, Input, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
-import Rewards from './Rewards';
 
 
 export default class DrawerScreen extends Component {
@@ -15,6 +14,11 @@ export default class DrawerScreen extends Component {
   navigateToRewardsPage = () => {
     console.log('navigateToRewardsPage has been executed');
     this.props.navigation.navigate("Rewards");
+  }
+
+  navigateToSettingsPage = () => {
+    console.log('navigateToSettingsPage has been executed');
+    this.props.navigation.navigate("Settings")
   }
 
   render() {
@@ -59,7 +63,7 @@ export default class DrawerScreen extends Component {
             
             <TouchableOpacity style={styles.sidebar}>
               <Icon name='settings' size={10}/>
-              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
+              <Text style={styles.settingsStyle} onPress={() => this.navigateToSettingsPage()}>
                 Settings
               </Text>
             </TouchableOpacity>
