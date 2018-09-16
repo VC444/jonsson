@@ -21,6 +21,7 @@ import EventsCalendar from './tabs/EventsCalendar';
 import DrawerScreen from './tabs/DrawerScreen';
 import Rewards from './tabs/Rewards';
 import Settings from './tabs/Settings';
+import Help from './tabs/Help';
 
 import * as firebase from 'firebase';
 
@@ -48,7 +49,8 @@ export const HomeFeedStack = createStackNavigator({
   },
   ArticleDetails: { screen: ArticleDetails },
   Rewards: { screen: Rewards },
-  Settings: { screen: Settings }
+  Settings: { screen: Settings },
+  Help: { screen: Help },
 });
 
 export const EventsFeedStack = createStackNavigator({
