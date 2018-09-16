@@ -71,7 +71,7 @@ export default class Events extends Component {
   static navigationOptions =({navigation})=> ({
     headerRight:(
          <Button transparent onPress={() => navigation.navigate('EventsCalendar')}>
-         <Icon name='ios-calendar-outline' />
+         <Icon name='ios-calendar-outline' style={{color: 'white'}} />
         </Button>
   )
 });
