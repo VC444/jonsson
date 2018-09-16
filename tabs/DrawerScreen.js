@@ -18,7 +18,12 @@ export default class DrawerScreen extends Component {
 
   navigateToSettingsPage = () => {
     console.log('navigateToSettingsPage has been executed');
-    this.props.navigation.navigate("Settings")
+    this.props.navigation.navigate("Settings");
+  }
+
+  navigateToHelpPage = () => {
+    console.log('navigateToHelpPage has been executed');
+    this.props.navigation.navigate("Help");
   }
 
   render() {
@@ -70,7 +75,7 @@ export default class DrawerScreen extends Component {
 
             <TouchableOpacity style={styles.sidebar}>
               <Icon name='help-circle' size={10}/>
-              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
+              <Text style={styles.settingsStyle} onPress={() => this.navigateToHelpPage()}>
                 Help & Feedback
               </Text>
             </TouchableOpacity>
