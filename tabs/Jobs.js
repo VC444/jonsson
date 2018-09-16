@@ -66,7 +66,7 @@
        Linking.openURL('https://www.utdallas.edu/career/cometcareers/')
      }
      >
-     <Icon name='ios-globe-outline' />
+     <Icon name='ios-globe-outline' style={{color: 'white'}} />
       </Button>,
      tabBarLabel: 'Jobs',
      tabBarIcon: ({ tintcolor }) => (
