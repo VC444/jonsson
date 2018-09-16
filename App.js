@@ -43,14 +43,14 @@ export const HomeFeedStack = createStackNavigator({
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       title: "News Feed",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
-      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#008542', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
   ArticleDetails: { screen: ArticleDetails },
   Rewards: { screen: Rewards },
   Settings: { screen: Settings },
-  Help: { screen: Help },
+  Help: { screen: Help }
 });
 
 export const EventsFeedStack = createStackNavigator({
@@ -58,8 +58,8 @@ export const EventsFeedStack = createStackNavigator({
     screen: Events,
     navigationOptions: ({ navigation }) => ({
       title: "Event Listings",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
-      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#008542', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
   EventDetails: { screen: EventDetails },
@@ -71,8 +71,8 @@ export const JobsFeedStack = createStackNavigator({
     screen: Jobs,
     navigationOptions: ({ navigation }) => ({
       title: "Job Listings",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
-      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#008542', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
   JobsDetails: { screen: JobsDetails },
