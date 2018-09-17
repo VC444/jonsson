@@ -43,7 +43,7 @@ export const HomeFeedStack = createStackNavigator({
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       title: "News Feed",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#008542', borderBottomWidth: 1 },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
@@ -58,7 +58,7 @@ export const EventsFeedStack = createStackNavigator({
     screen: Events,
     navigationOptions: ({ navigation }) => ({
       title: "Event Listings",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#008542', borderBottomWidth: 1 },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
@@ -71,7 +71,7 @@ export const JobsFeedStack = createStackNavigator({
     screen: Jobs,
     navigationOptions: ({ navigation }) => ({
       title: "Job Listings",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#008542', borderBottomWidth: 1 },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
@@ -93,7 +93,7 @@ export const AppScreenNavigator = createMaterialTopTabNavigator({
         fontSize: 15,
       },
       style: {
-        backgroundColor: '#C75B12', // UTD Color
+        backgroundColor: '#008542', // UTD Color
       },
     }
   });
