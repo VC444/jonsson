@@ -3,7 +3,7 @@
  * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
  */
  import React, { Component } from 'react';
- import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground } from 'react-native';
+ import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
  import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
  import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
  import * as firebase from 'firebase';
@@ -59,22 +59,6 @@
          })
        });
     }
-
-   static navigationOptions = {
-     headerRight:
-     <Button transparent onPress={() =>
-       Linking.openURL('https://www.utdallas.edu/career/cometcareers/')
-     }
-     >
-     <Icon name='ios-globe-outline' style={{color: 'white'}} />
-      </Button>,
-     tabBarLabel: 'Jobs',
-     tabBarIcon: ({ tintcolor }) => (
-      <Icon
-      name='ios-briefcase-outline'
-      color={ tintcolor} />
-     )
-   }
 
    render() {
      if (this.state.isLoading) {
@@ -142,10 +126,15 @@
                )
              }}
            />
+           <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={ ()=>{ Linking.openURL('https://joinhandshake.com')}}>
+           <Text style={{fontSize: 15, textAlign: 'center'}} >Click here to find more opportunities!
+             
+           </Text>
            <Image
-             style={{ height: 150, width: null, borderRadius: 10, position: 'relative',}}
-             source={require('../images/jcjobsbanner.png')}
+             style={{ height: 75, width: '70%', borderRadius: 0, position: 'relative', resizeMode: 'contain' }}
+             source={require('../images/handshake_logo_dark.png')}
            />
+           </TouchableOpacity>
          </Content>
        </Container>
      )
