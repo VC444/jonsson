@@ -22,6 +22,10 @@
    }
 
    async componentDidMount() {
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    });
      this.setState({
        firstName: await AsyncStorage.getItem('firstName'),
        lastName: await AsyncStorage.getItem('lastName'),
@@ -169,21 +173,6 @@
                 )
               }}
             />
-            <Content>
-              <Card bordered>
-                <CardItem bordered>
-                  <Body style={{ alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{ fontSize: 18, fontWeight: '800', alignItems: 'center', justifyContent: 'center'}}>Make a Gift</Text>
-                    <Text style={{ fontSize: 12, fontWeight: '100', alignItems: 'center', justifyContent: 'center', paddingTop: 5}}>Please click the donate button to make on online donation.</Text>
-                    <View style={{ alignItems: 'center', paddingTop: 5}}>
-                    <Button rounded success onPress={ ()=>{ Linking.openURL('https://giving.utdallas.edu/ECS')}}>
-                      <Text>Donate Now</Text>
-                    </Button>
-                    </View>
-                  </Body>
-                </CardItem>
-              </Card>
-            </Content>
            </Content>
          </Container>
        )

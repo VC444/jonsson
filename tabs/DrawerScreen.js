@@ -11,6 +11,21 @@ export default class DrawerScreen extends Component {
     console.log('DrawerScreen has been fired');
   }
 
+  navigateToRewardsPage = () => {
+    console.log('navigateToRewardsPage has been executed');
+    this.props.navigation.navigate("Rewards");
+  }
+
+  navigateToSettingsPage = () => {
+    console.log('navigateToSettingsPage has been executed');
+    this.props.navigation.navigate("Settings");
+  }
+
+  navigateToHelpPage = () => {
+    console.log('navigateToHelpPage has been executed');
+    this.props.navigation.navigate("Help");
+  }
+
   render() {
 
     const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -36,9 +51,9 @@ export default class DrawerScreen extends Component {
               </Text>
             </View>
 
-            <TouchableOpacity style={styles.sidebar}>
+            <TouchableOpacity style={styles.sidebar} onPress={()=> this.navigateToRewardsPage()}>
             <Icon type="FontAwesome" name='gift' size={5} />
-              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
+              <Text style={styles.settingsStyle}>
                 Rewards
               </Text>
             </TouchableOpacity>
@@ -53,14 +68,14 @@ export default class DrawerScreen extends Component {
             
             <TouchableOpacity style={styles.sidebar}>
               <Icon name='settings' size={10}/>
-              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
+              <Text style={styles.settingsStyle} onPress={() => this.navigateToSettingsPage()}>
                 Settings
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}>
               <Icon name='help-circle' size={10}/>
-              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
+              <Text style={styles.settingsStyle} onPress={() => this.navigateToHelpPage()}>
                 Help & Feedback
               </Text>
             </TouchableOpacity>

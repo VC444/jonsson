@@ -67,6 +67,14 @@ export default class Events extends Component {
       });
   }
 
+
+  static navigationOptions =({navigation})=> ({
+    headerRight:(
+         <Button transparent onPress={() => navigation.navigate('EventsCalendar')}>
+         <Icon name='ios-calendar-outline' style={{color: 'white'}} />
+        </Button>
+  )
+});
   /*
   static navigationOptions = {
     headerRight:
@@ -163,9 +171,6 @@ export default class Events extends Component {
                               <Icon name='ios-heart' style={{ fontSize: 14, color: '#d11141' }} /> {rowData.interestedCount} people interested
                           </Text>
                           </View>
-                          <Button transparent onPress={() => this.props.navigation.navigate('EventsCalendar')}>
-                            <Icon name='ios-calendar-outline' />
-                          </Button>
                         </Body>
                       </Left>
                     </ListItem>

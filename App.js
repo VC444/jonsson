@@ -18,8 +18,14 @@ import EventDetails from './tabs/EventDetails';
 import JobsDetails from './tabs/JobsDetails';
 import ArticleDetails from './tabs/ArticleDetails';
 import EventsCalendar from './tabs/EventsCalendar';
-import DrawerScreen from './tabs/DrawerScreen'
+import DrawerScreen from './tabs/DrawerScreen';
+import Rewards from './tabs/Rewards';
+import Settings from './tabs/Settings';
+import Help from './tabs/Help';
+
 import * as firebase from 'firebase';
+
+console.disableYellowBox = true
 
 // Initialize Firebase
 export var config = {
@@ -37,11 +43,14 @@ export const HomeFeedStack = createStackNavigator({
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       title: "News Feed",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
-      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
   ArticleDetails: { screen: ArticleDetails },
+  Rewards: { screen: Rewards },
+  Settings: { screen: Settings },
+  Help: { screen: Help }
 });
 
 export const EventsFeedStack = createStackNavigator({
@@ -49,8 +58,8 @@ export const EventsFeedStack = createStackNavigator({
     screen: Events,
     navigationOptions: ({ navigation }) => ({
       title: "Event Listings",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
-      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
   EventDetails: { screen: EventDetails },
@@ -62,8 +71,8 @@ export const JobsFeedStack = createStackNavigator({
     screen: Jobs,
     navigationOptions: ({ navigation }) => ({
       title: "Job Listings",
-      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#ffffff', borderBottomWidth: 1 },
-      headerTitleStyle: { fontSize: 18, fontWeight: '100' },
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
   JobsDetails: { screen: JobsDetails },
@@ -77,12 +86,15 @@ export const AppScreenNavigator = createMaterialTopTabNavigator({
   {
     tabBarPosition: 'bottom',
     swipeEnabled: true,
-    animationEnabled: false,
+    animationEnabled: true,
     tabBarOptions: {
-      activeTintColor: '#b7c3d0',
-      activeBackgroundColor: '#ffffff',
-      inactiveBackgroundColor: '#ffffff',
-      inactiveTintColor: '#B7C3D0',
+      activeTintColor: '#FFFFFF',
+      labelStyle: {
+        fontSize: 15,
+      },
+      style: {
+        backgroundColor: '#008542', // UTD Color
+      },
     }
   });
 
@@ -93,7 +105,7 @@ export const DrawerNavigator = createDrawerNavigator({
 }, {
     //initialRouteName: 'HomeFeedStack',
     contentComponent: DrawerScreen,
-    drawerWidth: 200
+    drawerWidth: 300
   });
 
 const MenuImage = ({ navigation }) => {
