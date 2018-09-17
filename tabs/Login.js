@@ -96,10 +96,10 @@ export default class Login extends React.Component {
   async componentWillMount() {
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
     if (LOGIN_TOKEN == null) {
-       // DO nothing and continue login process
+      // DO nothing and continue login process
     }
     else {
-       this.props.navigation.navigate("HomeFeedStack");
+      this.props.navigation.navigate("HomeFeedStack");
     }
   }
 
@@ -128,28 +128,28 @@ export default class Login extends React.Component {
     })
     const payload = await response.json()
     this.setState({
-       ...payload,
-        refreshing: false,
+      ...payload,
+      refreshing: false,
     })
     let value = this.state.pictureUrl
-    if (value == null){
-       AsyncStorage.setItem('userPhoto', 'https://www.utdallas.edu/brand/files/Temoc_Orange.png')
+    if (value == null) {
+      AsyncStorage.setItem('userPhoto', 'https://www.utdallas.edu/brand/files/Temoc_Orange.png')
     }
     else {
-       AsyncStorage.setItem('userPhoto', this.state.pictureUrl)
+      AsyncStorage.setItem('userPhoto', this.state.pictureUrl)
     }
     AsyncStorage.setItem('lastName', this.state.lastName),
-    AsyncStorage.setItem('firstName', this.state.firstName),
-    AsyncStorage.setItem('email', this.state.emailAddress),
-    AsyncStorage.setItem('headline', this.state.headline),
-    AsyncStorage.setItem('userID', this.state.id),
-    AsyncStorage.setItem('location', JSON.stringify(this.state.location)),
-    AsyncStorage.setItem('industry', this.state.industry),
-    AsyncStorage.setItem('LOGIN_TOKEN', "loggedIn"),
-    AsyncStorage.getItem('loggedInStatus',
-    (value) => {
-      this.setState({ loggedInStatus: 'loggedIn' });
-    });
+      AsyncStorage.setItem('firstName', this.state.firstName),
+      AsyncStorage.setItem('email', this.state.emailAddress),
+      AsyncStorage.setItem('headline', this.state.headline),
+      AsyncStorage.setItem('userID', this.state.id),
+      AsyncStorage.setItem('location', JSON.stringify(this.state.location)),
+      AsyncStorage.setItem('industry', this.state.industry),
+      AsyncStorage.setItem('LOGIN_TOKEN', "loggedIn"),
+      AsyncStorage.getItem('loggedInStatus',
+        (value) => {
+          this.setState({ loggedInStatus: 'loggedIn' });
+        });
     this.props.navigation.navigate("HomeFeedStack")
   }
 
@@ -174,14 +174,22 @@ export default class Login extends React.Component {
     return (
       <View style={styles.container}>
         <ImageBackground
-          style={{ height: 475, width: 500}}
+          style={{ height: 475, width: 500 }}
           style={styles.backdrop}
           blurRadius={1}>
-          <View style={styles.backdropView}>
-            <Image source={require('../images/Temoc_Orange.png')} style={{ height: 180, width: 150, paddingTop: 100}}></Image>
-            <Text style={{ fontSize: 32, fontWeight: '800', fontFamily: 'System'}}>Jonsson <Text style={{ fontSize: 32, fontWeight: '500'}}>Connect </Text></Text>
-            <Text style={{ fontSize: 22, fontWeight: '200', paddingTop: 20}}>Begin exploring oppotunities only offered by the Jonsson School. </Text>
-            <Text style={{ fontSize: 8, position: "absolute", bottom: -150}}></Text>
+          <View alignItems='center'>
+            <Image source={require('../images/Temoc_Orange.png')} style={{ height: 180, width: 150, paddingTop: 100 }}></Image>
+            <Text style={{ fontSize: 32, fontWeight: '800'}}>
+              Jonsson Connect
+            </Text>
+            <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingTop: 80 }}>
+              {/* Begin exploring oppotunities only offered by the Jonsson School. */}
+              The Erik Jonsson School of Engineering & Computer Science
+            </Text>
+            <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingTop: 20}}>
+              {/* Begin exploring oppotunities only offered by the Jonsson School. */}
+              Fearless Engineering.
+            </Text>
           </View>
         </ImageBackground>
         {!emailAddress &&
@@ -195,29 +203,32 @@ export default class Login extends React.Component {
                 clientID="86c3k9s35z8di0"
                 clientSecret="ptaW1pqjV26iefkz"
                 redirectUri="https://github.com/mendoza-git/JonssonConnect" // HAVE TO CHANGE
-                onSuccess= {
+                onSuccess={
                   data => this.getUser(data)
                 }
               />
             </View>
           )}
-          <View style={styles.container}>
-              <TouchableHighlight onPress={() => this.modal.open()}>
-                <Button onPress={() => this.modal.open()} style={{ width: 500}} rounded full primary>
-                  <Text style={{ fontWeight: '100', fontSize: 16}}> <Image source={require('../images/linkedin-logo.png')} style={{width: 25, height: 25}}></Image>Sign in with LinkedIn</Text>
-                </Button>
-              </TouchableHighlight>
-              <Text style={{ fontSize: 10, fontWeight: '100'}}></Text>
-              <TouchableHighlight>
-                <Button onPress={ ()=>{ Linking.openURL('https://engineering.utdallas.edu')}} style={{ width: 500}} full light>
-                  <Image style={{width: 25, height: 25}} source={require('../images/Temoc_Secondary_Blue.png')}></Image>
-                  <Text style={{ color: '#011f4b', fontWeight: '100', fontSize: 16}}>
-                    Visit the Erik Jonsson School Website
-                  </Text>
-                </Button>
-              </TouchableHighlight>
-          </View>
-          <Text style={{ fontSize: 8, fontWeight: '100', position: "absolute", bottom: 20}}>Copyright © 2018, The Univerity of Texas at Dallas, all rights reserved.</Text>
+        <View style={styles.container}>
+          <TouchableHighlight onPress={() => this.modal.open()}>
+            <Button transparent onPress={() => this.modal.open()} style={{width: 500 }} full light >
+              <Image source={require('../images/linkedin-logo.png')} style={{ width: 25, height: 25 }}></Image>
+              <Text style={{ color: '#c75b12', fontSize: 16 }}>
+                Sign in with LinkedIn
+              </Text>
+            </Button>
+          </TouchableHighlight>
+          <Text style={{ fontSize: 10, fontWeight: '100' }}></Text>
+          <TouchableHighlight>
+            <Button transparent onPress={() => { Linking.openURL('https://engineering.utdallas.edu') }} style={{ width: 500 }} full light>
+              <Image style={{ width: 25, height: 25 }} source={require('../images/Temoc_Secondary_Blue.png')}></Image>
+              <Text style={{ color: '#c75b12', fontSize: 16 }}>
+                Visit the Erik Jonsson School Website
+              </Text>
+            </Button>
+          </TouchableHighlight>
+        </View>
+        <Text style={{ fontSize: 8, fontWeight: '100', position: "absolute", bottom: 20 }}>Copyright © 2018, The Univerity of Texas at Dallas, all rights reserved.</Text>
       </View>
     )
   }
