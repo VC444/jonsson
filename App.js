@@ -105,7 +105,7 @@ export const DrawerNavigator = createDrawerNavigator({
 }, {
     //initialRouteName: 'HomeFeedStack',
     contentComponent: DrawerScreen,
-    drawerWidth: 200
+    drawerWidth: 300
   });
 
 const MenuImage = ({ navigation }) => {
