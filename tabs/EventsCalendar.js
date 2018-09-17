@@ -57,9 +57,7 @@ export default class EventsCalendar extends Component {
     // call function after you successfully get value in nextDay array
 
     anotherFunc = () => {
-        var nextDay = ['2018-09-13',
-            '2018-09-14',
-            '2018-09-15'];
+        var nextDay = ['2018-09-17'];
 
         var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: { selected: true, marked: true } }), {});
         this.setState({ marked: obj });
