@@ -15,56 +15,54 @@ import 'core-js/fn/symbol/iterator'
 export default class EventsCalendar extends Component {
     constructor(props) {
 
+        super(props);
+        this.state = {
+            marked: false,
+            formattedDate: [],
+        }
+    } // End of constructor
 
+    componentWillMount = () => {
         // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
 
         /******************************************************************************************************** */
         var dateOfEvent = firebase.database().ref("Events/");
-        dateOfEvent.on('value', gotData, errData)
-
-        function gotData(data) {
-            var dates = data.val()
-            var keys = Object.keys(dates)
-            var formattedDate = []
-
-            for (var i = 0; i < keys.length; i++) {
-                var k = keys[i];
-                var date_of_event = dates[k].eventDate;
-
-                var format_res = date_of_event.substring(0, 10);
-
-                formattedDate[i] = format_res
-
-            }
-            console.log(formattedDate)
-
-
-        }
-
-        function errData(err) {
-            console.log(err)
-        }
+        dateOfEvent.on('value', this.gotData, this.errData);
         /************************************************************************************************** */
+    }
 
+    gotData = (data) => {
+        var dates = data.val()
+        var keys = Object.keys(dates)
+        var formattedDate = []
 
+        for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            var date_of_event = dates[k].eventDate;
 
-        super(props);
-        this.state = {
-            marked: false,
+            var format_res = date_of_event.substring(0, 10);
+
+            formattedDate[i] = format_res
+
         }
-    } // End of constructor
+        this.setState({ formattedDate }, this.anotherFunc);
+
+        console.log('formatted date in state is ' + this.state.formattedDate);
+    }
+
+    errData = (err) => {
+        console.log(err);
+    }
 
     // call function after you successfully get value in nextDay array
 
     anotherFunc = () => {
-        var nextDay = ['2018-09-17'];
+        var nextDay = this.state.formattedDate;
 
         var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: { selected: true, marked: true } }), {});
+        console.log('obj variable is ' + obj);
         this.setState({ marked: obj });
 
-    }
-    componentDidMount() {
-        this.anotherFunc();
     }
 
     render() {
