@@ -45,6 +45,9 @@ export default class EventsCalendar extends Component {
             formattedDate[i] = format_res
 
         }
+
+        // Set formattedDate array that is initialized in state to values of local formattedDate array 
+        // and then call anotherFunc
         this.setState({ formattedDate }, this.anotherFunc);
 
         console.log('formatted date in state is ' + this.state.formattedDate);
