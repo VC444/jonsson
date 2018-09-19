@@ -57,7 +57,7 @@ export default class EventsCalendar extends Component {
     // call function after you successfully get value in nextDay array
 
     anotherFunc = () => {
-        var nextDay = ['2018-09-17'];
+        var nextDay = []; //TO BE CHANGED
 
         var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: { selected: true, marked: true } }), {});
         this.setState({ marked: obj });
@@ -106,7 +106,7 @@ export default class EventsCalendar extends Component {
                     //*********************************************************************************************************************************************
                     markedDates={this.state.marked}
                     // callback that gets called on day press
-                    onDayPress={(day) => { this.props.navigation.navigate("Agenda") }}
+                    onDayPress={(day) => { }}
                     // the list of items that have to be displayed in agenda. If you want to render item as empty date
                     // the value of date key kas to be an empty array []. If there exists no value for date key it is
                     // considered that the date in question is not yet loaded
