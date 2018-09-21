@@ -45,7 +45,7 @@ export default class DrawerScreen extends Component {
       <View>
         <ScrollView>
           <View>
-            <View style={styles.sidebar}>
+            <View style={styles.sidebarDate}>
               <Text style={styles.date} onPress={this.navigateToScreen()}>
                 {month + ' ' + dateNum}
               </Text>
@@ -103,8 +103,6 @@ DrawerScreen.propTypes = {
 const styles = {
   sidebar: {
     padding: 20,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
     flex: 1, 
     flexDirection: 'row', 
     alignItems: 'center',
@@ -131,5 +129,14 @@ const styles = {
   settingsStyle:{
     paddingLeft: 10, 
     textAlign: 'auto'
+  },
+  sidebarDate: {
+    padding: 20,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    flex: 1, 
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   }
 }
