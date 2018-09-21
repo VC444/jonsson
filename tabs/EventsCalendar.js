@@ -60,7 +60,9 @@ export default class EventsCalendar extends Component {
     // call function after you successfully get value in nextDay array
 
     anotherFunc = () => {
+
         var nextDay = this.state.formattedDate;
+
 
         var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: { selected: true, marked: true } }), {});
         console.log('obj variable is ' + obj);
