@@ -11,9 +11,9 @@ import 'core-js/es6/map'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
 
-// const vacation = {color: 'red'};
-// const massage = {color: 'blue'};
-// const workout = { color: 'green'};
+const dot_color = {color: 'black'}; // Constant dot color
+// var massage = {color: 'blue'};
+// var workout = { color: 'green'};
 // const blah = { color: 'yellow'};
 // const fee = { color: 'black'};
 
@@ -64,8 +64,56 @@ export default class EventsCalendar extends Component {
 
     anotherFunc = () => {
         var nextDay = this.state.formattedDate;
-        var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: {dots: this.state.formattedDate, selected: true} }), {});
-        console.log('obj variable is ' + obj);
+
+        console.log(nextDay)
+
+        
+    //     var compressed = ["we","2","we","se","se","we"];
+	// // make a copy of the input array
+	// var copy = compressed.slice(0);
+ 
+	// // first loop goes over every element
+	// for (var i = 0; i < compressed.length; i++) {
+ 
+	// 	var myCount = 0;	
+	// 	// loop over every element in the copy and see if it's the same
+	// 	for (var w = 0; w < copy.length; w++) {
+	// 		if (compressed[i] == copy[w]) {
+	// 			// increase amount of times duplicate is found
+	// 			myCount++;
+				
+	// 		}
+	// 	}
+ 
+	// 	if (myCount > 0) {
+			
+			
+	// 	}
+    // }
+    
+    // console.log("COUNTEEEER:", myCount)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        var dot_color_array = Array(3).fill(eval('dot_color')) // creating array of variable names
+        
+        var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: {dots: dot_color_array, selected: true} }), {});
         this.setState({ marked: obj });
     }
 
