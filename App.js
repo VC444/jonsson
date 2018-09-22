@@ -56,9 +56,9 @@ export const HomeFeedStack = createStackNavigator({
 
 export const EventsFeedStack = createStackNavigator({
   EventsTab: {
-    screen: Events,
+    screen: EventsCalendar,
     navigationOptions: ({ navigation }) => ({
-      title: "Event Listings",
+      title: "Events Calendar",
       headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
