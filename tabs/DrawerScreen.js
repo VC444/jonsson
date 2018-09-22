@@ -47,7 +47,7 @@ export default class DrawerScreen extends Component {
           <View>
             <View style={styles.sidebarDate}>
               <Text style={styles.date} onPress={this.navigateToScreen()}>
-                {month + ' ' + dateNum}
+                {day + ', ' + month + ' ' + dateNum}
               </Text>
             </View>
 
@@ -102,7 +102,8 @@ DrawerScreen.propTypes = {
 
 const styles = {
   sidebar: {
-    padding: 20,
+    padding: 14,
+    paddingLeft: 20,
     flex: 1, 
     flexDirection: 'row', 
     alignItems: 'center',
@@ -124,11 +125,13 @@ const styles = {
     paddingLeft: 10, 
     lineHeight: 25,
     textAlign: 'auto',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize: 18
   }, 
   settingsStyle:{
     paddingLeft: 10, 
-    textAlign: 'auto'
+    textAlign: 'auto',
+    fontSize: 18
   },
   sidebarDate: {
     padding: 20,
