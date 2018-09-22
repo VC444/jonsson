@@ -1,4 +1,4 @@
-import { CalendarList} from 'react-native-calendars';
+import { CalendarList } from 'react-native-calendars';
 
 import React, { Component } from 'react';
 import { View } from 'react-native';
@@ -11,9 +11,15 @@ import 'core-js/es6/map'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
 
+// const vacation = {color: 'red'};
+// const massage = {color: 'blue'};
+// const workout = { color: 'green'};
+// const blah = { color: 'yellow'};
+// const fee = { color: 'black'};
+
 
 export default class EventsCalendar extends Component {
-    
+
     constructor(props) {
 
         super(props);
@@ -49,7 +55,7 @@ export default class EventsCalendar extends Component {
 
         console.log('formatted date in state is ' + this.state.formattedDate);
     }
-    
+
     errData = (err) => {
         console.log(err);
     }
@@ -58,7 +64,7 @@ export default class EventsCalendar extends Component {
 
     anotherFunc = () => {
         var nextDay = this.state.formattedDate;
-        var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: { selected: true, marked: true } }), {});
+        var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: {dots: this.state.formattedDate, selected: true} }), {});
         console.log('obj variable is ' + obj);
         this.setState({ marked: obj });
     }
@@ -83,8 +89,9 @@ export default class EventsCalendar extends Component {
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
                     minDate={fullDate}
                     // By default, agenda dates are marked if they have at least one item, but you can override this if needed
-                    //*********************************************************************************************************************************************
                     markedDates={this.state.marked}
+                    //This attribute enables multiple dots on a single date
+                    markingType={'multi-dot'}
                     // callback that gets called on day press
                     onDayPress={(day) => { this.props.navigation.navigate("Agenda") }}
                 />

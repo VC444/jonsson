@@ -11,21 +11,6 @@ export default class DrawerScreen extends Component {
     console.log('DrawerScreen has been fired');
   }
 
-  navigateToRewardsPage = () => {
-    console.log('navigateToRewardsPage has been executed');
-    this.props.navigation.navigate("Rewards");
-  }
-
-  navigateToSettingsPage = () => {
-    console.log('navigateToSettingsPage has been executed');
-    this.props.navigation.navigate("Settings");
-  }
-
-  navigateToHelpPage = () => {
-    console.log('navigateToHelpPage has been executed');
-    this.props.navigation.navigate("Help");
-  }
-
   render() {
 
     const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -45,15 +30,15 @@ export default class DrawerScreen extends Component {
       <View>
         <ScrollView>
           <View>
-            <View style={styles.sidebarDate}>
+            <View style={styles.sidebar}>
               <Text style={styles.date} onPress={this.navigateToScreen()}>
                 {month + ' ' + dateNum}
               </Text>
             </View>
 
-            <TouchableOpacity style={styles.sidebar} onPress={()=> this.navigateToRewardsPage()}>
+            <TouchableOpacity style={styles.sidebar}>
             <Icon type="FontAwesome" name='gift' size={5} />
-              <Text style={styles.settingsStyle}>
+              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
                 Rewards
               </Text>
             </TouchableOpacity>
@@ -68,14 +53,14 @@ export default class DrawerScreen extends Component {
             
             <TouchableOpacity style={styles.sidebar}>
               <Icon name='settings' size={10}/>
-              <Text style={styles.settingsStyle} onPress={() => this.navigateToSettingsPage()}>
+              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
                 Settings
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}>
               <Icon name='help-circle' size={10}/>
-              <Text style={styles.settingsStyle} onPress={() => this.navigateToHelpPage()}>
+              <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
                 Help & Feedback
               </Text>
             </TouchableOpacity>
@@ -103,6 +88,8 @@ DrawerScreen.propTypes = {
 const styles = {
   sidebar: {
     padding: 20,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
     flex: 1, 
     flexDirection: 'row', 
     alignItems: 'center',
@@ -129,14 +116,5 @@ const styles = {
   settingsStyle:{
     paddingLeft: 10, 
     textAlign: 'auto'
-  },
-  sidebarDate: {
-    padding: 20,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    flex: 1, 
-    flexDirection: 'row', 
-    alignItems: 'center',
-    justifyContent: 'flex-start'
   }
 }
