@@ -11,7 +11,7 @@ import 'core-js/es6/map'
 import 'core-js/es6/symbol'
 import 'core-js/fn/symbol/iterator'
 
-const dot_color = {color: 'black'}; // Constant dot color
+const dot_color = {color: 'white'}; // Constant dot color
 // var massage = {color: 'blue'};
 // var workout = { color: 'green'};
 // const blah = { color: 'yellow'};
@@ -24,6 +24,7 @@ export default class EventsCalendar extends Component {
 
         super(props);
         this.state = {
+            disableTouchEvent: true,
             marked: false,
             formattedDate: [],
         }
@@ -93,25 +94,7 @@ export default class EventsCalendar extends Component {
     
     // console.log("COUNTEEEER:", myCount)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        var dot_color_array = Array(3).fill(eval('dot_color')) // creating array of variable names
+        var dot_color_array = Array(2).fill(eval('dot_color')) // creating array of variable names
         
         var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: {dots: dot_color_array, selected: true} }), {});
         this.setState({ marked: obj });
@@ -141,7 +124,12 @@ export default class EventsCalendar extends Component {
                     //This attribute enables multiple dots on a single date
                     markingType={'multi-dot'}
                     // callback that gets called on day press
-                    onDayPress={(day) => { this.props.navigation.navigate("Agenda") }}
+                    onDayPress={() => { 
+                        //if (someVariable == true)
+                        //{
+                            this.props.navigation.navigate("Agenda")
+                        //} 
+                    }}
                 />
             </View>
         )
