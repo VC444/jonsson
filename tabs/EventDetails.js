@@ -48,7 +48,7 @@
      return (
        <Container>
         <Content>
-        <Image source={{uri: this.props.navigation.state.params.rowData.eventImageURL}} style={{ height: 200, width: null }}>
+        <Image source={{uri: this.props.navigation.state.params.rowData.eventImageURL}} style={{ height: 200, width: null, resizeMode: 'stretch' }}>
         </Image>
         <Card style={{flex: 0}}>
             <CardItem>
