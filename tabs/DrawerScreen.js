@@ -87,14 +87,10 @@ DrawerScreen.propTypes = {
 
 const styles = {
   sidebar: {
-<<<<<<< HEAD
+
     padding: 14,
     paddingLeft: 20,
-=======
-    padding: 20,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
->>>>>>> 5ee7b68fabc42820299f8c91aef749d6d1f73f41
+
     flex: 1, 
     flexDirection: 'row', 
     alignItems: 'center',
@@ -121,20 +117,6 @@ const styles = {
   }, 
   settingsStyle:{
     paddingLeft: 10, 
-<<<<<<< HEAD
-    textAlign: 'auto',
-    fontSize: 18
-  },
-  sidebarDate: {
-    padding: 20,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    flex: 1, 
-    flexDirection: 'row', 
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-=======
     textAlign: 'auto'
->>>>>>> 5ee7b68fabc42820299f8c91aef749d6d1f73f41
   }
 }
