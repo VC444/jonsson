@@ -24,7 +24,6 @@ export default class EventsCalendar extends Component {
 
         super(props);
         this.state = {
-            disableTouchEvent: true,
             marked: false,
             formattedDate: [],
         }
