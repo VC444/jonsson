@@ -68,35 +68,41 @@ export default class EventsCalendar extends Component {
 
         console.log(nextDay)
 
-        
-    //     var compressed = ["we","2","we","se","se","we"];
-	// // make a copy of the input array
-	// var copy = compressed.slice(0);
- 
-	// // first loop goes over every element
-	// for (var i = 0; i < compressed.length; i++) {
- 
-	// 	var myCount = 0;	
-	// 	// loop over every element in the copy and see if it's the same
-	// 	for (var w = 0; w < copy.length; w++) {
-	// 		if (compressed[i] == copy[w]) {
-	// 			// increase amount of times duplicate is found
-	// 			myCount++;
-				
-	// 		}
-	// 	}
- 
-	// 	if (myCount > 0) {
-			
-			
-	// 	}
-    // }
-    
-    // console.log("COUNTEEEER:", myCount)
+
+      
+var sorted_arr = nextDay.slice().sort(); // You can define the comparing function here. 
+                                     // JS by default uses a crappy string compare.
+                                     // (we use slice to clone the array so the
+                                     // original array won't be modified)
+var results = [];
+for (var i = 0; i < sorted_arr.length - 1; i++) {
+    if (sorted_arr[i + 1] == sorted_arr[i]) {
+        results.push(sorted_arr[i]);
+    }
+}
+
+console.log(results);
+var orginal_dates = ["2018-11-14", "2019-01-01", "2018-10-18"]
+
+var b1 = new Set(results);
+var difference = [...new Set([...nextDay].filter(x => !b1.has(x)))];
+
+console.log(difference);
 
         var dot_color_array = Array(2).fill(eval('dot_color')) // creating array of variable names
         
-        var obj = nextDay.reduce((c, v) => Object.assign(c, { [v]: {dots: dot_color_array, selected: true} }), {});
+        var obj = results.reduce((c, v) => Object.assign(c, { [v]: {dots: dot_color_array, selected: true,selectedColor: 'red'} }), {});
+        
+        var dottom = Array(1).fill(eval('dot_color')) // creating array of variable names
+
+        for (var i = 0; i < difference.length; i++) 
+        {
+            obj[difference[i]] = {dots: dottom, selected: true, selectedColor: 'blue'}
+            //Do something
+        }
+
+
+        
         this.setState({ marked: obj });
     }
 
