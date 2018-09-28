@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import { Container, Header, Content, Accordion, Button } from "native-base";
-import t from 'tcomb-form-native';
+import { Container, Header, Content, Accordion, Button, Form, Item, Input, Label } from "native-base";
 
 
 const dataArray = [
@@ -9,16 +8,6 @@ const dataArray = [
     { title: "How can I get whoosh bits?", content: "Attend events and scan the qr code in the end!" },
     { title: "Who are eligible to get rewards", content: "UTD alumni and current students are eligible to get rewards." }
 ];
-
-const Form = t.form.Form;
-
-const Person = t.struct({
-    name: t.String,              // a required string
-    email: t.String,  // an optional string
-    feedback: t.String
-});
-
-const options = { underlineColorAndroid: 'transparent' };
 
 export default class Help extends Component {
 
@@ -38,9 +27,20 @@ export default class Help extends Component {
 
                 <Button info style={styles.button}><Text> Contact Us </Text></Button>
 
-                <View style={styles.container}>
-                    <Form type={Person} options={options} />
-                </View>
+                <Form style={styles.formView}>
+                    <Item fixedLabel>
+                        <Label>Name</Label>
+                        <Input />
+                    </Item>
+                    <Item fixedLabel last>
+                        <Label>Email</Label>
+                        <Input />
+                    </Item>
+                    <Item rounded style={styles.formView}>
+                        <Input placeholder='How can we improve Jonsson Connect?' />
+                    </Item>
+                </Form>
+
             </ScrollView>
         );
     }
@@ -60,5 +60,8 @@ const styles = StyleSheet.create({
     },
     masterView: {
         backgroundColor: '#FFFFFF',
+    },
+    formView: {
+        paddingTop: 20,
     }
 });
