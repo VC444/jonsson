@@ -129,10 +129,13 @@ console.log(difference);
                     //This attribute enables multiple dots on a single date
                     markingType={'multi-dot'}
                     // callback that gets called on day press
-                    onDayPress={() => { 
+                    onDayPress={(day) => { 
                         //if (someVariable == true)
                         //{
-                            this.props.navigation.navigate("Agenda")
+                            console.log("STRINGIFY: " + JSON.stringify(day.dateString))
+                            var dateString = JSON.stringify(day.dateString)
+                            
+                            this.props.navigation.navigate("Agenda",{dateString})
                         //} 
                     }}
                 />
