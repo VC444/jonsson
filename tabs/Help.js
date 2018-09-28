@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import { Container, Header, Content, Accordion, Button, Form, Item, Input, Label } from "native-base";
+import { Text, View, StyleSheet, ScrollView, Button } from 'react-native';
+import { Container, Header, Content, Accordion, Form, Item, Input, Label } from "native-base";
 
 
 const dataArray = [
@@ -13,36 +13,66 @@ export default class Help extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            giveFeedback: false
+        }
+    }
+
+    giveFeedbackPressed = () => {
+        console.log('giveFeedbackPressed has fired');
+        this.setState({ giveFeedback: true });
     }
 
     render() {
-        return (
-            <ScrollView style={styles.masterView}>
-                <View>
-                    <Accordion
-                        dataArray={dataArray}
-                        headerStyle={{ backgroundColor: "#FFFFFF" }}
+        if (this.state.giveFeedback == false) {
+            return (
+                <ScrollView style={styles.masterView}>
+                    <View>
+                        <Accordion
+                            dataArray={dataArray}
+                            headerStyle={{ backgroundColor: "#FFFFFF" }}
+                        />
+                    </View>
+
+                    <Button
+                        onPress={this.giveFeedbackPressed}
+                        title="Click ME"
+                        color="blue"
+                        style={styles.button}
                     />
-                </View>
 
-                <Button info style={styles.button}><Text> Contact Us </Text></Button>
+                </ScrollView>
+            );
+        } else {
+            return (
+                <ScrollView style={styles.masterView}>
+                    <View>
+                        <Accordion
+                            dataArray={dataArray}
+                            headerStyle={{ backgroundColor: "#FFFFFF" }}
+                        />
+                    </View>
 
-                <Form style={styles.formView}>
-                    <Item fixedLabel>
-                        <Label>Name</Label>
-                        <Input />
-                    </Item>
-                    <Item fixedLabel last>
-                        <Label>Email</Label>
-                        <Input />
-                    </Item>
-                    <Item rounded style={styles.formView}>
-                        <Input placeholder='How can we improve Jonsson Connect?' />
-                    </Item>
-                </Form>
+                    <Form style={styles.formView}>
+                        <Item stackedLabel>
+                            <Label>Enter your email</Label>
+                            <Input />
+                        </Item>
+                        <Item stackedLabel>
+                            <Label>How can we improve?</Label>
+                            <Input />
+                        </Item>
+                        <Button
+                            onPress={this.giveFeedbackPressed}
+                            title="Submit"
+                            color="blue"
+                            style={styles.button}
+                        />
+                    </Form>
 
-            </ScrollView>
-        );
+                </ScrollView>
+            );
+        }
     }
 }
 
