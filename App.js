@@ -49,7 +49,12 @@ export const HomeFeedStack = createStackNavigator({
     })
   },
   ArticleDetails: { screen: ArticleDetails },
-  Rewards: { screen: Rewards },
+  Rewards: { screen: Rewards, 
+    navigationOptions: ({ navigation }) => ({
+      title: "Rewards",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12' },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    }) },
   Settings: { screen: Settings },
   Help: { screen: Help }
 });
