@@ -126,7 +126,7 @@
                )
              }}
            />
-           <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={ ()=>{ Linking.openURL('https://joinhandshake.com')}}>
+           <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onPress={ ()=>{ Linking.openURL('https://utdallas.joinhandshake.com/login')}}>
            <Text style={{fontSize: 15, textAlign: 'center'}} >Click here to find more opportunities!
              
            </Text>
