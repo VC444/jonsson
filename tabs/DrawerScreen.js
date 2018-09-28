@@ -112,7 +112,7 @@ const styles = {
   },
   date: {
     fontWeight: 'bold',
-    fontSize: 20, 
+    fontSize: 18, 
     paddingTop: 20
   },
   logOut: {

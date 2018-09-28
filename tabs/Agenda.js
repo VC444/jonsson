@@ -29,6 +29,8 @@ export default class Events extends Component {
   }
 
   componentDidMount() {
+    console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.dateString)
+
     return fetch('https://jonssonconnect.firebaseio.com/Events.json')
       .then((response) => response.json())
       .then((responseJson) => {
