@@ -51,7 +51,14 @@ export const HomeFeedStack = createStackNavigator({
   ArticleDetails: { screen: ArticleDetails },
   Rewards: { screen: Rewards },
   Settings: { screen: Settings },
-  Help: { screen: Help }
+  Help: { 
+    screen: Help,
+    navigationOptions: ({ navigation }) => ({
+      title: "FAQ",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+   }
 });
 
 export const EventsFeedStack = createStackNavigator({
