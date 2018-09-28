@@ -4,9 +4,9 @@
  */
 
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight } from 'react-native';
+import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 //import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
-import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
 //import * as firebase from 'firebase';
 
 //import firebaseApp from './EventDetails';
@@ -66,15 +66,6 @@ export default class Events extends Component {
         })
       });
   }
-
-
-  static navigationOptions = ({ navigation }) => ({
-    headerRight: (
-      <Button transparent onPress={() => navigation.navigate('EventsCalendar')}>
-        <Icon name='ios-calendar-outline' style={{ color: 'white' }} />
-      </Button>
-    )
-  });
   /*
   static navigationOptions = {
     headerRight:
@@ -108,6 +99,18 @@ export default class Events extends Component {
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
+
+    const FlexedButtons = () => (
+      <View style={styles.container}>
+          <View style={styles.buttonContainer}>
+            <Button title="RSVP Now!" />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button title="QR Code" />
+          </View>
+        </View>
+        );
+      
     return (
       <Container style={styles.containerStyle}>
         <Content
@@ -171,6 +174,33 @@ export default class Events extends Component {
                               source={{ uri: rowData.eventImageURL }}
                             />
                           </TouchableHighlight>
+
+
+                          <FlexedButtons/>
+                        
+
+                          {/* // JUST ADDED!//
+                          <View style={styles.container}>
+                            <TouchableOpacity onPress={() => console.log("RSVP PRESSED")}>
+                              <Button transparent onPress={() => this.modal.open()} style={{ width: 500 }} full light >
+                                <Text style={{ color: '#c75b12', fontSize: 16 }}>
+                                  RSVP Now!
+                                </Text>
+                              </Button>
+                            
+                            <Text style={{ fontSize: 10, fontWeight: '100' }}></Text>
+                            
+                              <Button transparent onPress={() => console.log("QR CODE PRESSED!")} style={{ width: 500 }} full light>
+                                <Text style={{ color: '#c75b12', fontSize: 16 }}>
+                                  Scan QR Code
+                                </Text>
+                              </Button>
+                            </TouchableOpacity>
+                          </View> */}
+
+
+
+
                         </Body>
                       </Left>
                     </ListItem>
@@ -195,7 +225,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   backdrop: {
-    width: null,
     height: 120,
   },
   backdropView: {
@@ -270,4 +299,13 @@ const styles = StyleSheet.create({
   eventDescriptionStyle: {
     fontSize: 10,
   },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    flex: 1,
+  }
 });
