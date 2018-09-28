@@ -1,12 +1,14 @@
 /**
  * JonssonConnect Events Page
  * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
+ * 
+ * FLEX DIRECTION & MARGIN VERTICAL & COLOR IN STYLE
  */
 
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
+import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity } from 'react-native';
 //import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
-import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Button, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
 //import * as firebase from 'firebase';
 
 //import firebaseApp from './EventDetails';
@@ -30,7 +32,6 @@ export default class Events extends Component {
 
   componentDidMount() {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.dateString)
-
     return fetch('https://jonssonconnect.firebaseio.com/Events.json')
       .then((response) => response.json())
       .then((responseJson) => {
@@ -102,17 +103,6 @@ export default class Events extends Component {
       "July", "August", "September", "October", "November", "December"
     ];
 
-    const FlexedButtons = () => (
-      <View style={styles.container}>
-          <View style={styles.buttonContainer}>
-            <Button title="RSVP Now!" />
-          </View>
-          <View style={styles.buttonContainer}>
-            <Button title="QR Code" />
-          </View>
-        </View>
-        );
-      
     return (
       <Container style={styles.containerStyle}>
         <Content
@@ -176,38 +166,26 @@ export default class Events extends Component {
                               source={{ uri: rowData.eventImageURL }}
                             />
                           </TouchableHighlight>
-
-
-                          <FlexedButtons/>
-                        
-
-                          {/* // JUST ADDED!//
-                          <View style={styles.container}>
-                            <TouchableOpacity onPress={() => console.log("RSVP PRESSED")}>
-                              <Button transparent onPress={() => this.modal.open()} style={{ width: 500 }} full light >
-                                <Text style={{ color: '#c75b12', fontSize: 16 }}>
-                                  RSVP Now!
-                                </Text>
-                              </Button>
-                            
-                            <Text style={{ fontSize: 10, fontWeight: '100' }}></Text>
-                            
-                              <Button transparent onPress={() => console.log("QR CODE PRESSED!")} style={{ width: 500 }} full light>
-                                <Text style={{ color: '#c75b12', fontSize: 16 }}>
-                                  Scan QR Code
-                                </Text>
-                              </Button>
-                            </TouchableOpacity>
-                          </View> */}
-
-
-
-
+                          <View style={{flexDirection: "row", paddingHorizontal: 3}}>
+                          <TouchableHighlight>
+                            <Button onPress={() => { console.log("RSVP BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
+                              <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
+                                RSVP Now!
+                              </Text>
+                            </Button>
+                            </TouchableHighlight>
+                            <TouchableHighlight>
+                            <Button onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
+                              <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
+                                QR Code
+                              </Text>
+                            </Button>
+                          </TouchableHighlight>
+                          </View>
                         </Body>
                       </Left>
                     </ListItem>
                   </List>
-
                 </Content>
               )
             }}
@@ -300,14 +278,5 @@ const styles = StyleSheet.create({
   },
   eventDescriptionStyle: {
     fontSize: 10,
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    flex: 1,
   }
 });
