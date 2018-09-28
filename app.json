@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+  "name": "Jonsson Connect",
+  "icon": "./images/temoc_icon.png",
+  "version": "2.1.5",
+  "slug": "jonsson", 
+  "sdkVersion": "27.0.0",
+  "ios": {
+	"bundleIdentifier": "com.utdesign.jonssonconnect"
+  },
+  "android": {
+	"package": "com.utdesign.jonssonconnect"
   }
+ }
 }

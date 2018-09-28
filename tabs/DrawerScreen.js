@@ -15,13 +15,11 @@ export default class DrawerScreen extends Component {
     console.log('navigateToRewardsPage has been executed');
     this.props.navigation.navigate("Rewards");
   }
-
-  navigateToSettingsPage = () => {
+   navigateToSettingsPage = () => {
     console.log('navigateToSettingsPage has been executed');
     this.props.navigation.navigate("Settings");
   }
-
-  navigateToHelpPage = () => {
+   navigateToHelpPage = () => {
     console.log('navigateToHelpPage has been executed');
     this.props.navigation.navigate("Help");
   }
@@ -45,15 +43,15 @@ export default class DrawerScreen extends Component {
       <View>
         <ScrollView>
           <View>
-            <View style={styles.sidebar}>
+            <View style={styles.sidebarDate}>
               <Text style={styles.date} onPress={this.navigateToScreen()}>
-                {month + ' ' + dateNum}
+                {day + ', ' + month + ' ' + dateNum}
               </Text>
             </View>
 
-            <TouchableOpacity style={styles.sidebar} onPress={()=> this.navigateToRewardsPage()}>
+            <TouchableOpacity style={styles.sidebar}>
             <Icon type="FontAwesome" name='gift' size={5} />
-              <Text style={styles.settingsStyle}>
+              <Text style={styles.settingsStyle} onPress={()=> this.navigateToRewardsPage()}>
                 Rewards
               </Text>
             </TouchableOpacity>
@@ -102,9 +100,10 @@ DrawerScreen.propTypes = {
 
 const styles = {
   sidebar: {
-    padding: 20,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
+
+    padding: 14,
+    paddingLeft: 20,
+
     flex: 1, 
     flexDirection: 'row', 
     alignItems: 'center',
@@ -113,7 +112,7 @@ const styles = {
   },
   date: {
     fontWeight: 'bold',
-    fontSize: 20, 
+    fontSize: 18, 
     paddingTop: 20
   },
   logOut: {
@@ -126,10 +125,20 @@ const styles = {
     paddingLeft: 10, 
     lineHeight: 25,
     textAlign: 'auto',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize: 18
   }, 
   settingsStyle:{
     paddingLeft: 10, 
     textAlign: 'auto'
+  },
+  sidebarDate: {
+    padding: 20,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    flex: 1, 
+    flexDirection: 'row', 
+    alignItems: 'center',
+    justifyContent: 'flex-start'
   }
 }

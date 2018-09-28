@@ -56,14 +56,21 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     }) },
   Settings: { screen: Settings },
-  Help: { screen: Help }
+  Help: { 
+    screen: Help,
+    navigationOptions: ({ navigation }) => ({
+      title: "FAQ",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+   }
 });
 
 export const EventsFeedStack = createStackNavigator({
   EventsTab: {
-    screen: Events,
+    screen: EventsCalendar,
     navigationOptions: ({ navigation }) => ({
-      title: "Event Listings",
+      title: "Events Calendar",
       headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
