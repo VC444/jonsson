@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, Button } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, Accordion, Form, Item, Input, Label } from "native-base";
 
 
@@ -23,6 +23,11 @@ export default class Help extends Component {
         this.setState({ giveFeedback: true });
     }
 
+    feedbackSubmitted = () => {
+        console.log('Feedback has been submitted');
+        this.setState({ giveFeedback: false });
+    }
+
     render() {
         if (this.state.giveFeedback == false) {
             return (
@@ -34,12 +39,13 @@ export default class Help extends Component {
                         />
                     </View>
 
-                    <Button
+                    <TouchableOpacity
                         onPress={this.giveFeedbackPressed}
-                        title="Click ME"
-                        color="blue"
                         style={styles.button}
-                    />
+                    >
+                        <Text style={styles.buttonText}>Give Feedback</Text>
+                    </TouchableOpacity>
+
 
                 </ScrollView>
             );
@@ -62,12 +68,14 @@ export default class Help extends Component {
                             <Label>How can we improve?</Label>
                             <Input />
                         </Item>
-                        <Button
-                            onPress={this.giveFeedbackPressed}
-                            title="Submit"
-                            color="blue"
+                        
+                        <TouchableOpacity
+                            onPress={this.feedbackSubmitted}
                             style={styles.button}
-                        />
+                        >
+                            <Text style={styles.buttonText}>Submit</Text>
+                        </TouchableOpacity>
+
                     </Form>
 
                 </ScrollView>
@@ -85,13 +93,20 @@ const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 25,
+        padding: 20,
         marginTop: 30,
+    },
+    buttonText: {
+        color: '#E98300',
+        fontSize: 16,
+        // borderWidth: 0.5,
+        // borderRadius: 10,
+        // padding: 10
     },
     masterView: {
         backgroundColor: '#FFFFFF',
     },
     formView: {
-        paddingTop: 20,
+        paddingTop: 40,
     }
 });
