@@ -133,9 +133,9 @@ console.log(difference);
                         //if (someVariable == true)
                         //{
                             console.log("STRINGIFY: " + JSON.stringify(day.dateString))
-                            var dateString = JSON.stringify(day.dateString)
+                            // var dateString = JSON.stringify(day.dateString)
                             
-                            this.props.navigation.navigate("Agenda",{dateString})
+                            this.props.navigation.navigate("Agenda",{day})
                         //} 
                     }}
                 />
