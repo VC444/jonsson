@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import { Alert,ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 
 //import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
-import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Button, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
 //import * as firebase from 'firebase';
 
 //import firebaseApp from './EventDetails';
@@ -193,14 +193,14 @@ errData = (err) => {
                           </TouchableHighlight>
                           <View style={{flexDirection: "row", paddingHorizontal: 3}}>
                           <TouchableHighlight>
-                            <Button onPress={() => { console.log("RSVP BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
+                            <Button title=" " onPress={() => { console.log("RSVP BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
                               <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
                                 RSVP Now!
                               </Text>
                             </Button>
                             </TouchableHighlight>
                             <TouchableHighlight>
-                            <Button onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
+                            <Button title=" " onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
                               <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
                                 QR Code
                               </Text>

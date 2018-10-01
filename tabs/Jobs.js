@@ -82,7 +82,7 @@
           <ImageBackground
             style={styles.backdrop}
             blurRadius={0}
-            source={'../images/image1.jpg'}
+            source={require('../images/image1.jpg')}
             >
               <View style={styles.backdropView}>
                 <Text style={{ fontSize: 35, fontWeight: '200', paddingBottom: 5, paddingTop: 15, color: '#FFFFFF'}}>Jonsson|<Text style={{ fontSize: 35, fontWeight: '200', paddingBottom: 5, paddingTop: 15, color: '#FFFFFF'}}>Careers</Text></Text>
