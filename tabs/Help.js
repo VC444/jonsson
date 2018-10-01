@@ -6,7 +6,7 @@ import { Container, Header, Content, Accordion, Form, Item, Input, Label } from 
 const dataArray = [
     { title: "What is Jonsson Connect?", content: "Jonsson Connect is an app for UTD Engineering and Computer Science students and alumni." },
     { title: "How can I get whoosh bits?", content: "Attend events and scan the qr code in the end!" },
-    { title: "Who are eligible to get rewards", content: "UTD alumni and current students are eligible to get rewards." }
+    { title: "Who are eligible to get rewards?", content: "UTD alumni and current students." }
 ];
 
 export default class Help extends Component {
