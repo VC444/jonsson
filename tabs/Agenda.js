@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import { Alert,ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 
 //import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
-import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Button, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
 //import * as firebase from 'firebase';
 
 //import firebaseApp from './EventDetails';
