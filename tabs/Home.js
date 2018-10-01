@@ -135,7 +135,7 @@
               <ImageBackground
                 style={styles.backdrop}
                 blurRadius={0}
-                source={'../images/image2.jpg'}
+                source={require('../images/image2.jpg')}
                 >
                   <View style={styles.backdropView}>
                     <Thumbnail large source={{uri: this.state.userPhoto.toString() }} />

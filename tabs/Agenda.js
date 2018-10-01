@@ -193,14 +193,14 @@ errData = (err) => {
                           </TouchableHighlight>
                           <View style={{flexDirection: "row", paddingHorizontal: 3}}>
                           <TouchableHighlight>
-                            <Button onPress={() => { console.log("RSVP BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
+                            <Button title=" " onPress={() => { console.log("RSVP BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
                               <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
                                 RSVP Now!
                               </Text>
                             </Button>
                             </TouchableHighlight>
                             <TouchableHighlight>
-                            <Button onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
+                            <Button title=" " onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
                               <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
                                 QR Code
                               </Text>
