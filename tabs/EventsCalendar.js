@@ -90,13 +90,13 @@ console.log(difference);
 
         var dot_color_array = Array(2).fill(eval('dot_color')) // creating array of variable names
         
-        var obj = results.reduce((c, v) => Object.assign(c, { [v]: {dots: dot_color_array, selected: true,selectedColor: 'red'} }), {});
+        var obj = results.reduce((c, v) => Object.assign(c, { [v]: {dots: dot_color_array, selected: true,selectedColor: '#c75b12'} }), {});
         
         var dottom = Array(1).fill(eval('dot_color')) // creating array of variable names
 
         for (var i = 0; i < difference.length; i++) 
         {
-            obj[difference[i]] = {dots: dottom, selected: true, selectedColor: 'blue'}
+            obj[difference[i]] = {dots: dottom, selected: true, selectedColor: '#c75b12'}
             //Do something
         }
 
