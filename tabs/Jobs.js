@@ -82,7 +82,7 @@
           <ImageBackground
             style={styles.backdrop}
             blurRadius={0}
-            source={{ uri: 'https://images.unsplash.com/photo-1501876991173-f9c47cd28268?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=11822fe6ab2de36ee07cd74486dbdaf4&auto=format&fit=crop&w=1906&q=80'}}
+            source={require('../images/image1.jpg')}
             >
               <View style={styles.backdropView}>
                 <Text style={{ fontSize: 35, fontWeight: '200', paddingBottom: 5, paddingTop: 15, color: '#FFFFFF'}}>Jonsson|<Text style={{ fontSize: 35, fontWeight: '200', paddingBottom: 5, paddingTop: 15, color: '#FFFFFF'}}>Careers</Text></Text>
