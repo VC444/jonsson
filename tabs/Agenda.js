@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
+import { Alert,ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 //import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
 //import * as firebase from 'firebase';
@@ -29,24 +29,45 @@ export default class Events extends Component {
   }
 
   componentDidMount() {
-    console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.dateString)
+    console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
+    var hardcodeDate = this.props.navigation.state.params.day.dateString
+    var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventDate").startAt(hardcodeDate).endAt(hardcodeDate+"\uf8ff");
+    
+   
+    dateOfEvent.on('value', this.gotData, this.errData);
+  }
 
-    return fetch('https://jonssonconnect.firebaseio.com/Events.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+  
+
+  gotData = (data) => {
+    const { goBack } = this.props.navigation;
+    var dates = data.val()
+    ErrorUtils.setGlobalHandler(function() {
+      // your handler here
+      Alert.alert(
+        'No Events',
+        'Currently, there are no events scheduled at this time. Please Come back later.',
+        [
+        
+         
+          {text: 'Go Back', onPress: () => goBack(null)}
+        ],
+     
+      )
+      });
+    console.log("The Dates by child: " + JSON.stringify(dates))
+    let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.setState({
           isLoading: false,
-          dataSource: ds.cloneWithRows(responseJson),
-          data: responseJson.Events,
+          dataSource: ds.cloneWithRows(dates),
         }, function () {
           // do something with new state
         });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+}
+
+errData = (err) => {
+    console.log(err);
+}
 
   _onRefresh() {
     this.setState({ refreshing: true });
