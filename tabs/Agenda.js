@@ -49,12 +49,12 @@ export default class Events extends Component {
     ErrorUtils.setGlobalHandler(function() {
       // your handler here
       Alert.alert(
-        'No Events',
-        'Currently, there are no events scheduled at this time. Please Come back later.',
+        'Aw Snap!',
+        "We don't have any events to show for this date. Sorry! \t :(",
         [
         
          
-          {text: 'Go Back', onPress: () => goBack(null)}
+          {text: 'Back to Calendar', onPress: () => goBack(null)}
         ],
      
       )
@@ -193,17 +193,19 @@ errData = (err) => {
                           </TouchableHighlight>
                           <View style={{flexDirection: "row", paddingHorizontal: 3}}>
                           <TouchableHighlight>
-                            <Button title=" " onPress={() => { console.log("RSVP BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
-                              <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
-                                RSVP Now!
-                              </Text>
+                            <Button 
+                            title="RSVP Now!" 
+                            color="#c75b12"
+                            onPress={() => { console.log("RSVP BUTTON PRESSED!") }} 
+                            style={{width: 300}}>
                             </Button>
                             </TouchableHighlight>
                             <TouchableHighlight>
-                            <Button title=" " onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} style={{ width: 180, backgroundColor: '#c75b12' }}>
-                              <Text style={{ textAlign: 'center', color: '#FFFFFF', fontSize: 16 }}>
-                                QR Code
-                              </Text>
+                            <Button 
+                            title="Scan QR Code" 
+                            color='#c75b12'
+                            onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} 
+                            style={{width: 300}}>
                             </Button>
                           </TouchableHighlight>
                           </View>
