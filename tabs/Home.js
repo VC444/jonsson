@@ -135,7 +135,7 @@
               <ImageBackground
                 style={styles.backdrop}
                 blurRadius={0}
-                source={{ uri: 'https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}}
+                source={require('../images/image2.jpg')}
                 >
                   <View style={styles.backdropView}>
                     <Thumbnail large source={{uri: this.state.userPhoto.toString() }} />
