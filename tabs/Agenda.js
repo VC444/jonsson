@@ -7,7 +7,7 @@
 
 import React, { Component } from 'react';
 
-import { Alert,ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
+import { Alert, ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
 
 //import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
@@ -35,18 +35,18 @@ export default class Events extends Component {
   componentDidMount() {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
     var hardcodeDate = this.props.navigation.state.params.day.dateString
-    var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventDate").startAt(hardcodeDate).endAt(hardcodeDate+"\uf8ff");
-    
-   
+    var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
+
+
     dateOfEvent.on('value', this.gotData, this.errData);
   }
 
-  
+
 
   gotData = (data) => {
     const { goBack } = this.props.navigation;
     var dates = data.val()
-    ErrorUtils.setGlobalHandler(function() {
+    ErrorUtils.setGlobalHandler(function () {
       // your handler here
       Alert.alert(
         'Aw Snap!',
@@ -56,23 +56,23 @@ export default class Events extends Component {
          
           {text: 'Back to Calendar', onPress: () => goBack(null)}
         ],
-     
+
       )
-      });
+    });
     console.log("The Dates by child: " + JSON.stringify(dates))
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
-        this.setState({
-          isLoading: false,
-          dataSource: ds.cloneWithRows(dates),
-        }, function () {
-          // do something with new state
-        });
-}
+    this.setState({
+      isLoading: false,
+      dataSource: ds.cloneWithRows(dates),
+    }, function () {
+      // do something with new state
+    });
+  }
 
-errData = (err) => {
+  errData = (err) => {
     console.log(err);
-}
+  }
 
   _onRefresh() {
     this.setState({ refreshing: true });
@@ -191,23 +191,19 @@ errData = (err) => {
                               source={{ uri: rowData.eventImageURL }}
                             />
                           </TouchableHighlight>
-                          <View style={{flexDirection: "row", paddingHorizontal: 3}}>
-                          <TouchableHighlight>
-                            <Button 
-                            title="RSVP Now!" 
-                            color="#c75b12"
-                            onPress={() => { console.log("RSVP BUTTON PRESSED!") }} 
-                            style={{width: 300}}>
-                            </Button>
-                            </TouchableHighlight>
-                            <TouchableHighlight>
-                            <Button 
-                            title="Scan QR Code" 
-                            color='#c75b12'
-                            onPress={() => { console.log("QR CODE BUTTON PRESSED!") }} 
-                            style={{width: 300}}>
-                            </Button>
-                          </TouchableHighlight>
+                          <View style={{ flexDirection: "row", paddingHorizontal: 3 }}>
+                            <TouchableOpacity
+                              onPress={() => { console.log("RSVP BUTTON PRESSED!") }}
+                              style={styles.button}
+                            >
+                              <Text style={styles.buttonText}>RSVP Now!</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              onPress={() => { console.log("QR CODE BUTTON PRESSED!") }}
+                              style={styles.button}
+                            >
+                              <Text style={styles.buttonText}>QR Code</Text>
+                            </TouchableOpacity>
                           </View>
                         </Body>
                       </Left>
@@ -305,5 +301,18 @@ const styles = StyleSheet.create({
   },
   eventDescriptionStyle: {
     fontSize: 10,
-  }
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 30,
+    marginTop: 5,
+  },
+  buttonText: {
+    color: '#E98300',
+    fontSize: 16,
+    // borderWidth: 0.5,
+    // borderRadius: 10,
+    // padding: 10
+  },
 });
