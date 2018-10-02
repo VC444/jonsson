@@ -52,6 +52,8 @@ export default class Events extends Component {
         'Aw Snap!',
         "We don't have any events to show for this date. Sorry! \t :(",
         [
+        
+         
           {text: 'Back to Calendar', onPress: () => goBack(null)}
         ],
 
