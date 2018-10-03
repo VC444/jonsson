@@ -56,7 +56,7 @@ export default class Events extends Component {
          
           {text: 'Back to Calendar', onPress: () => goBack(null)}
         ],
-
+        { cancelable: false }
       )
     });
     console.log("The Dates by child: " + JSON.stringify(dates))
