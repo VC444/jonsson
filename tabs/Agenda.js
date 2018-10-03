@@ -56,7 +56,7 @@ export default class Events extends Component {
          
           {text: 'Back to Calendar', onPress: () => goBack(null)}
         ],
-
+        { cancelable: false }
       )
     });
     console.log("The Dates by child: " + JSON.stringify(dates))
@@ -74,48 +74,6 @@ export default class Events extends Component {
     console.log(err);
   }
 
-  _onRefresh() {
-    this.setState({ refreshing: true });
-    return fetch('https://jonssonconnect.firebaseio.com/Events.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        this.setState({
-          isLoading: false,
-          dataSource: ds.cloneWithRows(responseJson),
-          refreshing: false,
-        }, function () {
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          isLoading: false,
-          networkFailed: true,
-        })
-      });
-  }
-  /*
-  static navigationOptions = {
-    headerRight:
-      <Button transparent onPress={console.log("the props are " + this.props)}>
-        <Icon name='ios-calendar-outline' />
-      </Button>,
-    tabBarLabel: 'Events',
-    tabBarIcon: ({ tintcolor }) => (
-      <Icon
-        name='ios-calendar-outline'
-        color={tintcolor} />
-    )
-  }
-  */
-
-  /* This function is executed when the calendar icon is pressed
-  calendarIconPressed = () => {
-    console.log('calendarIconPressed function fired');
-    this.props.navigation.navigate('EventsCalendar');
-  }
-  */
-
   render() {
     if (this.state.isLoading) {
       return (
@@ -131,12 +89,6 @@ export default class Events extends Component {
     return (
       <Container style={styles.containerStyle}>
         <Content
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh.bind(this)}
-            />
-          }
         >
           <View style={styles.container2}>
             <ImageBackground
