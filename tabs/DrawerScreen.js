@@ -87,20 +87,20 @@ export default class DrawerScreen extends Component {
       <View>
         <ScrollView>
           <View>
-            <View style = {styles.photo} >
+            <View style={styles.photo} >
               <Thumbnail large source={{ uri: this.state.userPhoto.toString() }} />
             </View>
 
             <View style={styles.userInfo}>
-              <Text>{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
-            </View>
-
-            <View style={styles.userInfo}> 
-              <Text> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
+              <Text style={{ fontSize: 16, fontWeight: '700', color: '#FFFFFF'}} >{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
             </View>
 
             <View style={styles.userInfo}>
-              <Text> <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
+              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF'}} > <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
+            </View>
+
+            <View style={styles.industryInfo}>
+              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF'}} > <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
             </View>
 
 
@@ -195,8 +195,7 @@ const styles = {
   },
   sidebarDate: {
     padding: 20,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
+
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -215,10 +214,19 @@ const styles = {
     justifyContent: 'center',
     paddingTop: 30,
     paddingBottom: 5,
+    backgroundColor: '#393e44',
   },
   userInfo: {
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 7,
+    backgroundColor: '#393e44',
+  },
+  industryInfo: {
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 4,
+    paddingBottom: 15,
+    backgroundColor: '#393e44',
   }
 }
