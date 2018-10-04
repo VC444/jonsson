@@ -81,7 +81,10 @@ export const EventsFeedStack = createStackNavigator({
   },
   EventDetails: { screen: EventDetails },
   EventsCalendar: { screen: EventsCalendar },
-  Agenda: { screen: Agenda },
+  Agenda: {
+    screen: Agenda,
+    headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 }
+  },
   Qrcode: { screen: Qrcode },
   Rsvp: { screen: Rsvp }
 });
