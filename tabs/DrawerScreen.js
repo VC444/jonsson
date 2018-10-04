@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
-import { ScrollView, Text, View, Linking, TouchableOpacity} from 'react-native';
+import { ScrollView, Text, View, Linking, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
 import { DrawerActions } from 'react-navigation';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, Icon, ListItem, Item, Input, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
 
 
 export default class DrawerScreen extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    }
+  }
+
   navigateToScreen = (route) => () => {
     console.log('DrawerScreen has been fired');
   }
@@ -15,16 +23,52 @@ export default class DrawerScreen extends Component {
     console.log('navigateToRewardsPage has been executed');
     this.props.navigation.navigate("Rewards");
   }
-   navigateToSettingsPage = () => {
+  navigateToSettingsPage = () => {
     console.log('navigateToSettingsPage has been executed');
     this.props.navigation.navigate("Settings");
   }
-   navigateToHelpPage = () => {
+  navigateToHelpPage = () => {
     console.log('navigateToHelpPage has been executed');
     this.props.navigation.navigate("Help");
   }
 
+  // componentDidMount = async() => {
+  //   this.setState({
+  //     firstName: await AsyncStorage.getItem('firstName'),
+  //     lastName: await AsyncStorage.getItem('lastName'),
+  //     userPhoto: await AsyncStorage.getItem('userPhoto'),
+  //     headline: await AsyncStorage.getItem('headline'),
+  //     location: await AsyncStorage.getItem('location'),
+  //     industry: await AsyncStorage.getItem('industry'),
+  //   }, this.setState({ isLoading: false }));
+  // }
+
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+    this.setState({
+      firstName: await AsyncStorage.getItem('firstName'),
+      lastName: await AsyncStorage.getItem('lastName'),
+      userPhoto: await AsyncStorage.getItem('userPhoto'),
+      headline: await AsyncStorage.getItem('headline'),
+      location: await AsyncStorage.getItem('location'),
+      industry: await AsyncStorage.getItem('industry'),
+    });
+  }
+
   render() {
+
+    if (!this.state.firstName) {
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
+    console.log('These are all the state values' + this.state.firstName + this.state.lastName);
 
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -43,6 +87,23 @@ export default class DrawerScreen extends Component {
       <View>
         <ScrollView>
           <View>
+            <View style = {styles.photo} >
+              <Thumbnail large source={{ uri: this.state.userPhoto.toString() }} />
+            </View>
+
+            <View style={styles.userInfo}>
+              <Text>{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
+            </View>
+
+            <View style={styles.userInfo}> 
+              <Text> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
+            </View>
+
+            <View style={styles.userInfo}>
+              <Text> <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
+            </View>
+
+
             <View style={styles.sidebarDate}>
               <Text style={styles.date} onPress={this.navigateToScreen()}>
                 {day + ', ' + month + ' ' + dateNum}
@@ -50,43 +111,43 @@ export default class DrawerScreen extends Component {
             </View>
 
             <TouchableOpacity style={styles.sidebar}>
-            <Icon type="FontAwesome" name='gift' size={5} />
-              <Text style={styles.settingsStyle} onPress={()=> this.navigateToRewardsPage()}>
+              <Icon type="FontAwesome" name='gift' size={5} />
+              <Text style={styles.settingsStyle} onPress={() => this.navigateToRewardsPage()}>
                 Rewards
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}
-             onPress={ ()=>{ Linking.openURL('https://giving.utdallas.edu/ECS')}}>
+              onPress={() => { Linking.openURL('https://giving.utdallas.edu/ECS') }}>
               <Icon type="FontAwesome" name='dollar' size={10} />
               <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
-                Donate Now 
+                Donate Now
               </Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity style={styles.sidebar}>
-              <Icon name='settings' size={10}/>
+              <Icon name='settings' size={10} />
               <Text style={styles.settingsStyle} onPress={() => this.navigateToSettingsPage()}>
                 Settings
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}>
-              <Icon name='help-circle' size={10}/>
+              <Icon name='help-circle' size={10} />
               <Text style={styles.settingsStyle} onPress={() => this.navigateToHelpPage()}>
                 Help & Feedback
               </Text>
             </TouchableOpacity>
-           
-            <TouchableOpacity style={styles.sidebar } 
-               transparent onPress={() => navigation.navigate('Profile')
-                  }>
-                  <Icon style={styles.logOut} type="Ionicons" name='ios-log-out'size={10}  />
-            <Text style={styles.logOutText} onPress={this.navigateToScreen()}>
+
+            <TouchableOpacity style={styles.sidebar}
+              transparent onPress={() => navigation.navigate('Profile')
+              }>
+              <Icon style={styles.logOut} type="Ionicons" name='ios-log-out' size={10} />
+              <Text style={styles.logOutText} onPress={this.navigateToScreen()}>
                 Log Out
               </Text>
             </TouchableOpacity>
-            
+
           </View>
         </ScrollView>
       </View>
@@ -104,15 +165,15 @@ const styles = {
     padding: 14,
     paddingLeft: 20,
 
-    flex: 1, 
-    flexDirection: 'row', 
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start'
-      
+
   },
   date: {
     fontWeight: 'bold',
-    fontSize: 18, 
+    fontSize: 18,
     paddingTop: 20
   },
   logOut: {
@@ -120,25 +181,44 @@ const styles = {
     textAlign: 'auto',
     fontWeight: 'bold'
   },
-  logOutText:{
+  logOutText: {
     color: 'red',
-    paddingLeft: 10, 
+    paddingLeft: 10,
     lineHeight: 25,
     textAlign: 'auto',
     fontWeight: 'bold',
     fontSize: 18
-  }, 
-  settingsStyle:{
-    paddingLeft: 10, 
+  },
+  settingsStyle: {
+    paddingLeft: 10,
     textAlign: 'auto'
   },
   sidebarDate: {
     padding: 20,
     borderWidth: 0.5,
     borderColor: '#d6d7da',
-    flex: 1, 
-    flexDirection: 'row', 
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start'
+  },
+  backdropView: {
+    paddingTop: 10,
+    width: 400,
+    backgroundColor: 'rgba(0,0,0,0)',
+    paddingLeft: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  photo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 30,
+    paddingBottom: 5,
+  },
+  userInfo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 4,
   }
 }
