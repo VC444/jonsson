@@ -52,9 +52,9 @@ export default class Events extends Component {
         'Aw Snap!',
         "We don't have any events to show for this date. Sorry! \t :(",
         [
-        
-         
-          {text: 'Back to Calendar', onPress: () => goBack(null)}
+
+
+          { text: 'Back to Calendar', onPress: () => goBack(null) }
         ],
 
       )
@@ -115,6 +115,16 @@ export default class Events extends Component {
     this.props.navigation.navigate('EventsCalendar');
   }
   */
+
+  rsvpPressed = () => {
+    console.log('rsvp button pressed');
+    this.props.navigation.navigate("Rsvp");
+  }
+
+  qrCodePressed = () => {
+    console.log('qrcode button pressed');
+    this.props.navigation.navigate('Qrcode');
+  }
 
   render() {
     if (this.state.isLoading) {
@@ -193,13 +203,13 @@ export default class Events extends Component {
                           </TouchableHighlight>
                           <View style={{ flexDirection: "row", paddingHorizontal: 3 }}>
                             <TouchableOpacity
-                              onPress={() => { console.log("RSVP BUTTON PRESSED!") }}
+                              onPress={this.rsvpPressed}
                               style={styles.button}
                             >
                               <Text style={styles.buttonText}>RSVP Now!</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                              onPress={() => { console.log("QR CODE BUTTON PRESSED!") }}
+                              onPress={this.qrCodePressed}
                               style={styles.button}
                             >
                               <Text style={styles.buttonText}>QR Code</Text>
