@@ -23,6 +23,8 @@ import Rewards from './tabs/Rewards';
 import Settings from './tabs/Settings';
 import Help from './tabs/Help';
 import Agenda from './tabs/Agenda';
+import Qrcode from './tabs/Qrcode';
+import Rsvp from './tabs/Rsvp';
 
 import * as firebase from 'firebase';
 
@@ -49,21 +51,23 @@ export const HomeFeedStack = createStackNavigator({
     })
   },
   ArticleDetails: { screen: ArticleDetails },
-  Rewards: { screen: Rewards, 
+  Rewards: {
+    screen: Rewards,
     navigationOptions: ({ navigation }) => ({
       title: "Rewards",
       headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12' },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
-    }) },
+    })
+  },
   Settings: { screen: Settings },
-  Help: { 
+  Help: {
     screen: Help,
     navigationOptions: ({ navigation }) => ({
       title: "FAQ",
       headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
-   }
+  }
 });
 
 export const EventsFeedStack = createStackNavigator({
@@ -77,7 +81,9 @@ export const EventsFeedStack = createStackNavigator({
   },
   EventDetails: { screen: EventDetails },
   EventsCalendar: { screen: EventsCalendar },
-  Agenda: { screen: Agenda }
+  Agenda: { screen: Agenda },
+  Qrcode: { screen: Qrcode },
+  Rsvp: { screen: Rsvp }
 });
 
 export const JobsFeedStack = createStackNavigator({
