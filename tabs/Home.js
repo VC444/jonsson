@@ -3,48 +3,48 @@
  * https://github.com/mendoza-git/JonssonConnect
  * @flow
  */
- import React, { Component } from 'react';
- import { Alert, ActivityIndicator, AsyncStorage, Image, ListView, Linking, ImageBackground, FlatList, RefreshControl, StyleSheet, TextInput, View, TouchableHighlight } from 'react-native';
- import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
- import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Item, Icon, Input, Tab, Tabs, Text, Title, Button, Left, Body, Right, H1, H2, H3, } from 'native-base';
- import * as firebase from 'firebase';
- import firebaseApp from '../App';
- import rootRef from '../App';
+import React, { Component } from 'react';
+import { Alert, ActivityIndicator, AsyncStorage, Image, ListView, Linking, ImageBackground, FlatList, RefreshControl, StyleSheet, TextInput, View, TouchableHighlight } from 'react-native';
+import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
+import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Item, Icon, Input, Tab, Tabs, Text, Title, Button, Left, Body, Right, H1, H2, H3, } from 'native-base';
+import * as firebase from 'firebase';
+import firebaseApp from '../App';
+import rootRef from '../App';
 
- export default class Home extends Component {
+export default class Home extends Component {
 
-   constructor(props) {
-     super(props);
-     this.state = {
-       isLoading: true,
-       refreshing: false,
-     }
-   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      refreshing: false,
+    }
+  }
 
-   async componentDidMount() {
+  async componentDidMount() {
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
-     this.setState({
-       firstName: await AsyncStorage.getItem('firstName'),
-       lastName: await AsyncStorage.getItem('lastName'),
-       userPhoto: await AsyncStorage.getItem('userPhoto'),
-       headline: await AsyncStorage.getItem('headline'),
-       location: await AsyncStorage.getItem('location'),
-       industry: await AsyncStorage.getItem('industry'),
-     });
-     //return fetch('https://jonssonconnect.firebaseio.com/.json') // NOTE: As of Aug-2018, Firebase rules prevent this
-     return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
-     //return fetch('/Users/mendoza/Downloads/articles.json')
+    this.setState({
+      firstName: await AsyncStorage.getItem('firstName'),
+      lastName: await AsyncStorage.getItem('lastName'),
+      userPhoto: await AsyncStorage.getItem('userPhoto'),
+      headline: await AsyncStorage.getItem('headline'),
+      location: await AsyncStorage.getItem('location'),
+      industry: await AsyncStorage.getItem('industry'),
+    });
+    //return fetch('https://jonssonconnect.firebaseio.com/.json') // NOTE: As of Aug-2018, Firebase rules prevent this
+    return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
+      //return fetch('/Users/mendoza/Downloads/articles.json')
       .then((response) => response.json())
       .then((responseJson) => {
-        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.setState({
           isLoading: false,
           dataSource: ds.cloneWithRows(responseJson),
-        }, function() {
-          });
+        }, function () {
+        });
       })
       .catch((error) => {
         //console.error(error);
@@ -53,133 +53,129 @@
           networkFailed: true,
         })
       });
-    }
+  }
 
 
-    firstSearch() {
-      return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
-       .then((response) => response.json())
-       .then((responseJson) => {
-         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-         this.setState({
-           isLoading: false,
-           dataSource: ds.cloneWithRows(responseJson),
-         }, function() {
-           });
-       })
-       .catch((error) => {
-         //console.error(error);
-         this.setState({
-           isLoading: false,
-           networkFailed: true,
-         })
-       });
-     }
-
-     _onRefresh() {
-       this.setState({refreshing: true});
-       return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
-        .then((response) => response.json())
-        .then((responseJson) => {
-          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          this.setState({
-            isLoading: false,
-            dataSource: ds.cloneWithRows(responseJson),
-            refreshing: false,
-          }, function() {
-            });
-        })
-        .catch((error) => {
-          //console.error(error);
-          this.setState({
-            isLoading: false,
-            networkFailed: true,
-          })
+  firstSearch() {
+    return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson),
+        }, function () {
         });
-     }
+      })
+      .catch((error) => {
+        //console.error(error);
+        this.setState({
+          isLoading: false,
+          networkFailed: true,
+        })
+      });
+  }
 
-     
+  _onRefresh() {
+    this.setState({ refreshing: true });
+    return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.setState({
+          isLoading: false,
+          dataSource: ds.cloneWithRows(responseJson),
+          refreshing: false,
+        }, function () {
+        });
+      })
+      .catch((error) => {
+        //console.error(error);
+        this.setState({
+          isLoading: false,
+          networkFailed: true,
+        })
+      });
+  }
 
-     render() {
-       if (this.state.isLoading) {
-         return (
-           <View style={{flex: 1, paddingTop: 20}}>
-             <ActivityIndicator />
-           </View>
-         );
-       }
-       const monthNames = ["January", "February", "March", "April", "May", "June",
-         "July", "August", "September", "October", "November", "December"
-       ]
-       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
-         "Saturday"
-       ]
 
-       const date = new Date()
-       var month = monthNames[date.getMonth()]
-       var year = date.getFullYear()
-       var day = date.getDate()
-       var dayofweek = days[date.getDay()]
 
-       return (
-         <Container style={styles.containerStyle}>
-          <Content
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh.bind(this)}
-              />
-            }
-          >
-            <View style={styles.container2}>
-              <ImageBackground
-                style={styles.backdrop}
-                blurRadius={0}
-                source={require('../images/image2.jpg')}
-                >
-                  <View style={styles.backdropView}>
-                    <Thumbnail large source={{uri: this.state.userPhoto.toString() }} />
-                    <Text style={{ fontSize: 20, fontWeight: '800', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#FFFFFF'}}>{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
-                    <Text style={{ fontSize: 14, fontWeight: '300', paddingBottom: 5, paddingTop: 2, color: '#FFFFFF'}}> <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }}/> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
-                    <Text style={{ fontSize: 14, fontWeight: '300', paddingBottom: 5, paddingTop: 2, color: '#FFFFFF'}}> <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }}/> {this.state.industry.toString()}</Text>
-                  </View>
-              </ImageBackground>
-            </View>
-            <Content style={{ backgroundColor: '#FFFFFF'}}>
-              <Card>
-                <CardItem bordered style={{ borderLeftColor: '#0039A6', borderLeftWidth: 2}}>
-                  <Body>
-                    <Text style={{ fontSize: 22, fontWeight: '600', color: '#343d46'}}><Icon name='md-globe' style={{ fontSize: 22, color: '#0039A6'}}/> {dayofweek}, {month} {day}</Text>
-                  </Body>
-                </CardItem>
-              </Card>
-            </Content>
-            <ListView
-              dataSource={this.state.dataSource}
-              renderRow={(rowData) => {
-                const {uri} = rowData;
-                return (
-                 <Content>
-                   <Text style={{fontSize: 14, fontWeight: '800'}}></Text>
-                   <Text style={{color: rowData.articleColor, fontSize: 10, fontWeight: '100', paddingLeft: 15, paddingRight: 5, paddingTop: 10, }}>
-                    <Icon name='ios-pricetag' style={{ fontSize: 10, color: rowData.articleColor}}/>  {rowData.articleType}
-                   </Text>
-                   <Text onPress={() => this.props.navigation.navigate("ArticleDetails", {rowData})} style={styles.nameStyle}>
-                    {rowData.articleName}
-                   </Text>
-                   <Text style={styles.dateStyle}>
-                    <Icon name='ios-clock-outline' style={{ fontSize: 12, color: '#878787'}}/> {monthNames[parseInt(rowData.postedOn.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(rowData.postedOn.toString().substr(8, 2))}, {rowData.postedOn.toString().substr(0, 4)}</Text>
-                 </Content>
-                )
-              }}
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ]
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+      "Saturday"
+    ]
+
+    const date = new Date()
+    var month = monthNames[date.getMonth()]
+    var year = date.getFullYear()
+    var day = date.getDate()
+    var dayofweek = days[date.getDay()]
+
+    return (
+      <Container style={styles.containerStyle}>
+        <Content
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
             />
-           </Content>
-         </Container>
-       )
-     }
-   }
+          }
+        >
+          <View style={styles.container2}>
+            <ImageBackground
+              style={styles.backdrop}
+              blurRadius={0}
+              source={require('../images/image2.jpg')}>
+              <View style={styles.backdropView}>
+                {/* <Text style={{ fontSize: 35, fontWeight: 'bold', paddingBottom: 5, paddingTop: 15, color: '#000000'}}>Jonsson|<Text style={{ fontSize: 35, fontWeight: 'bold', paddingBottom: 5, paddingTop: 15, color: '#c75b12'}}>Careers</Text></Text> */}
+              </View>
+            </ImageBackground>
+          </View>
+          <Content style={{ backgroundColor: '#FFFFFF' }}>
+            <Card>
+              <CardItem bordered style={{ borderLeftColor: '#0039A6', borderLeftWidth: 2 }}>
+                <Body>
+                  <Text style={{ fontSize: 22, fontWeight: '600', color: '#343d46' }}><Icon name='md-globe' style={{ fontSize: 22, color: '#0039A6' }} /> {dayofweek}, {month} {day}</Text>
+                </Body>
+              </CardItem>
+            </Card>
+          </Content>
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData) => {
+              const { uri } = rowData;
+              return (
+                <Content>
+                  <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
+                  <Text style={{ color: rowData.articleColor, fontSize: 10, fontWeight: '100', paddingLeft: 15, paddingRight: 5, paddingTop: 10, }}>
+                    <Icon name='ios-pricetag' style={{ fontSize: 10, color: rowData.articleColor }} />  {rowData.articleType}
+                  </Text>
+                  <Text onPress={() => this.props.navigation.navigate("ArticleDetails", { rowData })} style={styles.nameStyle}>
+                    {rowData.articleName}
+                  </Text>
+                  <Text style={styles.dateStyle}>
+                    <Icon name='ios-clock-outline' style={{ fontSize: 12, color: '#878787' }} /> {monthNames[parseInt(rowData.postedOn.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(rowData.postedOn.toString().substr(8, 2))}, {rowData.postedOn.toString().substr(0, 4)}</Text>
+                </Content>
+              )
+            }}
+          />
+        </Content>
+      </Container>
+    )
+  }
+}
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: '#FFFFFF',
   },
