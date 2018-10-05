@@ -150,7 +150,7 @@
   },
   backdrop: {
      width: null,
-     height: 120,
+     height: 180,
   },
   backdropView: {
      paddingTop: 20,
