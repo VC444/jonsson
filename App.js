@@ -1,8 +1,8 @@
 /**
- * JonssonConnect Application - Akshay
- * https://github.com/facebook/react-native
- * @flow
+ * JonssonConnect App Page
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
  */
+
 import React, { Component } from 'react';
 import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator, createDrawerNavigator } from "react-navigation";
@@ -25,6 +25,7 @@ import Help from './tabs/Help';
 import Agenda from './tabs/Agenda';
 import Qrcode from './tabs/Qrcode';
 import Rsvp from './tabs/Rsvp';
+import Redeem from './tabs/Redeem';
 
 import * as firebase from 'firebase';
 
@@ -59,6 +60,7 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
+  Redeem: { screen: Redeem },
   Settings: { screen: Settings },
   Help: {
     screen: Help,

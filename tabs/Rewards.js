@@ -1,3 +1,8 @@
+/**
+ * JonssonConnect Rewards Page
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
+ */
+
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ListView, ScrollView} from 'react-native';
 import { Container, List } from 'native-base';
@@ -61,6 +66,10 @@ export default class Rewards extends Component {
           });
       }
 
+      onRedeemPressed = () => {
+          this.props.navigation.navigate('Redeem');
+      }
+
 
 
 
@@ -99,7 +108,7 @@ export default class Rewards extends Component {
                 Events attended </Text>
             </View>
             
-        <TouchableOpacity 
+        <TouchableOpacity onPress={this.onRedeemPressed}
         style={{
             width: '100%', height: '14%', backgroundColor: 'white'}}>
             <Text style={{
