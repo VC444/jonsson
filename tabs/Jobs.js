@@ -82,18 +82,17 @@
           <ImageBackground
             style={styles.backdrop}
             blurRadius={0}
-            source={require('../images/image1.jpg')}
-            >
+            source={require('../images/image1.jpg')}>
               <View style={styles.backdropView}>
-                <Text style={{ fontSize: 35, fontWeight: '200', paddingBottom: 5, paddingTop: 15, color: '#FFFFFF'}}>Jonsson|<Text style={{ fontSize: 35, fontWeight: '200', paddingBottom: 5, paddingTop: 15, color: '#FFFFFF'}}>Careers</Text></Text>
+              {/* <Text style={{ fontSize: 35, fontWeight: 'bold', paddingBottom: 5, paddingTop: 15, color: '#000000'}}>Jonsson|<Text style={{ fontSize: 35, fontWeight: 'bold', paddingBottom: 5, paddingTop: 15, color: '#c75b12'}}>Careers</Text></Text> */}
               </View>
           </ImageBackground>
         </View>
           <Content>
           <Card>
-            <CardItem style={{ borderLeftColor: '#008542', borderLeftWidth: 2}}>
+            <CardItem>
               <Body>
-                <Text style={{ fontSize: 22, fontWeight: '800'}}><Icon name='md-trending-up' style={{ fontSize: 22, color: '#383838'}}/> Trending Jobs</Text>
+                <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800'}}><Icon name='md-trending-up' style={{ fontSize: 32, color: '#c75b12'}}/>    Jonsson|Careers</Text>
               </Body>
             </CardItem>
           </Card>
@@ -151,7 +150,7 @@
   },
   backdrop: {
      width: null,
-     height: 120,
+     height: 180,
   },
   backdropView: {
      paddingTop: 20,

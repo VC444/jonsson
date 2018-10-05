@@ -52,11 +52,11 @@ export default class Events extends Component {
         'Aw Snap!',
         "We don't have any events to show for this date. Sorry! \t :(",
         [
-        
-         
-          {text: 'Back to Calendar', onPress: () => goBack(null)}
-        ],
 
+
+          { text: 'Back to Calendar', onPress: () => goBack(null) }
+        ],
+        { cancelable: false }
       )
     });
     console.log("The Dates by child: " + JSON.stringify(dates))
@@ -74,47 +74,17 @@ export default class Events extends Component {
     console.log(err);
   }
 
-  _onRefresh() {
-    this.setState({ refreshing: true });
-    return fetch('https://jonssonconnect.firebaseio.com/Events.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-        this.setState({
-          isLoading: false,
-          dataSource: ds.cloneWithRows(responseJson),
-          refreshing: false,
-        }, function () {
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          isLoading: false,
-          networkFailed: true,
-        })
-      });
+  rsvpPressed = () => {
+    console.log('rsvp button pressed');
+    this.props.navigation.navigate("Rsvp");
   }
-  /*
-  static navigationOptions = {
-    headerRight:
-      <Button transparent onPress={console.log("the props are " + this.props)}>
-        <Icon name='ios-calendar-outline' />
-      </Button>,
-    tabBarLabel: 'Events',
-    tabBarIcon: ({ tintcolor }) => (
-      <Icon
-        name='ios-calendar-outline'
-        color={tintcolor} />
-    )
-  }
-  */
 
-  /* This function is executed when the calendar icon is pressed
-  calendarIconPressed = () => {
-    console.log('calendarIconPressed function fired');
-    this.props.navigation.navigate('EventsCalendar');
+  qrCodePressed = () => {
+    console.log('qrcode button pressed');
+    this.props.navigation.navigate('Qrcode');
   }
-  */
+
+
 
   render() {
     if (this.state.isLoading) {
@@ -131,29 +101,23 @@ export default class Events extends Component {
     return (
       <Container style={styles.containerStyle}>
         <Content
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh.bind(this)}
-            />
-          }
         >
           <View style={styles.container2}>
             <ImageBackground
               style={styles.backdrop}
               blurRadius={0}
-              source={{ uri: 'https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8ccfcc13bfcdfca6f54a8e043ffbe075&auto=format&fit=crop&w=1650&q=80' }}
+              source={require('../images/image4.jpg')}
             >
               <View style={styles.backdropView}>
-                <Text style={{ fontSize: 35, fontWeight: '200', color: '#FFFFFF' }}>Comet Calendar</Text>
+                {/* <Text style={{ fontSize: 35, fontWeight: '200', color: '#FFFFFF' }}>Comet Calendar</Text> */}
               </View>
             </ImageBackground>
           </View>
           <Content>
             <Card>
-              <CardItem style={{ borderLeftColor: '#800000', borderLeftWidth: 2 }}>
+              <CardItem>
                 <Body>
-                  <Text style={{ fontSize: 22, fontWeight: '800' }}><Icon name='ios-flame' style={{ fontSize: 22, color: '#d64d4d' }} /> Find Events</Text>
+                  <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800' }}><Icon name='ios-flame' style={{ fontSize: 32, color: '#c75b12' }}/>    Jonsson|Calendar</Text>
                 </Body>
               </CardItem>
             </Card>
@@ -193,13 +157,13 @@ export default class Events extends Component {
                           </TouchableHighlight>
                           <View style={{ flexDirection: "row", paddingHorizontal: 3 }}>
                             <TouchableOpacity
-                              onPress={() => { console.log("RSVP BUTTON PRESSED!") }}
+                              onPress={this.rsvpPressed}
                               style={styles.button}
                             >
                               <Text style={styles.buttonText}>RSVP Now!</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                              onPress={() => { console.log("QR CODE BUTTON PRESSED!") }}
+                              onPress={this.qrCodePressed}
                               style={styles.button}
                             >
                               <Text style={styles.buttonText}>QR Code</Text>
