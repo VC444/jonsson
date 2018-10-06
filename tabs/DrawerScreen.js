@@ -1,3 +1,8 @@
+/**
+ * JonssonConnect DrawerScreen Page
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
+ */
+
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';

@@ -1,8 +1,8 @@
 /**
- * JonssonConnect Event Details Page
- * https://github.com/mendoza-git/JonssonConnect
- * @flow
+ * JonssonConnect EventDetails Page
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
  */
+
  import React, { Component } from 'react';
  import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, View } from 'react-native';
  import { createBottomTabNavigator, createStackNavigator } from "react-navigation";

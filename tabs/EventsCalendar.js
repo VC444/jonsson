@@ -1,3 +1,8 @@
+/**
+ * JonssonConnect EventsCalendar Page
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
+ */
+
 import { CalendarList } from 'react-native-calendars';
 
 import React, { Component } from 'react';
