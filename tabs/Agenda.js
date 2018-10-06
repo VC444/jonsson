@@ -1,8 +1,6 @@
 /**
  * JonssonConnect Events Page
  * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
- * 
- * FLEX DIRECTION & MARGIN VERTICAL & COLOR IN STYLE
  */
 
 import React, { Component } from 'react';
