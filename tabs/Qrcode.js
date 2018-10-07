@@ -23,6 +23,7 @@ export default class Qrcode extends Component {
       'Scan successful!',
       JSON.stringify(data)
     );
+    this.props.navigation.pop();
   };
 
   render() {
