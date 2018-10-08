@@ -42,7 +42,7 @@ export default class EventDetails extends Component {
   rsvpButton = () => {
     if (this.state.rsvpState == true) {
       return (
-        <Button full style={styles.InterestedbuttonStyle}
+        <Button full style={styles.cancelRsvpButtonStyle}
           onPress={() => {
             var query = firebase.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
             query.once('value', data => {
@@ -66,7 +66,7 @@ export default class EventDetails extends Component {
       )
     } else {
       return (
-        <Button full style={styles.InterestedbuttonStyle}
+        <Button full style={styles.rsvpButtonStyle}
           onPress={() => {
             var query = firebase.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
             query.once('value', data => {
@@ -146,12 +146,12 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontSize: 20,
   },
-  InterestedbuttonStyle: {
+  rsvpButtonStyle: {
     backgroundColor: '#5BC6E8',
     height: 40,
   },
-  AttendingbuttonStyle: {
-    backgroundColor: '#40E0D0',
+  cancelRsvpButtonStyle: {
+    backgroundColor: '#bf281a',
     height: 40,
   },
   descriptionStyle: {
