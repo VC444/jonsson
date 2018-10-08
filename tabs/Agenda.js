@@ -136,13 +136,10 @@ export default class Events extends Component {
                           </Text>
                           <Text style={{ fontWeight: '100', fontSize: 12, color: '#757575', paddingTop: 5 }}><Icon name='ios-pin-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {rowData.eventLocation}</Text>
                           <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>
-                          <View style={{ flexDirection: "row", paddingTop: 5 }}>
-                            <Text style={{ textAlign: 'left', fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
-                              <Icon name='ios-flame' style={{ fontSize: 14, color: '#f37735' }} /> {rowData.attendingCount} people attending
-                         </Text>
-                            <Text style={{ textAlign: 'right', fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
-                              <Icon name='ios-heart' style={{ fontSize: 14, color: '#d11141' }} /> {rowData.interestedCount} people interested
-                         </Text>
+                          <View style={{ flex:1,justifyContent: "center",alignItems: "center",flexDirection: "row", paddingTop: 5 }}>
+                            <Text style={{fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
+                              <Icon name='ios-people' style={{ fontSize: 25, color: '#f37735' }} /> {rowData.rsvpCount} people attending
+                            </Text>
                           </View>
                           <TouchableHighlight
                             onPress={
