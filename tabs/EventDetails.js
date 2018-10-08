@@ -114,7 +114,7 @@ export default class EventDetails extends Component {
                       });
                     });
                   }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-heart' style={{ fontSize: 14, color: '#ffffff' }} /> Interested</Text>
+                  <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-heart' style={{ fontSize: 14, color: '#ffffff' }} /> RSVP </Text>
                 </Button>
 
               </Body>
