@@ -52,7 +52,7 @@ export default class EventDetails extends Component {
                 eventDetails = userSnapshot;
                 var userID = this.state.userID.toString();
                 var userEmail = this.state.userEmail.toString();
-                this.eventsRef = firebase.database().ref('Events/' + key).child('usersInterested').child(userID).set(userEmail);
+                this.eventsRef = firebase.database().ref('Events/' + key).child('usersRsvp').child(userID).remove();
                 var interestedCountRef = firebase.database().ref('Events/' + key).child('rsvpCount');
                 interestedCountRef.transaction(function (current_value) {
                   return (current_value || 0) - 1;
@@ -76,7 +76,7 @@ export default class EventDetails extends Component {
                 eventDetails = userSnapshot;
                 var userID = this.state.userID.toString();
                 var userEmail = this.state.userEmail.toString();
-                this.eventsRef = firebase.database().ref('Events/' + key).child('usersInterested').child(userID).set(userEmail);
+                this.eventsRef = firebase.database().ref('Events/' + key).child('usersRsvp').child(userID).set(userEmail);
                 var interestedCountRef = firebase.database().ref('Events/' + key).child('rsvpCount');
                 interestedCountRef.transaction(function (current_value) {
                   return (current_value || 0) + 1;
