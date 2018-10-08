@@ -135,7 +135,7 @@ export default class Events extends Component {
                             <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {monthNames[parseInt(rowData.eventDate.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(rowData.eventDate.toString().substr(8, 2))}, {rowData.eventDate.toString().substr(0, 4)}
                           </Text>
                           <Text style={{ fontWeight: '100', fontSize: 12, color: '#757575', paddingTop: 5 }}><Icon name='ios-pin-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {rowData.eventLocation}</Text>
-                          <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>
+                          <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>                     
                           <View style={{ flex:1,justifyContent: "center",alignItems: "center",flexDirection: "row", paddingTop: 5 }}>
                             <Text style={{fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
                               <Icon name='ios-people' style={{ fontSize: 25, color: '#f37735' }} /> {rowData.rsvpCount} people attending
@@ -150,18 +150,14 @@ export default class Events extends Component {
                               source={{ uri: rowData.eventImageURL }}
                             />
                           </TouchableHighlight>
-                          <View style={{ flexDirection: "row", paddingHorizontal: 3 }}>
-                            <TouchableOpacity
-                              onPress={this.rsvpPressed}
-                              style={styles.button}
-                            >
-                              <Text style={styles.buttonText}>RSVP Now!</Text>
-                            </TouchableOpacity>
+                          <View style={{ flex:1,justifyContent: "center",alignItems: "center",flexDirection: "row", paddingHorizontal: 3 }}>
                             <TouchableOpacity
                               onPress={this.qrCodePressed}
                               style={styles.button}
                             >
-                              <Text style={styles.buttonText}>QR Code</Text>
+                              <Text style={styles.buttonText}>
+                              <Icon name='md-qr-scanner' style={{ fontSize: 25, color: '#f37735' }} />  Whoosh Bits  <Icon name='md-qr-scanner' style={{ fontSize: 25, color: '#f37735' }} />
+                              </Text>
                             </TouchableOpacity>
                           </View>
                         </Body>
