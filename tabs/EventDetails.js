@@ -57,11 +57,9 @@ export default class EventDetails extends Component {
                 <Text style={styles.hostStyle}>{this.props.navigation.state.params.rowData.hostedBy}</Text>
                 <View style={{ flexDirection: "row" }}>
                   <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 10, paddingRight: 125 }}><Icon name='ios-flame' style={{ fontSize: 18, color: '#f37735' }} /> Attending</Text>
-                  <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 15 }}> <Icon name='ios-heart' style={{ fontSize: 18, color: '#d11141' }} /> Interested</Text>
                 </View>
                 <View style={{ flexDirection: "row" }}>
-                  <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 35, paddingRight: 225, paddingTop: 10 }}>{this.props.navigation.state.params.rowData.attendingCount}</Text>
-                  <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 5, paddingTop: 10 }}>{this.props.navigation.state.params.rowData.interestedCount}</Text>
+                  <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 35, paddingRight: 225, paddingTop: 10 }}>{this.props.navigation.state.params.rowData.rsvpCount}</Text>
                 </View>
 
               </Body>
@@ -75,26 +73,6 @@ export default class EventDetails extends Component {
             </CardItem>
             <CardItem>
               <Body>
-                <Button full style={{ backgroundColor: this.state.buttonColor }}
-                  onPress={() => {
-                    this.setState({ buttonColor: '#137ed9' });
-                    var query = firebase.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
-                    query.once('value', data => {
-                      data.forEach(userSnapshot => {
-                        let key = userSnapshot.key;
-                        var userID = this.state.userID.toString();
-                        var userEmail = this.state.userEmail.toString();
-                        this.eventsRef = firebase.database().ref('Events/' + key).child('usersAttending').child(userID).set(userEmail);
-                        this.attendingCountRef = firebase.database().ref('Events/' + key).child('attendingCount');
-                        var attendingCountRef = firebase.database().ref('Events/' + key).child('attendingCount');
-                        attendingCountRef.transaction(function (current_value) {
-                          return (current_value || 0) + 1;
-                        });
-                      });
-                    });
-                  }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500' }}><Icon name='ios-flame' style={{ fontSize: 14, color: '#ffffff' }} /> Attending</Text>
-                </Button>
                 <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
                 <Button full style={styles.InterestedbuttonStyle}
                   onPress={() => {
