@@ -61,7 +61,7 @@ export default class EventDetails extends Component {
             });
             this.setState({ rsvpState: false });
           }}>
-          <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-heart' style={{ fontSize: 14, color: '#ffffff' }} /> Cancel RSVP </Text>
+          <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-close-circle' style={{ fontSize: 14, color: '#ffffff' }} /> Cancel RSVP </Text>
         </Button>
       )
     } else {
@@ -85,7 +85,7 @@ export default class EventDetails extends Component {
             });
             this.setState({ rsvpState: true });
           }}>
-          <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-heart' style={{ fontSize: 14, color: '#ffffff' }} /> RSVP </Text>
+          <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-checkmark-circle' style={{ fontSize: 14, color: '#ffffff' }} /> RSVP </Text>
         </Button>
       )
     }
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   rsvpButtonStyle: {
-    backgroundColor: '#5BC6E8',
+    backgroundColor: '#69BE28',
     height: 40,
   },
   cancelRsvpButtonStyle: {
