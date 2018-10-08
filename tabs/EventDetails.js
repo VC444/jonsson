@@ -15,7 +15,8 @@ export default class EventDetails extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      buttonColor: '#40E0D0'
+      buttonColor: '#40E0D0',
+      rsvpState: false,
     }
   }
 
@@ -44,6 +45,64 @@ export default class EventDetails extends Component {
           <ActivityIndicator />
         </View>
       );
+    } else if (this.state.rsvpState == false) {
+      return (
+        <Container>
+          <Content>
+            <Image source={{ uri: this.props.navigation.state.params.rowData.eventImageURL }} style={{ height: 200, width: null, resizeMode: 'stretch' }}>
+            </Image>
+            <Card style={{ flex: 0 }}>
+              <CardItem>
+                <Body>
+                  <Text style={styles.nameStyle}>{this.props.navigation.state.params.rowData.eventTitle}</Text>
+                  <Text style={styles.hostStyle}>{this.props.navigation.state.params.rowData.hostedBy}</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 10, paddingRight: 125 }}><Icon name='ios-flame' style={{ fontSize: 18, color: '#f37735' }} /> Attending</Text>
+                  </View>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 35, paddingRight: 225, paddingTop: 10 }}>{this.props.navigation.state.params.rowData.rsvpCount}</Text>
+                  </View>
+
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text style={{ fontSize: 18, fontWeight: '800' }}>Details</Text>
+                  <Text style={{ fontSize: 14, fontWeight: '100' }}></Text>
+                  <Text style={styles.descriptionStyle}>{this.props.navigation.state.params.rowData.eventDescription}</Text>
+                </Body>
+              </CardItem>
+              <CardItem>
+                <Body>
+                  <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
+                  <Button full style={styles.InterestedbuttonStyle}
+                    onPress={() => {
+                      var query = firebase.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
+                      query.once('value', data => {
+                        data.forEach(userSnapshot => {
+                          let key = userSnapshot.key;
+                          eventKey = key;
+                          eventDetails = userSnapshot;
+                          var userID = this.state.userID.toString();
+                          var userEmail = this.state.userEmail.toString();
+                          this.eventsRef = firebase.database().ref('Events/' + key).child('usersInterested').child(userID).set(userEmail);
+                          var interestedCountRef = firebase.database().ref('Events/' + key).child('rsvpCount');
+                          interestedCountRef.transaction(function (current_value) {
+                            return (current_value || 0) + 1;
+                          });
+                        });
+                      });
+                      this.setState({ rsvpState: true });
+                    }}>
+                    <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-heart' style={{ fontSize: 14, color: '#ffffff' }} /> RSVP </Text>
+                  </Button>
+
+                </Body>
+              </CardItem>
+            </Card>
+          </Content>
+        </Container>
+      )
     }
     return (
       <Container>
@@ -87,12 +146,13 @@ export default class EventDetails extends Component {
                         this.eventsRef = firebase.database().ref('Events/' + key).child('usersInterested').child(userID).set(userEmail);
                         var interestedCountRef = firebase.database().ref('Events/' + key).child('rsvpCount');
                         interestedCountRef.transaction(function (current_value) {
-                          return (current_value || 0) + 1;
+                          return (current_value || 0) - 1;
                         });
                       });
                     });
+                    this.setState({ rsvpState: false });
                   }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-heart' style={{ fontSize: 14, color: '#ffffff' }} /> RSVP </Text>
+                  <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-heart' style={{ fontSize: 14, color: '#ffffff' }} /> Cancel RSVP </Text>
                 </Button>
 
               </Body>
@@ -101,6 +161,7 @@ export default class EventDetails extends Component {
         </Content>
       </Container>
     )
+
   }
 }
 
