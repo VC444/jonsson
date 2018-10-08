@@ -78,15 +78,15 @@ export default class EventDetails extends Component {
                 <Button full style={{ backgroundColor: this.state.buttonColor }}
                   onPress={() => {
                     this.setState({ buttonColor: '#137ed9' });
-                    var query = firebaseApp.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
+                    var query = firebase.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
                     query.once('value', data => {
                       data.forEach(userSnapshot => {
                         let key = userSnapshot.key;
                         var userID = this.state.userID.toString();
                         var userEmail = this.state.userEmail.toString();
-                        this.eventsRef = firebaseApp.database().ref('Events/' + key).child('usersAttending').child(userID).set(userEmail);
-                        this.attendingCountRef = firebaseApp.database().ref('Events/' + key).child('attendingCount');
-                        var attendingCountRef = firebaseApp.database().ref('Events/' + key).child('attendingCount');
+                        this.eventsRef = firebase.database().ref('Events/' + key).child('usersAttending').child(userID).set(userEmail);
+                        this.attendingCountRef = firebase.database().ref('Events/' + key).child('attendingCount');
+                        var attendingCountRef = firebase.database().ref('Events/' + key).child('attendingCount');
                         attendingCountRef.transaction(function (current_value) {
                           return (current_value || 0) + 1;
                         });
@@ -98,14 +98,16 @@ export default class EventDetails extends Component {
                 <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
                 <Button full style={styles.InterestedbuttonStyle}
                   onPress={() => {
-                    var query = firebaseApp.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
+                    var query = firebase.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
                     query.once('value', data => {
                       data.forEach(userSnapshot => {
                         let key = userSnapshot.key;
+                        eventKey = key;
+                        eventDetails = userSnapshot;
                         var userID = this.state.userID.toString();
                         var userEmail = this.state.userEmail.toString();
-                        this.eventsRef = firebaseApp.database().ref('Events/' + key).child('usersInterested').child(userID).set(userEmail);
-                        var interestedCountRef = firebaseApp.database().ref('Events/' + key).child('interestedCount');
+                        this.eventsRef = firebase.database().ref('Events/' + key).child('usersInterested').child(userID).set(userEmail);
+                        var interestedCountRef = firebase.database().ref('Events/' + key).child('rsvpCount');
                         interestedCountRef.transaction(function (current_value) {
                           return (current_value || 0) + 1;
                         });
