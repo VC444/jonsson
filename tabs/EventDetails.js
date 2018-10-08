@@ -110,13 +110,6 @@ export default class EventDetails extends Component {
               <Body>
                 <Text style={styles.nameStyle}>{this.props.navigation.state.params.rowData.eventTitle}</Text>
                 <Text style={styles.hostStyle}>{this.props.navigation.state.params.rowData.hostedBy}</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 10, paddingRight: 125 }}><Icon name='ios-flame' style={{ fontSize: 18, color: '#f37735' }} /> Attending</Text>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ fontSize: 18, fontWeight: '100', color: '#3b5998', paddingLeft: 35, paddingRight: 225, paddingTop: 10 }}>{this.props.navigation.state.params.rowData.rsvpCount}</Text>
-                </View>
-
               </Body>
             </CardItem>
             <CardItem>
