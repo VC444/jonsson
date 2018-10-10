@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ListView, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView} from 'react-native';
 import { Container, List } from 'native-base';
 import * as firebase from 'firebase';
 
@@ -74,8 +74,17 @@ export default class Rewards extends Component {
 
 
     render() {
+
         return(
     <ScrollView> 
+        <ImageBackground
+              style={{width: null, height: 130}}
+              blurRadius={0}
+              source={require('../images/NSERL_Courtyard.jpg')}>
+              <View style={{ paddingTop: 10, width: 400, backgroundColor: 'rgba(0,0,0,0)',
+               paddingLeft: 15,  alignItems: 'center', justifyContent: 'center',}}/>
+        </ImageBackground>
+
         <View style={{
             flex: 1,
             flexDirection: 'row',
