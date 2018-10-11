@@ -1,3 +1,8 @@
+/**
+ * JonssonConnect DrawerScreen Page
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
+ */
+
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -173,7 +178,7 @@ const styles = {
   },
   date: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 17,
     paddingTop: 20
   },
   logOut: {

@@ -1,8 +1,6 @@
 /**
  * JonssonConnect Events Page
  * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
- * 
- * FLEX DIRECTION & MARGIN VERTICAL & COLOR IN STYLE
  */
 
 import React, { Component } from 'react';
@@ -46,19 +44,19 @@ export default class Events extends Component {
   gotData = (data) => {
     const { goBack } = this.props.navigation;
     var dates = data.val()
-    ErrorUtils.setGlobalHandler(function () {
-      // your handler here
-      Alert.alert(
-        'Aw Snap!',
-        "We don't have any events to show for this date. Sorry! \t :(",
-        [
+    // ErrorUtils.setGlobalHandler(function () {
+    //   // your handler here
+    //   Alert.alert(
+    //     'Aw Snap!',
+    //     "We don't have any events to show for this date. Sorry! \t :(",
+    //     [
 
 
-          { text: 'Back to Calendar', onPress: () => goBack(null) }
-        ],
-        { cancelable: false }
-      )
-    });
+    //       { text: 'Back to Calendar', onPress: () => goBack(null) }
+    //     ],
+    //     { cancelable: false }
+    //   )
+    // });
     console.log("The Dates by child: " + JSON.stringify(dates))
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
@@ -83,8 +81,6 @@ export default class Events extends Component {
     console.log('qrcode button pressed');
     this.props.navigation.navigate('Qrcode');
   }
-
-
 
   render() {
     if (this.state.isLoading) {
@@ -117,8 +113,11 @@ export default class Events extends Component {
             <Card>
               <CardItem>
                 <Body>
-                  <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800' }}><Icon name='ios-flame' style={{ fontSize: 32, color: '#c75b12' }}/>    Jonsson|Calendar</Text>
+                  <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800' }}><Icon name='ios-flame' style={{ fontSize: 32, color: '#c75b12' }} />    Jonsson|Calendar</Text>
                 </Body>
+                <TouchableHighlight onPress={this.qrCodePressed}>
+                  <Icon type="Ionicons" name='md-qr-scanner' />
+                </TouchableHighlight>
               </CardItem>
             </Card>
           </Content>
@@ -138,13 +137,10 @@ export default class Events extends Component {
                           </Text>
                           <Text style={{ fontWeight: '100', fontSize: 12, color: '#757575', paddingTop: 5 }}><Icon name='ios-pin-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {rowData.eventLocation}</Text>
                           <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>
-                          <View style={{ flexDirection: "row", paddingTop: 5 }}>
-                            <Text style={{ textAlign: 'left', fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
-                              <Icon name='ios-flame' style={{ fontSize: 14, color: '#f37735' }} /> {rowData.attendingCount} people attending
-                         </Text>
-                            <Text style={{ textAlign: 'right', fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
-                              <Icon name='ios-heart' style={{ fontSize: 14, color: '#d11141' }} /> {rowData.interestedCount} people interested
-                         </Text>
+                          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "row", paddingTop: 5 }}>
+                            <Text style={{ fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
+                              <Icon name='ios-people' style={{ fontSize: 25, color: '#f37735' }} /> {rowData.rsvpCount} people attending
+                            </Text>
                           </View>
                           <TouchableHighlight
                             onPress={
@@ -155,20 +151,6 @@ export default class Events extends Component {
                               source={{ uri: rowData.eventImageURL }}
                             />
                           </TouchableHighlight>
-                          <View style={{ flexDirection: "row", paddingHorizontal: 3 }}>
-                            <TouchableOpacity
-                              onPress={this.rsvpPressed}
-                              style={styles.button}
-                            >
-                              <Text style={styles.buttonText}>RSVP Now!</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                              onPress={this.qrCodePressed}
-                              style={styles.button}
-                            >
-                              <Text style={styles.buttonText}>QR Code</Text>
-                            </TouchableOpacity>
-                          </View>
                         </Body>
                       </Left>
                     </ListItem>

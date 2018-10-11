@@ -1,5 +1,10 @@
+/**
+ * JonssonConnect Rewards Page
+ * Developed in part by Manu, Akshay, Vignesh, Ramya, & Jahnavi
+ */
+
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ListView, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView} from 'react-native';
 import { Container, List } from 'native-base';
 import * as firebase from 'firebase';
 
@@ -61,12 +66,25 @@ export default class Rewards extends Component {
           });
       }
 
+      onRedeemPressed = () => {
+          this.props.navigation.navigate('Redeem');
+      }
+
 
 
 
     render() {
+
         return(
     <ScrollView> 
+        <ImageBackground
+              style={{width: null, height: 130}}
+              blurRadius={0}
+              source={require('../images/NSERL_Courtyard.jpg')}>
+              <View style={{ paddingTop: 10, width: 400, backgroundColor: 'rgba(0,0,0,0)',
+               paddingLeft: 15,  alignItems: 'center', justifyContent: 'center',}}/>
+        </ImageBackground>
+
         <View style={{
             flex: 1,
             flexDirection: 'row',
@@ -99,7 +117,7 @@ export default class Rewards extends Component {
                 Events attended </Text>
             </View>
             
-        <TouchableOpacity 
+        <TouchableOpacity onPress={this.onRedeemPressed}
         style={{
             width: '100%', height: '14%', backgroundColor: 'white'}}>
             <Text style={{
