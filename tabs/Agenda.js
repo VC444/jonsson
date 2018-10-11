@@ -116,7 +116,7 @@ export default class Events extends Component {
                   <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800' }}><Icon name='ios-flame' style={{ fontSize: 32, color: '#c75b12' }} />    Jonsson|Calendar</Text>
                 </Body>
                 <TouchableHighlight onPress={this.qrCodePressed}>
-                  <Icon type="Ionicons" name='ios-qr-scanner' />
+                  <Icon type="Ionicons" name='md-qr-scanner' />
                 </TouchableHighlight>
               </CardItem>
             </Card>
