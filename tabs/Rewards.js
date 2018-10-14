@@ -20,7 +20,8 @@ export default class Rewards extends Component {
             isLoading: true, 
             refreshing: false,
             dataSource: ev.cloneWithRows([]),
-            points: 0
+            points: 0,
+            numOfEvents: 0
          };
         this.renderRow = this.renderRow.bind(this)
     }
@@ -40,8 +41,10 @@ export default class Rewards extends Component {
         rewardsRef.once('value', data => {
             var rewardsData = data.val();
             var points = rewardsData.points;
+            var numOfEvents = rewardsData.numOfEvents;
             console.log('rewardsData is ' + points);
             this.setState({points});
+            this.setState({numOfEvents});
         });
         
         return fetch('https://jonssonconnect.firebaseio.com/Events.json')
@@ -139,7 +142,7 @@ export default class Rewards extends Component {
                     paddingTop:15,
                     color: '#008542',
                     fontWeight: 'bold'
-                }}> 7 {"\n"}{"\n"}
+                }}> {this.state.numOfEvents} {"\n"}{"\n"}
                 Events attended </Text>
             </View>
             
