@@ -97,8 +97,10 @@ export default class Login extends React.Component {
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
     if (LOGIN_TOKEN == null) {
       // DO nothing and continue login process
+      console.log('Login token not found');
     }
     else {
+      console.log('Login token has been found');
       this.props.navigation.navigate("HomeFeedStack");
     }
   }
@@ -150,7 +152,7 @@ export default class Login extends React.Component {
         (value) => {
           this.setState({ loggedInStatus: 'loggedIn' });
         });
-    this.props.navigation.navigate("HomeFeedStack")
+    this.props.navigation.navigate('DrawerNavigator');
   }
 
   renderItem(label, value) {
@@ -200,8 +202,8 @@ export default class Login extends React.Component {
                   this.modal = ref
                 }}
                 linkText=""
-                clientID="86c3k9s35z8di0"
-                clientSecret="ptaW1pqjV26iefkz"
+                clientID="78ssigjikq1vry"
+                clientSecret="w994WmnW8KCgOVts"
                 redirectUri="https://engineering.utdallas.edu" // HAVE TO CHANGE
                 onSuccess={
                   data => this.getUser(data)
