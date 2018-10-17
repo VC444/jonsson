@@ -89,10 +89,11 @@ export default class Login extends React.Component {
 
   constructor(props) {
     super(props)
-    StatusBar.setHidden(true)
+    // StatusBar.setHidden(true)
     this.state = { isLoggedIn: false };
   }
 
+  // This will see if the login token already exists - If it does, go to Main App Screen
   async componentWillMount() {
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
     if (LOGIN_TOKEN == null) {
@@ -101,7 +102,7 @@ export default class Login extends React.Component {
     }
     else {
       console.log('Login token has been found');
-      this.props.navigation.navigate("HomeFeedStack");
+      this.props.navigation.navigate("DrawerNavigator");
     }
   }
 
