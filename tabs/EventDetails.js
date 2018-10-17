@@ -26,6 +26,28 @@ export default class EventDetails extends Component {
       userEmail: await AsyncStorage.getItem('email'),
       isLoading: false
     });
+
+    let eventKey;
+    var query = firebase.database().ref('/Events').orderByChild('eventTitle').equalTo(this.props.navigation.state.params.rowData.eventTitle);
+    query.once('value', data => {
+      data.forEach(userSnapshot => {
+        var eventData = userSnapshot.val();
+        eventKey = userSnapshot.key;
+        var stringifiedEvent = JSON.stringify(eventData);
+        var parsedEvent = JSON.parse(stringifiedEvent);
+        console.log('updated query result is ' + stringifiedEvent);
+        console.log('event key isss' + eventKey);
+
+        var usersRsvp = parsedEvent.usersRsvp;
+        for (var userId in usersRsvp) {
+          if (userId == this.state.userID) {
+            this.setState({ rsvpState: true });
+          }
+        }
+
+        //console.log('The users are ' + parsedEvent.usersRsvp);
+      });
+    });
   }
 
   static navigationOptions = {
@@ -122,7 +144,7 @@ export default class EventDetails extends Component {
             <CardItem>
               <Body>
                 <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
-                <this.rsvpButton/>
+                <this.rsvpButton />
               </Body>
             </CardItem>
           </Card>

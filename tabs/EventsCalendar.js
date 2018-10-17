@@ -35,6 +35,20 @@ export default class EventsCalendar extends Component {
     }
 
     componentWillMount = () => {
+        // var eventsRef = firebase.database().ref('Events');
+        // var dateArray = [];
+        // eventsRef.orderByChild('eventDate').on('child_added', function(snapshot) {
+        //     console.log(snapshot.key + " has event date " + snapshot.val().eventDate);
+        //     dateArray.push(snapshot.val().eventDate);
+        //     var splitArray = dateArray.split('T');
+        //     console.log('this is the dateArray vccc' + dateArray);
+        // });
+        // queryDates.once('value', data => {
+        //     var goodData = data.val();
+        //     for (var date in goodData) {
+        //         console.log('These are the date values that vc wrote' + date);
+        //     }
+        // });
         // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
         /******************************************************************************************************** */
         var dateOfEvent = firebase.database().ref("Events/");
@@ -116,7 +130,8 @@ console.log(difference);
         var year = date.getFullYear()
         var day = date.getDate()
         var fullDate = year + '-' + month + '-' + day;
-        console.log(fullDate);
+        var stringDate = fullDate.toString();
+        console.log('this is fulldateeeeeee' + stringDate);
 
         return (
             <View>
@@ -128,7 +143,7 @@ console.log(difference);
                     // Enable or disable scrolling of calendar list
                     scrollEnabled={true}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                    
+                    minDate={stringDate}
                     // By default, agenda dates are marked if they have at least one item, but you can override this if needed
                     markedDates={this.state.marked}
                     //This attribute enables multiple dots on a single date
@@ -137,10 +152,21 @@ console.log(difference);
                     onDayPress={(day) => { 
                         //if (someVariable == true)
                         //{
-                            console.log("STRINGIFY: " + JSON.stringify(day.dateString))
+                            console.log("STRINGIFY: " + JSON.stringify(day.dateString));
+                            var hasEvent = false;
+                            for(var date in this.state.marked) {
+                                console.log('This is marked state object: ' + date);
+                                if (day.dateString == date) {
+                                    hasEvent = true;
+                                }
+                            }
+                            if (hasEvent) {
+                                this.props.navigation.navigate("Agenda",{day});
+                            } else {
+                                alert('Aw Snap! We dont have any events to show for this date. Sorry!');
+                            }
                             // var dateString = JSON.stringify(day.dateString)
-                            
-                            this.props.navigation.navigate("Agenda",{day})
+                        
                         //} 
                     }}
                 />

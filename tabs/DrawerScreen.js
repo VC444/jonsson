@@ -178,7 +178,7 @@ const styles = {
   },
   date: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 17,
     paddingTop: 20
   },
   logOut: {
