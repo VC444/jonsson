@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView, ActivityIndicator, AsyncStorage} from 'react-native';
 import { Container, List } from 'native-base';
 import * as firebase from 'firebase';
 
@@ -19,13 +19,34 @@ export default class Rewards extends Component {
         this.state = {
             isLoading: true, 
             refreshing: false,
-            dataSource: ev.cloneWithRows([])
+            dataSource: ev.cloneWithRows([]),
+            points: 0,
+            numOfEvents: 0
          };
         this.renderRow = this.renderRow.bind(this)
     }
 
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        this.setState({
+            userID: await AsyncStorage.getItem('userID'),
+            isLoading: false
+          });
+
+        var rewardRefString = 'Rewards/' + this.state.userID;
+        console.log('rewardsRefString is ' + rewardRefString);
+        var rewardsRef = firebase.database().ref(rewardRefString);
+        console.log('rewardsRef is ' + rewardsRef);
+        rewardsRef.once('value', data => {
+            var rewardsData = data.val();
+            var points = rewardsData.points;
+            var numOfEvents = rewardsData.numOfEvents;
+            console.log('rewardsData is ' + points);
+            this.setState({points});
+            this.setState({numOfEvents});
+        });
+        
         return fetch('https://jonssonconnect.firebaseio.com/Events.json')
           .then((response) => response.json())
           .then((responseJson) => {
@@ -43,7 +64,6 @@ export default class Rewards extends Component {
             console.error(error);
           });
       }
-
 
       _onRefresh() {
         this.setState({ refreshing: true });
@@ -75,6 +95,15 @@ export default class Rewards extends Component {
 
     render() {
 
+        if (this.state.isLoading) {
+            return (
+              <View style={{ flex: 1, paddingTop: 20 }}>
+                <ActivityIndicator />
+              </View>
+            );
+          }
+          console.log('this is user id from rewards component' + this.state.userID);
+
         return(
     <ScrollView> 
         <ImageBackground
@@ -100,7 +129,7 @@ export default class Rewards extends Component {
                     paddingTop: 15,
                     color: '#008542',
                     fontWeight: 'bold'}}>
-                    50 {"\n"}{"\n"}
+                    {this.state.points} {"\n"}{"\n"}
                     Whoosh Bits</Text>
             </View>
 
@@ -113,7 +142,7 @@ export default class Rewards extends Component {
                     paddingTop:15,
                     color: '#008542',
                     fontWeight: 'bold'
-                }}> 7 {"\n"}{"\n"}
+                }}> {this.state.numOfEvents} {"\n"}{"\n"}
                 Events attended </Text>
             </View>
             
@@ -156,7 +185,6 @@ export default class Rewards extends Component {
                     borderColor: '#d3d3d3',
                     width: '100%',
                     backgroundColor: 'white',
-                    fontSize: '16',
                     paddingTop:15,
                     paddingBottom: 15, 
                     paddingLeft: 8

@@ -89,17 +89,20 @@ export default class Login extends React.Component {
 
   constructor(props) {
     super(props)
-    StatusBar.setHidden(true)
+    // StatusBar.setHidden(true)
     this.state = { isLoggedIn: false };
   }
 
+  // This will see if the login token already exists - If it does, go to Main App Screen
   async componentWillMount() {
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
     if (LOGIN_TOKEN == null) {
       // DO nothing and continue login process
+      console.log('Login token not found');
     }
     else {
-      this.props.navigation.navigate("HomeFeedStack");
+      console.log('Login token has been found');
+      this.props.navigation.navigate("DrawerNavigator");
     }
   }
 
@@ -150,7 +153,7 @@ export default class Login extends React.Component {
         (value) => {
           this.setState({ loggedInStatus: 'loggedIn' });
         });
-    this.props.navigation.navigate("HomeFeedStack")
+    this.props.navigation.navigate('DrawerNavigator');
   }
 
   renderItem(label, value) {
@@ -200,8 +203,8 @@ export default class Login extends React.Component {
                   this.modal = ref
                 }}
                 linkText=""
-                clientID="86c3k9s35z8di0"
-                clientSecret="ptaW1pqjV26iefkz"
+                clientID="78ssigjikq1vry"
+                clientSecret="w994WmnW8KCgOVts"
                 redirectUri="https://engineering.utdallas.edu" // HAVE TO CHANGE
                 onSuccess={
                   data => this.getUser(data)
@@ -228,7 +231,7 @@ export default class Login extends React.Component {
             </Button>
           </TouchableHighlight>
         </View>
-        <Text style={{ fontSize: 8, fontWeight: '100', position: "absolute", bottom: 20 }}>Copyright © 2018, The Univerity of Texas at Dallas, all rights reserved.</Text>
+        <Text style={{ fontSize: 8, fontWeight: '100', position: "absolute", bottom: 20 }}>Copyright © 2018, The University of Texas at Dallas, all rights reserved.</Text>
       </View>
     )
   }
