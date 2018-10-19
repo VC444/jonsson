@@ -27,7 +27,6 @@ export default class Help extends Component {
         this.postFeedback = this.postFeedback.bind(this);
     }
     handleEmailChange(e){
-        console.log(e);
         this.setState({
             email : e
         });
@@ -39,7 +38,6 @@ export default class Help extends Component {
     }
     /****************************************/
     postFeedback = (email, message, emailClear, messageClear) =>{
-        console.log('triggered')
         if(this.state.message!=null){
             if(!this.state.isLoading){
                 const self = this;
@@ -57,7 +55,6 @@ export default class Help extends Component {
             .then((response) => response.json() )
             .then((responseData) => {
                 if(!responseData.error){
-                    console.log('success',responseData);
                     self.setState({
                         email: '', message: '',
                         isSubmited: true,
@@ -66,7 +63,6 @@ export default class Help extends Component {
                     })
                 }
                 else {
-                    console.log('error',responseData);
                     Alert.alert(
                         responseData.error,
                         [
@@ -78,7 +74,7 @@ export default class Help extends Component {
                 }
             })
             .catch((err)=>{
-                console.log(err);
+                
             })
              
         }
@@ -97,12 +93,10 @@ export default class Help extends Component {
 
 
     giveFeedbackPressed = () => {
-        console.log('giveFeedbackPressed has fired');
         this.setState({ giveFeedback: true });
     }
 
     feedbackSubmitted = () => {
-        console.log('Feedback has been submitted');
         Alert.alert("Feedback has been submitted! Thank you");
         this.setState({
             isLoading :true
