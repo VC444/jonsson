@@ -231,7 +231,7 @@ export default class Login extends React.Component {
             </Button>
           </TouchableHighlight>
         </View>
-        <Text style={{ fontSize: 8, fontWeight: '100', position: "absolute", bottom: 20 }}>Copyright © 2018, The Univerity of Texas at Dallas, all rights reserved.</Text>
+        <Text style={{ fontSize: 8, fontWeight: '100', position: "absolute", bottom: 20 }}>Copyright © 2018, The University of Texas at Dallas, all rights reserved.</Text>
       </View>
     )
   }

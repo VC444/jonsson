@@ -195,7 +195,7 @@ export default class Rewards extends Component {
                 <Text style={{color: '#008542'}}>{events.eventTitle}</Text>
                 <Text style={{color: '#008542', paddingTop:10}}>{events.eventDate}</Text>
             </View>
-            <View style={{marginTop: -20, paddingLeft: 300, flex:0, width: '100%'}}>
+            <View style={{marginTop: 15, paddingLeft: 300, flex:0, width: '100%'}}>
                 <Text style={{color: '#008542',fontWeight: 'bold', fontSize: 16}}>{events.attandingCount}</Text>
             </View>
         </ScrollView>

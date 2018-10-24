@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert } from 'react-native';
 import { Container, Header, Content, Accordion, Form, Item, Input, Label } from "native-base";
+import * as firebase from 'firebase';
+import Axios from 'axios';
 
 
 const dataArray = [
@@ -14,18 +16,92 @@ export default class Help extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            giveFeedback: false
-        }
+            giveFeedback: false,
+            email : '',
+            message : '',
+            isLoading : false 
+        };
+        this.feedbackSubmitted = this.feedbackSubmitted.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.postFeedback = this.postFeedback.bind(this);
     }
+    handleEmailChange(e){
+        this.setState({
+            email : e
+        });
+    }
+    handleMessageChange(e){
+        this.setState({
+            message : e
+        })
+    }
+    /****************************************/
+    postFeedback = (email, message, emailClear, messageClear) =>{
+        if(this.state.message!=null){
+            if(!this.state.isLoading){
+                const self = this;
+            fetch('https://jonssonconnect.firebaseio.com/Feedback.json?auth=qKeO1eylfWgscqfLFVGMv298g6KlHo0BRN8E2kFb', {
+                method: 'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({
+                    "email": email, 
+                    "message": message,
+                })
+            })
+            .then((response) => response.json() )
+            .then((responseData) => {
+                if(!responseData.error){
+                    self.setState({
+                        email: '', message: '',
+                        isSubmited: true,
+                        giveFeedback : false,
+                        isLoading : false 
+                    })
+                }
+                else {
+                    Alert.alert(
+                        responseData.error,
+                        [
+                            {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+
+                        ],
+                        { cancelable: false}
+                    )
+                }
+            })
+            .catch((err)=>{
+                
+            })
+             
+        }
+        }
+        else {
+            Alert.alert(
+                'Oops!',
+                'Press SUBMIT buttona after entering your message.',
+                [
+                    {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                ],
+                {cancelable: false}
+            )
+        }
+    };
+
 
     giveFeedbackPressed = () => {
-        console.log('giveFeedbackPressed has fired');
         this.setState({ giveFeedback: true });
     }
 
     feedbackSubmitted = () => {
-        console.log('Feedback has been submitted');
-        this.setState({ giveFeedback: false });
+        Alert.alert("Feedback has been submitted! Thank you");
+        this.setState({
+            isLoading :true
+        })
+        this.postFeedback(this.state.email, this.state.message);
     }
 
     render() {
@@ -62,18 +138,18 @@ export default class Help extends Component {
                     <Form style={styles.formView}>
                         <Item stackedLabel>
                             <Label>Enter your email</Label>
-                            <Input />
+                            <Input value={this.state.email} onChangeText={(e)=>{this.handleEmailChange(e)}} name="email"/>
                         </Item>
                         <Item stackedLabel>
                             <Label>How can we improve?</Label>
-                            <Input />
+                            <Input value={this.state.message} onChangeText={(e)=>{this.handleMessageChange(e)}} name="message"/>
                         </Item>
                         
                         <TouchableOpacity
                             onPress={this.feedbackSubmitted}
                             style={styles.button}
                         >
-                            <Text style={styles.buttonText}>Submit</Text>
+                            <Text style={styles.buttonText}>{this.state.isLoading?'Submiting Please wait!':'Submit'}</Text>
                         </TouchableOpacity>
 
                     </Form>
