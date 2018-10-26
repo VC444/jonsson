@@ -5,6 +5,7 @@
 
 import React, { Component } from 'react';
 import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet, View } from 'react-native';
+import { Constants, MapView } from 'expo';
 import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
 import { Container, Header, Content, Card, Col, CardItem, Grid, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Button, Left, Body, Right, Row, H1, H2, H3 } from 'native-base';
 import * as firebase from 'firebase';
@@ -17,6 +18,12 @@ export default class EventDetails extends Component {
       isLoading: true,
       buttonColor: '#40E0D0',
       rsvpState: false,
+      mapRegion: {
+        latitude: 37.78825,
+        longitude: -122.4324,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
     }
   }
 
@@ -125,6 +132,13 @@ export default class EventDetails extends Component {
     return (
       <Container>
         <Content>
+          <View style={styles.container}>
+          <MapView
+            style={{ alignSelf: 'stretch', height: 200 }}
+            region={this.state.mapRegion}
+            onRegionChange={this._handleMapRegionChange}
+          />
+          </View>
           <Image source={{ uri: this.props.navigation.state.params.rowData.eventImageURL }} style={{ height: 200, width: null, resizeMode: 'stretch' }}>
           </Image>
           <Card style={{ flex: 0 }}>
