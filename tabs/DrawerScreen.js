@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { ScrollView, Text, View, Linking, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
 import { DrawerActions } from 'react-navigation';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, Icon, ListItem, Item, Input, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
+import { Permissions, Notifications } from 'expo';
+import * as firebase from 'firebase';
 
 
 export default class DrawerScreen extends Component {
@@ -60,7 +62,41 @@ export default class DrawerScreen extends Component {
       headline: await AsyncStorage.getItem('headline'),
       location: await AsyncStorage.getItem('location'),
       industry: await AsyncStorage.getItem('industry'),
+      userID: await AsyncStorage.getItem('userID')
     });
+
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+      return;
+    }
+    // Get the token that uniquely identifies this device
+    let token = await Notifications.getExpoPushTokenAsync();
+    console.log('The updated token is ' + token);
+    let userID = await this.state.userID;
+
+    let userRef = firebase.database().ref('Users/' + userID);
+    userRef.set({ 
+      notificationToken: token
+    }).then(function () {
+        console.log('Synchronization succeeded');
+      })
+      .catch(function (error) {
+        console.log('Synchronization failed' + error);
+      });
   }
 
   render() {
@@ -97,15 +133,15 @@ export default class DrawerScreen extends Component {
             </View>
 
             <View style={styles.userInfo}>
-              <Text style={{ fontSize: 16, fontWeight: '700', color: '#FFFFFF'}} >{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
+              <Text style={{ fontSize: 16, fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
             </View>
 
             <View style={styles.userInfo}>
-              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF'}} > <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
+              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
             </View>
 
             <View style={styles.industryInfo}>
-              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF'}} > <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
+              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
             </View>
 
 
