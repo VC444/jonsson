@@ -102,6 +102,8 @@ export default class Login extends React.Component {
     }
     else {
       console.log('Login token has been found');
+      let category = await this.chooseCategory(); 
+      console.log(category);
       this.props.navigation.navigate("DrawerNavigator");
     }
   }
@@ -154,6 +156,11 @@ export default class Login extends React.Component {
           this.setState({ loggedInStatus: 'loggedIn' });
         });
     this.props.navigation.navigate('DrawerNavigator');
+  }
+
+  chooseCategory = () => {
+    let category = 'Student';
+    return category;
   }
 
   renderItem(label, value) {
