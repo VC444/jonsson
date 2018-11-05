@@ -115,7 +115,7 @@ export default class EventDetails extends Component {
       )
     }
   }
-
+// This is the method for map url
   _handlePress = (url) => {
     console.log("THE URL IS:" + url)
     Linking.openURL("https://www.google.com/maps/search/?api=1&query="+url);
