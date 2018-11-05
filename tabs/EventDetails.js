@@ -8,6 +8,8 @@ import { ActivityIndicator, AsyncStorage, Image, ListView, FlatList, StyleSheet,
 import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
 import { Container, Header, Content, Card, Col, CardItem, Grid, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Button, Left, Body, Right, Row, H1, H2, H3 } from 'native-base';
 import * as firebase from 'firebase';
+import { Linking } from 'react-native';
+
 
 export default class EventDetails extends Component {
 
@@ -17,6 +19,7 @@ export default class EventDetails extends Component {
       isLoading: true,
       buttonColor: '#40E0D0',
       rsvpState: false,
+
     }
   }
 
@@ -112,6 +115,11 @@ export default class EventDetails extends Component {
       )
     }
   }
+// This is the method for map url
+  _handlePress = (url) => {
+    console.log("THE URL IS:" + url)
+    Linking.openURL("https://www.google.com/maps/search/?api=1&query="+url);
+  };
 
   render() {
 
@@ -125,6 +133,12 @@ export default class EventDetails extends Component {
     return (
       <Container>
         <Content>
+          <View style={{flex:1,justifyContent: "center",alignItems: "center"}}>
+            <Text style={{fontWeight:"bold",fontSize: 20}}
+            onPress={(yourData) => this._handlePress(this.props.navigation.state.params.rowData.eventLocation)}>
+           <Icon name='ios-navigate' style={{ fontSize: 50}} />
+            </Text>
+          </View>
           <Image source={{ uri: this.props.navigation.state.params.rowData.eventImageURL }} style={{ height: 200, width: null, resizeMode: 'stretch' }}>
           </Image>
           <Card style={{ flex: 0 }}>

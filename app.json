@@ -2,6 +2,7 @@
   "expo": {
     "name": "Jonsson Connect",
     "icon": "./images/temoc_icon.png",
+    "orientation": "portrait",
     "version": "2.1.5",
     "slug": "jonsson",
     "sdkVersion": "27.0.0",
