@@ -163,7 +163,7 @@ console.log(difference);
                             if (hasEvent) {
                                 this.props.navigation.navigate("Agenda",{day});
                             } else {
-                                alert('Aw Snap! We dont have any events to show for this date. Sorry!');
+                                alert('Aw Snap! We don\'t have any events to show for this date. Sorry!');
                             }
                             // var dateString = JSON.stringify(day.dateString)
                         

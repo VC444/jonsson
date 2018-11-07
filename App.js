@@ -26,6 +26,7 @@ import Agenda from './tabs/Agenda';
 import Qrcode from './tabs/Qrcode';
 import Rsvp from './tabs/Rsvp';
 import Redeem from './tabs/Redeem';
+import CodeDisplay from './tabs/CodeDisplay'
 
 import * as firebase from 'firebase';
 
@@ -61,6 +62,7 @@ export const HomeFeedStack = createStackNavigator({
     })
   },
   Redeem: { screen: Redeem },
+  CodeDisplay: {screen: CodeDisplay},
   Settings: { screen: Settings },
   Help: {
     screen: Help,
