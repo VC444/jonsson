@@ -55,7 +55,6 @@ export default class Home extends Component {
       });
   }
 
-
   firstSearch() {
     return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
       .then((response) => response.json())

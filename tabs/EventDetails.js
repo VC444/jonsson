@@ -133,12 +133,6 @@ export default class EventDetails extends Component {
     return (
       <Container>
         <Content>
-          <View style={{flex:1,justifyContent: "center",alignItems: "center"}}>
-            <Text style={{fontWeight:"bold",fontSize: 20}}
-            onPress={(yourData) => this._handlePress(this.props.navigation.state.params.rowData.eventLocation)}>
-           <Icon name='ios-navigate' style={{ fontSize: 50}} />
-            </Text>
-          </View>
           <Image source={{ uri: this.props.navigation.state.params.rowData.eventImageURL }} style={{ height: 200, width: null, resizeMode: 'stretch' }}>
           </Image>
           <Card style={{ flex: 0 }}>
@@ -154,6 +148,15 @@ export default class EventDetails extends Component {
                 <Text style={{ fontSize: 14, fontWeight: '100' }}></Text>
                 <Text style={styles.descriptionStyle}>{this.props.navigation.state.params.rowData.eventDescription}</Text>
               </Body>
+            </CardItem>
+            <CardItem>
+            <View style={{flex:1,justifyContent: "center",alignItems: "center"}}>
+            <Text style={{fontWeight:"bold",fontSize: 20}}
+            onPress={(yourData) => this._handlePress(this.props.navigation.state.params.rowData.eventLocation)}>
+            Take Me There! {"  "} {"  "}
+           <Icon name='ios-navigate' style={{ fontSize: 50}} />
+            </Text>
+          </View>
             </CardItem>
             <CardItem>
               <Body>

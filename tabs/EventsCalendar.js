@@ -143,7 +143,7 @@ console.log(difference);
                     // Enable or disable scrolling of calendar list
                     scrollEnabled={true}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                    minDate={stringDate}
+                    //minDate={stringDate}
                     // By default, agenda dates are marked if they have at least one item, but you can override this if needed
                     markedDates={this.state.marked}
                     //This attribute enables multiple dots on a single date

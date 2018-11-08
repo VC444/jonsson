@@ -15,37 +15,32 @@ export default class Redeem extends Component {
         this.state = {
             generateQRdata: '',
             redeemWhooshBits: false,
-            whooshBitsValue: '69',
+            whooshBitsValue: '0',
             redeemPressed: false,
         };
     }
 
-    redeemPointsHandler(w) {
+    redeemPointsUpdater(w) {
         this.setState({
             whooshBitsValue: w
         })
     }
 
-    redeemWhooshBitsPressed = () => {
-        this.setState({ redeemWhooshBits: true });
+    displayQRCode() {
+        var woosh = this.state.whooshBitsValue;
+        console.log("FROM REDEEM PAGE: " + woosh);
+        this.props.navigation.navigate('CodeDisplay',{woosh});
     }
 
     whooshBitsRedeemed = () => {
-        Alert.alert("Your QR code has been generated!");
+        // Alert.alert("Your QR code has been generated!");
         this.setState({
             isLoading: true,
             redeemPressed: true
         })
-        // this.redeemPointsHandler();
-        //var whooshBitsString = whooshBits;
     }
 
     render() {
-        if (this.state.redeemPressed == true) {
-            return (
-                <CodeDisplay whooshBitsValue={this.state.whooshBitsValue} />
-            )
-        }
         return (
             <ScrollView style={styles.masterView}>
                 <View style={styles.infoStyle}>
@@ -53,15 +48,15 @@ export default class Redeem extends Component {
                     <Text>Go ahead and enter the number of points you want to redeem below and then hit the redeem button!</Text>
                     <Text>Then, show the QR code to an attendant to approve your redeem points request!</Text>
                 </View>
-
+                
                 <Form style={styles.formView}>
                     <Item stackedLabel>
                         <Label>Whoosh Bits to Redeem?</Label>
-                        <Input onChangeText={(points => this.redeemPointsHandler(points))} name="whooshBits" />
+                        <Input onChangeText={(w)=>{(this.redeemPointsUpdater(w))}} name="whooshBits" />
                         {console.log('Whoosh Bits value entered: ' + this.state.whooshBitsValue)}
                     </Item>
                     <TouchableOpacity
-                        onPress={this.whooshBitsRedeemed}
+                        onPress={() => this.displayQRCode()}
                         style={styles.button}
                     >
                         <Text style={styles.buttonText}>{this.state.isLoading ? 'Redeeming...' : 'Redeem Whoosh Bits!'}</Text>
@@ -89,9 +84,6 @@ const styles = StyleSheet.create({
         color: '#E98300',
         fontSize: 16,
         fontWeight: '200'
-        // borderWidth: 0.5,
-        // borderRadius: 10,
-        // padding: 10
     },
     masterView: {
         backgroundColor: '#FFFFFF',
@@ -101,6 +93,5 @@ const styles = StyleSheet.create({
     },
     infoStyle: {
         textAlign: "center",
-        textColor: "#000000"
     }
 });
