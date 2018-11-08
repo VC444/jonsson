@@ -21,11 +21,33 @@ export default class Home extends Component {
     }
   }
 
+  studentUser = () => 
+  {
+    console.log('Current Student Pressed!')
+  }
+
+  alumniUser = () =>
+  {
+    console.log('Alumni Pressed!')
+  }
+
   async componentDidMount() {
+    
+    Alert.alert(
+      'I am a ...',
+      'Please choose one of the options below. It will help us provide you with the most relevant news, events, & jobs!',
+      [
+        {text: 'Current Student', onPress: () => this.studentUser() },
+        {text: 'Alumnus', onPress: () => this.alumniUser()},
+      ],
+      { cancelable: false }
+    )
+    
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
+
     this.setState({
       firstName: await AsyncStorage.getItem('firstName'),
       lastName: await AsyncStorage.getItem('lastName'),
