@@ -82,7 +82,7 @@ export default class Help extends Component {
         else {
             Alert.alert(
                 'Oops!',
-                'Press SUBMIT buttona after entering your message.',
+                'Press the SUBMIT button after entering your message.',
                 [
                     {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 ],
@@ -137,7 +137,7 @@ export default class Help extends Component {
 
                     <Form style={styles.formView}>
                         <Item stackedLabel>
-                            <Label>Enter your email</Label>
+                            <Label>Email ID (@utdallas.edu is preferred!)</Label>
                             <Input value={this.state.email} onChangeText={(e)=>{this.handleEmailChange(e)}} name="email"/>
                         </Item>
                         <Item stackedLabel>
@@ -149,7 +149,7 @@ export default class Help extends Component {
                             onPress={this.feedbackSubmitted}
                             style={styles.button}
                         >
-                            <Text style={styles.buttonText}>{this.state.isLoading?'Submiting Please wait!':'Submit'}</Text>
+                            <Text style={styles.buttonText}>{this.state.isLoading?'Submitting... Give Us A Sec!':'Submit'}</Text>
                         </TouchableOpacity>
 
                     </Form>

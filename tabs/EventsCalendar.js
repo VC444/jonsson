@@ -143,7 +143,7 @@ console.log(difference);
                     // Enable or disable scrolling of calendar list
                     scrollEnabled={true}
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-                    minDate={stringDate}
+                    //minDate={stringDate}
                     // By default, agenda dates are marked if they have at least one item, but you can override this if needed
                     markedDates={this.state.marked}
                     //This attribute enables multiple dots on a single date
@@ -163,7 +163,7 @@ console.log(difference);
                             if (hasEvent) {
                                 this.props.navigation.navigate("Agenda",{day});
                             } else {
-                                alert('Aw Snap! We dont have any events to show for this date. Sorry!');
+                                alert('Aw Snap! We don\'t have any events to show for this date. Sorry!');
                             }
                             // var dateString = JSON.stringify(day.dateString)
                         
