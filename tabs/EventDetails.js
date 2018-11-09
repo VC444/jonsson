@@ -110,7 +110,8 @@ export default class EventDetails extends Component {
             });
             this.setState({ rsvpState: true });
           }}>
-          <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-checkmark-circle' style={{ fontSize: 14, color: '#ffffff' }} /> RSVP </Text>
+          <Text style={{ fontSize: 14, fontWeight: '500' }}>
+          <Icon name='ios-checkmark-circle' style={{ fontSize: 14, color: '#ffffff' }} />{"  "} RSVP </Text>
         </Button>
       )
     }
@@ -150,11 +151,11 @@ export default class EventDetails extends Component {
               </Body>
             </CardItem>
             <CardItem>
-            <View style={{flex:1,justifyContent: "center",alignItems: "center"}}>
-            <Text style={{fontWeight:"bold",fontSize: 20}}
+            <View style={{flex:1,justifyContent: "center",alignItems: "center", paddingVertical: 8, backgroundColor: "#c75b12" }}>
+            <Text style={{fontWeight:"bold",fontSize: 14, color: '#FFFFFF'}}
             onPress={(yourData) => this._handlePress(this.props.navigation.state.params.rowData.eventLocation)}>
-            Take Me There! {"  "} {"  "}
-           <Icon name='ios-navigate' style={{ fontSize: 50}} />
+            <Icon type="Entypo" name='location' style={{ fontSize: 20, color: '#FFFFFF'}} />
+            {"  "} OPEN IN MAPS!
             </Text>
           </View>
             </CardItem>

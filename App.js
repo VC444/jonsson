@@ -26,7 +26,7 @@ import Agenda from './tabs/Agenda';
 import Qrcode from './tabs/Qrcode';
 import Rsvp from './tabs/Rsvp';
 import Redeem from './tabs/Redeem';
-import CodeDisplay from './tabs/CodeDisplay'
+import CodeDisplay from './tabs/CodeDisplay';
 
 import * as firebase from 'firebase';
 

@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import { Container, Header, Content, Accordion, Form, Item, Input, Label } from "native-base";
 import CodeDisplay from './CodeDisplay';
 
@@ -17,8 +17,17 @@ export default class Redeem extends Component {
             redeemWhooshBits: false,
             whooshBitsValue: '0',
             redeemPressed: false,
+            userID: 'init',
         };
     }
+    
+      async componentDidMount() {
+    
+        this.setState({
+            userID: await AsyncStorage.getItem('userID'),
+          });
+        
+        }
 
     redeemPointsUpdater(w) {
         this.setState({
@@ -28,8 +37,10 @@ export default class Redeem extends Component {
 
     displayQRCode() {
         var woosh = this.state.whooshBitsValue;
+        var ourUserID = this.state.userID;
         console.log("FROM REDEEM PAGE: " + woosh);
-        this.props.navigation.navigate('CodeDisplay',{woosh});
+        console.log("FROM REDEEM PAGE USER ID: " + ourUserID);
+        this.props.navigation.navigate('CodeDisplay',{woosh, ourUserID});
     }
 
     whooshBitsRedeemed = () => {
