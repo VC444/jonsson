@@ -44,19 +44,7 @@ export default class Events extends Component {
   gotData = (data) => {
     const { goBack } = this.props.navigation;
     var dates = data.val()
-    // ErrorUtils.setGlobalHandler(function () {
-    //   // your handler here
-    //   Alert.alert(
-    //     'Aw Snap!',
-    //     "We don't have any events to show for this date. Sorry! \t :(",
-    //     [
 
-
-    //       { text: 'Back to Calendar', onPress: () => goBack(null) }
-    //     ],
-    //     { cancelable: false }
-    //   )
-    // });
     console.log("The Dates by child: " + JSON.stringify(dates))
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 

@@ -19,12 +19,47 @@ export default class Qrcode extends Component {
   };
 
   _handleBarCodeRead = data => {
-    Alert.alert(
-      'Scan successful!',
-      JSON.stringify(data)
-    );
-    this.props.navigation.pop();
+    
+     if (true)
+     {
+       //var data1 = 'userID: ' + userID;
+      // var data2 = 'Whoosh Bits: ' + whooshBits;
+      Alert.alert(
+        'Admin Approval',
+        // 'Please approve the following redeem request:',
+        'UserID: somethingGoesHere \n WhooshBits: somethingElseHere',
+        // JSON.stringify(data1),
+        // JSON.stringify(data2),
+        [
+          
+          {text: 'Deny', style: 'cancel', onPress: () => this.denyWhooshBitsRedeem()},
+          {text: 'Approve', onPress: () => this.approveWhooshBitsRedeem()},
+        ],
+        { cancelable: false }
+      )
+     }
+    else
+    {
+      Alert.alert(
+        'Aw Snap!',
+        'To redeem Whoosh Bits, please show the QR code to an approved event coordinator.',
+        [
+          {text: 'OK'},
+        ],
+        { cancelable: false }
+      )
+    }
+    
+
   };
+
+  approveWhooshBitsRedeem = whooshBits => {
+    console.log("WHOOSH BITS APPROVED!");
+  }
+
+  denyWhooshBitsRedeem = whooshBits => {
+    console.log("WHOOSH BITS DENIED!");
+  }
 
   render() {
     return (
