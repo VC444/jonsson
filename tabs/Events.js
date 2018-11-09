@@ -75,27 +75,6 @@ export default class Events extends Component {
         </Button>
   )
 });
-  /*
-  static navigationOptions = {
-    headerRight:
-      <Button transparent onPress={console.log("the props are " + this.props)}>
-        <Icon name='ios-calendar-outline' />
-      </Button>,
-    tabBarLabel: 'Events',
-    tabBarIcon: ({ tintcolor }) => (
-      <Icon
-        name='ios-calendar-outline'
-        color={tintcolor} />
-    )
-  }
-  */
-
-  /* This function is executed when the calendar icon is pressed
-  calendarIconPressed = () => {
-    console.log('calendarIconPressed function fired');
-    this.props.navigation.navigate('EventsCalendar');
-  }
-  */
 
   render() {
     if (this.state.isLoading) {

@@ -39,7 +39,7 @@ export default class EventDetails extends Component {
         var stringifiedEvent = JSON.stringify(eventData);
         var parsedEvent = JSON.parse(stringifiedEvent);
         console.log('updated query result is ' + stringifiedEvent);
-        console.log('event key isss' + eventKey);
+        console.log('event key is' + eventKey);
 
         var usersRsvp = parsedEvent.usersRsvp;
         for (var userId in usersRsvp) {
@@ -86,7 +86,7 @@ export default class EventDetails extends Component {
             });
             this.setState({ rsvpState: false });
           }}>
-          <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-close-circle' style={{ fontSize: 14, color: '#ffffff' }} /> Cancel RSVP </Text>
+          <Text style={{ fontSize: 14, fontWeight: '500' }}> <Icon name='ios-close-circle' style={{ fontSize: 14, color: '#ffffff' }} />{"  "} Cancel RSVP </Text>
         </Button>
       )
     } else {
