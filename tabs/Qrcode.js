@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Alert } from 'react-native';
+import { Text, View, StyleSheet, Alert, AsyncStorage } from 'react-native';
 import { Constants, BarCodeScanner, Permissions } from 'expo';
 
 export default class Qrcode extends Component {
@@ -20,16 +20,19 @@ export default class Qrcode extends Component {
 
   _handleBarCodeRead = data => {
     
-     if (true)
+    var temp = JSON.stringify(data);
+    var splitData = temp.split(',');
+    console.log("Mode (app/web): " + splitData[1]);
+    console.log("Secret Key: " + splitData[2]);
+    console.log("Whoosh Bits: " + splitData[3]);
+
+     if (splitData[0] == '"web') //YET TO ADD CHECK FOR FIREBASE FOR ADMIN
      {
-       //var data1 = 'userID: ' + userID;
-      // var data2 = 'Whoosh Bits: ' + whooshBits;
+       var data1 = 'userID: someUserID';  //YET TO USE ASYNCSTORAGE HERE
+      var data2 = 'Whoosh Bits: ' + splitData[2];
       Alert.alert(
         'Admin Approval',
-        // 'Please approve the following redeem request:',
-        'UserID: somethingGoesHere \n WhooshBits: somethingElseHere',
-        // JSON.stringify(data1),
-        // JSON.stringify(data2),
+        'Please approve the following redeem request: \n' + data1 + '\n ' + data2,  //
         [
           
           {text: 'Deny', style: 'cancel', onPress: () => this.denyWhooshBitsRedeem()},
