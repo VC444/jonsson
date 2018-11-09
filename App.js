@@ -20,7 +20,6 @@ import ArticleDetails from './tabs/ArticleDetails';
 import EventsCalendar from './tabs/EventsCalendar';
 import DrawerScreen from './tabs/DrawerScreen';
 import Rewards from './tabs/Rewards';
-import Settings from './tabs/Settings';
 import Help from './tabs/Help';
 import Agenda from './tabs/Agenda';
 import Qrcode from './tabs/Qrcode';
@@ -63,7 +62,6 @@ export const HomeFeedStack = createStackNavigator({
   },
   Redeem: { screen: Redeem },
   CodeDisplay: {screen: CodeDisplay},
-  Settings: { screen: Settings },
   Help: {
     screen: Help,
     navigationOptions: ({ navigation }) => ({
