@@ -30,10 +30,6 @@ export default class DrawerScreen extends Component {
     console.log('navigateToRewardsPage has been executed');
     this.props.navigation.navigate("Rewards");
   }
-  navigateToSettingsPage = () => {
-    console.log('navigateToSettingsPage has been executed');
-    this.props.navigation.navigate("Settings");
-  }
   navigateToHelpPage = () => {
     console.log('navigateToHelpPage has been executed');
     this.props.navigation.navigate("Help");
@@ -163,13 +159,6 @@ export default class DrawerScreen extends Component {
               <Icon type="FontAwesome" name='dollar' size={10} />
               <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
                 Donate Now
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.sidebar}>
-              <Icon name='settings' size={10} />
-              <Text style={styles.settingsStyle} onPress={() => this.navigateToSettingsPage()}>
-                Settings
               </Text>
             </TouchableOpacity>
 
