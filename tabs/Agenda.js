@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 
-import { Alert, ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button } from 'react-native';
+import { Alert, ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button, AsyncStorage } from 'react-native';
 
 //import { createBottomTabNavigator, createStackNavigator } from "react-navigation";
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Left, Body, Right, H1, H2, H3 } from 'native-base';
@@ -27,16 +27,23 @@ export default class Events extends Component {
     this.state = {
       isLoading: true,
       refreshing: false,
+      userIdLoading: true,
+      userID: 'SuperstarRajani',
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
     var hardcodeDate = this.props.navigation.state.params.day.dateString
     var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
 
 
     dateOfEvent.on('value', this.gotData, this.errData);
+    
+    this.setState({
+      userID: await AsyncStorage.getItem('userID'),
+      userIdLoading: false,
+    });
   }
 
 
@@ -67,11 +74,12 @@ export default class Events extends Component {
 
   qrCodePressed = () => {
     console.log('qrcode button pressed');
-    this.props.navigation.navigate('Qrcode');
+    var theUserID = this.state.userID;
+    this.props.navigation.navigate('Qrcode', {theUserID});
   }
 
   render() {
-    if (this.state.isLoading) {
+    if (this.state.isLoading || this.state.userIdLoading) {
       return (
         <View style={{ flex: 1, paddingTop: 20 }}>
           <ActivityIndicator />
