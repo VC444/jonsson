@@ -178,6 +178,8 @@ export default class DrawerScreen extends Component {
               </Text>
             </TouchableOpacity>
 
+            <Text style={styles.buildStyle}>Build Number: 1.0.0</Text>
+
           </View>
         </ScrollView>
       </View>
@@ -258,5 +260,10 @@ const styles = {
     paddingTop: 4,
     paddingBottom: 15,
     backgroundColor: '#393e44',
+  },
+  buildStyle: {
+    paddingLeft: 20,
+    textAlign: 'auto',
+    paddingTop: 50
   }
 }
