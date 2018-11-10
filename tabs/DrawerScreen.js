@@ -30,10 +30,6 @@ export default class DrawerScreen extends Component {
     console.log('navigateToRewardsPage has been executed');
     this.props.navigation.navigate("Rewards");
   }
-  navigateToSettingsPage = () => {
-    console.log('navigateToSettingsPage has been executed');
-    this.props.navigation.navigate("Settings");
-  }
   navigateToHelpPage = () => {
     console.log('navigateToHelpPage has been executed');
     this.props.navigation.navigate("Help");
@@ -167,13 +163,6 @@ export default class DrawerScreen extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}>
-              <Icon name='settings' size={10} />
-              <Text style={styles.settingsStyle} onPress={() => this.navigateToSettingsPage()}>
-                Settings
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.sidebar}>
               <Icon name='help-circle' size={10} />
               <Text style={styles.settingsStyle} onPress={() => this.navigateToHelpPage()}>
                 Help & Feedback
@@ -188,6 +177,8 @@ export default class DrawerScreen extends Component {
                 Log Out
               </Text>
             </TouchableOpacity>
+
+            <Text style={styles.buildStyle}>Build Number: 1.0.0</Text>
 
           </View>
         </ScrollView>
@@ -269,5 +260,10 @@ const styles = {
     paddingTop: 4,
     paddingBottom: 15,
     backgroundColor: '#393e44',
+  },
+  buildStyle: {
+    paddingLeft: 20,
+    textAlign: 'auto',
+    paddingTop: 50
   }
 }
