@@ -178,7 +178,7 @@ export default class DrawerScreen extends Component {
               </Text>
             </TouchableOpacity> */}
 
-            <Text style={styles.buildStyle}>Build Number: 1.0.0</Text>
+            <Text style={styles.buildStyle}>Build Number: 2.1.6</Text>
 
           </View>
         </ScrollView>

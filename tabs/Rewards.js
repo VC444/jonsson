@@ -34,7 +34,7 @@ export default class Rewards extends Component {
             isLoading: false
           });
 
-        var rewardRefString = 'Rewards/' + this.state.userID;
+        var rewardRefString = 'Users/' + this.state.userID;
         console.log('rewardsRefString is ' + rewardRefString);
         var rewardsRef = firebase.database().ref(rewardRefString);
         console.log('rewardsRef is ' + rewardsRef);
