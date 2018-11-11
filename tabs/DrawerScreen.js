@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
-import { ScrollView, Text, View, Linking, TouchableOpacity, ActivityIndicator, AsyncStorage } from 'react-native';
+import { ScrollView, Text, View, Linking, TouchableOpacity, ActivityIndicator, AsyncStorage, ImageBackground, Image } from 'react-native';
 import { DrawerActions } from 'react-navigation';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, Icon, ListItem, Item, Input, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
 import { Permissions, Notifications } from 'expo';
@@ -85,11 +85,11 @@ export default class DrawerScreen extends Component {
     let userID = await this.state.userID;
 
     let userRef = firebase.database().ref('Users/' + userID);
-    userRef.set({ 
+    userRef.set({
       notificationToken: token
     }).then(function () {
-        console.log('Synchronization succeeded');
-      })
+      console.log('Synchronization succeeded');
+    })
       .catch(function (error) {
         console.log('Synchronization failed' + error);
       });
@@ -124,23 +124,25 @@ export default class DrawerScreen extends Component {
       <View>
         <ScrollView>
           <View>
-            <View style={styles.photo} >
-              <Thumbnail large source={{ uri: this.state.userPhoto.toString() }} />
-            </View>
+              <View>
+                <ImageBackground style={styles.backdrop} source={require('../images/image7.jpg')}>
+                <View style={styles.photo} >
+                  <Thumbnail large source={{ uri: this.state.userPhoto.toString() }} />
+                </View>
 
-            <View style={styles.userInfo}>
-              <Text style={{ fontSize: 16, fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
-            </View>
+                <View style={styles.userInfo}>
+                  <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()}{" "} {this.state.lastName.toString()}</Text>
+                </View>
 
-            <View style={styles.userInfo}>
-              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
-            </View>
+                <View style={styles.industryInfo}>
+                  <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
+                </View>
 
-            <View style={styles.industryInfo}>
-              <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
-            </View>
-
-
+                <View style={styles.industryInfo}>
+                  <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
+                </View>
+                </ImageBackground>
+              </View>
             <View style={styles.sidebarDate}>
               <Text style={styles.date} onPress={this.navigateToScreen()}>
                 {day + ', ' + month + ' ' + dateNum}
@@ -176,13 +178,13 @@ export default class DrawerScreen extends Component {
               <Text style={styles.logOutText} onPress={this.navigateToScreen()}>
                 Log Out
               </Text>
-            </TouchableOpacity> */}
-
-            <Text style={styles.buildStyle}>Build Number: 2.1.6</Text>
-
+            </TouchableOpacity>
+            <View style={styles.bottom}>
+              <Text style={styles.buildStyle}>Build Number: 2.1.6</Text>
+            </View>
           </View>
         </ScrollView>
-      </View>
+      </View >
     );
   }
 }
@@ -192,6 +194,13 @@ DrawerScreen.propTypes = {
 };
 
 const styles = {
+
+  backdrop: {
+    width: '100%',
+    height: '100%',
+    flex: 1
+  },
+
   sidebar: {
 
     padding: 14,
@@ -205,8 +214,8 @@ const styles = {
   },
   date: {
     fontWeight: 'bold',
-    fontSize: 17,
-    paddingTop: 20
+    fontSize: 19,
+    paddingTop: 10
   },
   logOut: {
     color: 'red',
@@ -235,7 +244,7 @@ const styles = {
   },
   backdropView: {
     paddingTop: 10,
-    width: 400,
+    width: 200,
     backgroundColor: 'rgba(0,0,0,0)',
     paddingLeft: 15,
     alignItems: 'center',
@@ -245,25 +254,30 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 30,
-    paddingBottom: 5,
-    backgroundColor: '#393e44',
+    paddingBottom: 3,
   },
   userInfo: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 7,
-    backgroundColor: '#393e44',
+    paddingTop: 5,
+    paddingBottom: 5
   },
   industryInfo: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 4,
-    paddingBottom: 15,
-    backgroundColor: '#393e44',
+    paddingBottom: 4,
   },
+
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginTop: 280
+  },
+
   buildStyle: {
-    paddingLeft: 20,
-    textAlign: 'auto',
-    paddingTop: 50
+    textAlign: 'center',
+    bottom: 0,
+    color: 'grey'
   }
 }
