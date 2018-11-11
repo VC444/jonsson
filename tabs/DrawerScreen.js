@@ -171,7 +171,7 @@ export default class DrawerScreen extends Component {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.sidebar}
+            {/* <TouchableOpacity style={styles.sidebar}
               transparent onPress={() => navigation.navigate('Profile')
               }>
               <Icon style={styles.logOut} type="Ionicons" name='ios-log-out' size={10} />
