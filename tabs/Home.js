@@ -166,7 +166,7 @@ export default class Home extends Component {
             <Card>
               <CardItem bordered style={{ borderLeftColor: '#0039A6', borderLeftWidth: 2 }}>
                 <Body>
-                  <Text style={{ fontSize: 22, fontWeight: '600', color: '#343d46' }}><Icon name='md-globe' style={{ fontSize: 22, color: '#0039A6' }} /> {dayofweek}, {month} {day}</Text>
+                  <Text style={{ fontSize: 22, fontWeight: '600', color: '#C75B12' }}><Icon name='calendar' style={{ fontSize: 22, color: '#C75B12' }} /> {" "}{dayofweek}, {month} {day}</Text>
                 </Body>
               </CardItem>
             </Card>

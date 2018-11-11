@@ -92,7 +92,7 @@
           <Card>
             <CardItem>
               <Body>
-                <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800'}}><Icon name='md-trending-up' style={{ fontSize: 32, color: '#c75b12'}}/>    Jonsson|Careers</Text>
+                <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800'}}><Icon name='md-trending-up' style={{ fontSize: 26, color: '#c75b12'}}/> {" "}Jonsson | Careers</Text>
               </Body>
             </CardItem>
           </Card>
