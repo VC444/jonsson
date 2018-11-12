@@ -10,6 +10,7 @@ import * as firebase from 'firebase';
 
 import firebaseApp from './EventDetails';
 import config from './EventDetails'
+import moment from 'moment';
 
 export default class Rewards extends Component {
 
@@ -90,8 +91,12 @@ export default class Rewards extends Component {
           this.props.navigation.navigate('Redeem');
       }
 
-
-
+      utcToLocal = (time) => {
+        var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm:ss a");
+        var splitTime = localTime.split(',');
+        console.log(splitTime[2]);
+        return splitTime[2];
+      }
 
     render() {
 
@@ -193,7 +198,7 @@ export default class Rewards extends Component {
         <ScrollView>
             <View style={{width: '100%',flexGrow:1}}>
                 <Text style={{color: '#008542'}}>{events.eventTitle}</Text>
-                <Text style={{color: '#008542', paddingTop:10}}>{events.eventDate}</Text>
+                <Text style={{color: '#008542', paddingTop:10}}>{this.utcToLocal(events.eventDate.toString())}</Text>
             </View>
             <View style={{marginTop: 15, paddingLeft: 300, flex:0, width: '100%'}}>
                 <Text style={{color: '#008542',fontWeight: 'bold', fontSize: 16}}>{events.attandingCount}</Text>
