@@ -4,6 +4,7 @@
  */
 
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import { Alert, ActivityIndicator, Image, ListView, FlatList, StyleSheet, View, Linking, RefreshControl, TextInput, ImageBackground, TouchableHighlight, TouchableOpacity, Button, AsyncStorage } from 'react-native';
 
@@ -39,7 +40,7 @@ export default class Events extends Component {
 
 
     dateOfEvent.on('value', this.gotData, this.errData);
-    
+
     this.setState({
       userID: await AsyncStorage.getItem('userID'),
       userIdLoading: false,
@@ -75,7 +76,14 @@ export default class Events extends Component {
   qrCodePressed = () => {
     console.log('qrcode button pressed');
     var theUserID = this.state.userID;
-    this.props.navigation.navigate('Qrcode', {theUserID});
+    this.props.navigation.navigate('Qrcode', { theUserID });
+  }
+
+  utcToLocal = (time) => {
+    var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm:ss a");
+    var splitTime = localTime.split(',');
+    console.log(splitTime[2]);
+    return splitTime[2];
   }
 
   render() {
@@ -128,6 +136,9 @@ export default class Events extends Component {
                           <Text style={{ fontWeight: '800', fontSize: 16 }}>{rowData.eventTitle}</Text>
                           <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5 }}>
                             <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {monthNames[parseInt(rowData.eventDate.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(rowData.eventDate.toString().substr(8, 2))}, {rowData.eventDate.toString().substr(0, 4)}
+                          </Text>
+                          <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5 }}>
+                            <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {this.utcToLocal(rowData.eventDate.toString())}
                           </Text>
                           <Text style={{ fontWeight: '100', fontSize: 12, color: '#757575', paddingTop: 5 }}><Icon name='ios-pin-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {rowData.eventLocation}</Text>
                           <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>
