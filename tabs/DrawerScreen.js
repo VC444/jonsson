@@ -131,7 +131,8 @@ export default class DrawerScreen extends Component {
                 </View>
 
                 <View style={styles.userInfo}>
-                  <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()}{" "} {this.state.lastName.toString()}</Text>
+                  <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()}</Text>
+                  <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.lastName.toString()}</Text>
                 </View>
 
                 <View style={styles.industryInfo}>
@@ -272,7 +273,7 @@ const styles = {
   bottom: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginTop: 280
+    marginTop: 80
   },
 
   buildStyle: {

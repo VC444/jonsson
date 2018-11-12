@@ -61,6 +61,7 @@ export default class Qrcode extends Component {
      }
     else if (this.state.mode == 'web')
     {
+
       Alert.alert(
         this.state.whooshBits + ' Whoosh Bits Redeemed!',
         'Thanks for attending! \n \nWe look forward to seeing you again!' ,  
