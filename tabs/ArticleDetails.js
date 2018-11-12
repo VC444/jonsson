@@ -91,7 +91,7 @@
     },
     contentStyle: {
        fontWeight: '300',
-       fontSize: 11,
+       fontSize: 17,
     },
    nameStyle: {
       fontWeight: '600',
