@@ -9,6 +9,7 @@ import { createBottomTabNavigator, createStackNavigator } from "react-navigation
 import { Container, Header, Content, Card, Col, CardItem, Grid, Thumbnail, List, ListItem, Icon, Item, Input, Text, Title, Button, Left, Body, Right, Row, H1, H2, H3 } from 'native-base';
 import * as firebase from 'firebase';
 import { Linking } from 'react-native';
+import moment from 'moment';
 
 
 export default class EventDetails extends Component {
@@ -111,18 +112,29 @@ export default class EventDetails extends Component {
             this.setState({ rsvpState: true });
           }}>
           <Text style={{ fontSize: 14, fontWeight: '500' }}>
-          <Icon name='ios-checkmark-circle' style={{ fontSize: 14, color: '#ffffff' }} />{"  "} RSVP </Text>
+            <Icon name='ios-checkmark-circle' style={{ fontSize: 14, color: '#ffffff' }} />{"  "} RSVP </Text>
         </Button>
       )
     }
   }
-// This is the method for map url
+  // This is the method for map url
   _handlePress = (url) => {
     console.log("THE URL IS:" + url)
-    Linking.openURL("https://www.google.com/maps/search/?api=1&query="+url);
+    Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + url);
   };
 
+  utcToLocal = (time) => {
+    var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm:ss a");
+    var splitTime = localTime.split(',');
+    console.log(splitTime[2]);
+    return splitTime[2];
+  }
+
   render() {
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
 
     if (this.state.isLoading) {
       return (
@@ -143,6 +155,12 @@ export default class EventDetails extends Component {
                 <Text style={styles.hostStyle}>{this.props.navigation.state.params.rowData.hostedBy}</Text>
               </Body>
             </CardItem>
+            <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5, paddingLeft: 20 }}>
+              <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {monthNames[parseInt(this.props.navigation.state.params.rowData.eventDate.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(this.props.navigation.state.params.rowData.eventDate.toString().substr(8, 2))}, {this.props.navigation.state.params.rowData.eventDate.toString().substr(0, 4)}
+            </Text>
+            <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5, paddingLeft: 20 }}>
+              <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {this.utcToLocal(this.props.navigation.state.params.rowData.eventDate.toString())}
+            </Text>
             <CardItem>
               <Body>
                 <Text style={{ fontSize: 18, fontWeight: '800' }}>Details</Text>
@@ -151,13 +169,13 @@ export default class EventDetails extends Component {
               </Body>
             </CardItem>
             <CardItem>
-            <View style={{flex:1,justifyContent: "center",alignItems: "center", paddingVertical: 8, backgroundColor: "#c75b12" }}>
-            <Text style={{fontWeight:"bold",fontSize: 14, color: '#FFFFFF'}}
-            onPress={(yourData) => this._handlePress(this.props.navigation.state.params.rowData.eventLocation)}>
-            <Icon type="Entypo" name='location' style={{ fontSize: 20, color: '#FFFFFF'}} />
-            {"  "} OPEN IN MAPS!
+              <View style={{ flex: 1, justifyContent: "center", alignItems: "center", paddingVertical: 8, backgroundColor: "#c75b12" }}>
+                <Text style={{ fontWeight: "bold", fontSize: 14, color: '#FFFFFF' }}
+                  onPress={(yourData) => this._handlePress(this.props.navigation.state.params.rowData.eventLocation)}>
+                  <Icon type="Entypo" name='location' style={{ fontSize: 20, color: '#FFFFFF' }} />
+                  {"  "} OPEN IN MAPS!
             </Text>
-          </View>
+              </View>
             </CardItem>
             <CardItem>
               <Body>
