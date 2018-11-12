@@ -178,7 +178,7 @@ export default class DrawerScreen extends Component {
               <Text style={styles.logOutText} onPress={this.navigateToScreen()}>
                 Log Out
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity > */}
             <View style={styles.bottom}>
               <Text style={styles.buildStyle}>Build Number: 2.1.6</Text>
             </View>
