@@ -92,7 +92,7 @@ export default class DrawerScreen extends Component {
     let userRef = firebase.database().ref('Users/' + userID);
     userRef.set({
       notificationToken: token,
-      firsName: firstName,
+      firstName: firstName,
       lastName: lastName
     }).then(function () {
       console.log('Synchronization succeeded');
