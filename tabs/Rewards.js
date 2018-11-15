@@ -92,7 +92,7 @@ export default class Rewards extends Component {
       }
 
       utcToLocal = (time) => {
-        var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm:ss a");
+        var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm a");
         var splitTime = localTime.split(',');
         console.log(splitTime[2]);
         return splitTime[2];
@@ -127,7 +127,7 @@ export default class Rewards extends Component {
         }}>
     
             <View style={{
-                width: '50%', height: '16%', backgroundColor: 'white'}}>
+                width: '50%', height: '15%', backgroundColor: 'white'}}>
                 <Text style={{
                     textAlign:'center', 
                     fontSize: 17, 
@@ -139,7 +139,7 @@ export default class Rewards extends Component {
             </View>
 
             <View style={{
-                width: '50%', height: '16%', backgroundColor: 'white'}}>
+                width: '50%', height: '15%', backgroundColor: 'white'}}>
                 
                 <Text style={{
                     textAlign:'center', 
@@ -153,11 +153,10 @@ export default class Rewards extends Component {
             
         <TouchableOpacity onPress={this.onRedeemPressed}
         style={{
-            width: '100%', height: '14%', backgroundColor: 'white'}}>
+            width: '100%', backgroundColor: 'white'}}>
             <Text style={{
                     textAlign:'center', 
-                    fontSize: 32, 
-                    padding: 25,
+                    fontSize: 20,
                     color: '#c75b12',
                     fontWeight: 'bold'}}>
                     Redeem Rewards!
