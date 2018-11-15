@@ -8,12 +8,20 @@ export default class Qrcode extends Component {
     hasCameraPermission: null,
     isBarcodeRead: true,
     mode: '',
+    ourEventID: '',
     secretKey: '',
     whooshBits: '0',
+    hasRedeemed: false,
+    usrLinkedInID: '',
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this._requestCameraPermission();
+
+    this.setState({
+      emailID: await AsyncStorage.getItem('email'),
+      //emailLoading: false,
+    });
   }
 
   _requestCameraPermission = async () => {
@@ -37,13 +45,17 @@ export default class Qrcode extends Component {
     console.log("TEMP3 DATA[1]: " + temp3[1]);
     var splitData = temp3[1].split(',');
     console.log("Mode (app/web): " + splitData[0]);
-    console.log("Secret Key: " + splitData[1]);
-    console.log("Whoosh Bits: " + splitData[2]);
+    console.log("Event ID: " + splitData[1]);
+    console.log("Secret Key: " + splitData[2]);
+    console.log("Whoosh Bits: " + splitData[3]);
     this.state.mode = splitData[0];
-    this.state.secretKey = splitData[1];
-    this.state.whooshBits = splitData[2];
+    this.state.ourEventID = splitData[1];
+    this.state.secretKey = splitData[2];
+    this.state.whooshBits = splitData[3];
+    console.log("EMAIL ID FROM QRCODE.JS: " + this.state.emailID)
 
     var data1 = 'userID: ' + this.props.navigation.state.params.theUserID.toString();  //COMES FROM Agenda.js
+    this.state.usrLinkedInID = this.props.navigation.state.params.theUserID.toString();
     var data2 = 'Whoosh Bits: ' + this.state.whooshBits;
 
      if (this.state.mode == 'app') //YET TO ADD CHECK FOR FIREBASE FOR ADMIN
@@ -59,8 +71,42 @@ export default class Qrcode extends Component {
         { cancelable: false }
       )
      }
-    else if (this.state.mode == 'web')
+    else if (this.state.mode == 'web' && (!this.state.hasRedeemed))
     {
+      //this.state.hasRedeemed = true;
+      let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
+      //var usersAttended = {usrLinkedInID: this.state.emailID};
+      // let userRef = firebase.database().ref('Users/' + userID);
+      // userRef.set({
+      //   notificationToken: token
+      // }).then(function () {
+      //   console.log('Synchronization succeeded');
+      // })
+      //   .catch(function (error) {
+      //     console.log('Synchronization failed' + error);
+      //   });
+      var jabba = this.state.usrLinkedInID;
+      userHasAttendedRef.set({
+        //usersAttended
+        [jabba]: this.state.emailID
+      }).then(function () {
+        console.log('User added to attended list!');
+      })
+        .catch(function (error) {
+          console.log('User not added to attended list!' + error);
+        });
+
+      // userHasAttendedRef.transaction(function(usrLinkedInID) {
+      //   return this.state.emailID ;
+      // }).then(function () {
+      //     console.log('USER EMAIL ID UPDATED IN FIREBASE!');
+      //   })
+      //   .catch(function (error) {
+      //     console.log('USER EMAIL ID NOT UPDATED: ' + error);
+      //   });
+
+
+
       Alert.alert(
         this.state.whooshBits + ' Whoosh Bits Redeemed!',
         'Thanks for attending! \n \nWe look forward to seeing you again!' ,  
@@ -91,9 +137,23 @@ export default class Qrcode extends Component {
     console.log("WHOOSH BITS DENIED!");
   }
 
+  getEventData = (data) => {
+    var eventsObject = data.val()
+    var eventID = Object.keys(eventsObject)
+    console.log(eventID[0]);
+    console.log(eventID[1]);
+}
+
+errData = (err) => {
+    console.log(err);
+}
+
   addWhooshBitsToUser() {
     console.log("ADDING WHOOSH BITS TO USER")
     console.log('USER ID FROM QR CODE PAGE: ' + this.props.navigation.state.params.theUserID.toString())
+
+    var eventObjectData = firebase.database().ref("Events/");
+    eventObjectData.on('value', this.getEventData, this.errData);
 
     let numEventRef = firebase.database().ref('Users/' + this.props.navigation.state.params.theUserID.toString() + '/numOfEvents/');
     let pointsRef = firebase.database().ref('Users/' + this.props.navigation.state.params.theUserID.toString() + '/points/');

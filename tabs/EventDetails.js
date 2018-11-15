@@ -124,7 +124,7 @@ export default class EventDetails extends Component {
   };
 
   utcToLocal = (time) => {
-    var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm:ss a");
+    var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm a");
     var splitTime = localTime.split(',');
     console.log(splitTime[2]);
     return splitTime[2];
