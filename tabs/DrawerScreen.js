@@ -83,10 +83,17 @@ export default class DrawerScreen extends Component {
     let token = await Notifications.getExpoPushTokenAsync();
     console.log('The updated token is ' + token);
     let userID = await this.state.userID;
+    
+    // get firstname and lastname from state
+    let firstName = await this.state.firstName;
+    let lastName = await this.state.lastName;
 
+    // Writing user's firstname, lastname, and notification token to firebase
     let userRef = firebase.database().ref('Users/' + userID);
     userRef.set({
-      notificationToken: token
+      notificationToken: token,
+      firsName: firstName,
+      lastName: lastName
     }).then(function () {
       console.log('Synchronization succeeded');
     })
@@ -179,7 +186,7 @@ export default class DrawerScreen extends Component {
               <Text style={styles.logOutText} onPress={this.navigateToScreen()}>
                 Log Out
               </Text>
-            </TouchableOpacity > */}
+            </TouchableOpacity> */}
             <View style={styles.bottom}>
               <Text style={styles.buildStyle}>Build Number: 2.1.6</Text>
             </View>
