@@ -4,6 +4,7 @@ import { Constants, BarCodeScanner, Permissions, Location } from 'expo';
 import * as firebase from 'firebase';
 
 export default class Qrcode extends Component {
+
   state = {
     hasCameraPermission: null,
     isBarcodeRead: true,
@@ -13,10 +14,19 @@ export default class Qrcode extends Component {
     whooshBits: '0',
     hasRedeemed: false,
     usrLinkedInID: '',
+    attendedFlag: false,
   };
 
   async componentDidMount() {
     this._requestCameraPermission();
+
+    // navigator.geolocation.getCurrentPosition(position => {
+    //   console.log('lat is ' + position.coords.latitude);
+    //   console.log('long is ' + position.coords.longitude);
+    // });
+
+    // var latlng = Expo.Location.geocodeAsync("800 W Campbell Rd, Richardson, TX 75080");
+    // console.log(latlng);
 
     this.setState({
       emailID: await AsyncStorage.getItem('email'),
@@ -38,16 +48,17 @@ export default class Qrcode extends Component {
   }
 
   _handleBarCodeRead = data => {
-
     var temp = JSON.stringify(data);
     var temp2 = temp.split(':');
     var temp3 = temp2[2].split('\"');
+    var eventId;
     console.log("TEMP3 DATA[1]: " + temp3[1]);
     var splitData = temp3[1].split(',');
     console.log("Mode (app/web): " + splitData[0]);
     console.log("Event ID: " + splitData[1]);
     console.log("Secret Key: " + splitData[2]);
     console.log("Whoosh Bits: " + splitData[3]);
+    eventId = splitData[1];
     this.state.mode = splitData[0];
     this.state.ourEventID = splitData[1];
     this.state.secretKey = splitData[2];
@@ -70,11 +81,30 @@ export default class Qrcode extends Component {
         ],
         { cancelable: false }
       )
-     }
-    else if (this.state.mode == 'web' && (!this.state.hasRedeemed))
-    {
+    }
+    else if (this.state.mode == 'web' && (!this.state.hasRedeemed)) {
+      let userId = this.props.navigation.state.params.theUserID.toString();
+      var userHasAttended;
+
       //this.state.hasRedeemed = true;
+      var jill = this.state.usrLinkedInID;
+      console.log("RAP SONG USER ID: " + this.props.navigation.state.params.theUserID.toString())
       let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
+     // let attendedFlag = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/').snapshot();
+     var testing = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
+     testing.child(userId).once('value', function(snapshot) {
+      var exists = (snapshot.val() !== null) 
+      console.log("DOES EXISTS:" + exists)
+      userHasAttended = exists;
+     });
+      {
+        console.log('User inside loop attended!')
+      }
+      //  {
+      //   // this.state.attendedFlag = snapshot.ref(this.state.emailID).exists();
+      //   console.log('User inside loop attended: ' + this.state.attendedFlag);
+      // });
+      console.log('outside loop: ' + this.state.attendedFlag);
       //var usersAttended = {usrLinkedInID: this.state.emailID};
       // let userRef = firebase.database().ref('Users/' + userID);
       // userRef.set({
@@ -96,6 +126,27 @@ export default class Qrcode extends Component {
           console.log('User not added to attended list!' + error);
         });
 
+
+      if (userHasAttended) {
+        Alert.alert(
+          'You have already scanned the QR code for this event.',
+          'Do not try to cheat the system bruh. \n \nLololol',
+          [
+            { text: 'Damn It', onPress: () => console.log('User tried to cheat the system') },
+          ],
+          { cancelable: false }
+        )
+      } else {
+        Alert.alert(
+          this.state.whooshBits + ' Whoosh Bits Redeemed!',
+          'Thanks for attending! \n \nWe look forward to seeing you again!',
+          [
+            { text: 'Thanks!', onPress: () => this.addWhooshBitsToUser() },
+          ],
+          { cancelable: false }
+        )
+      }
+
       // userHasAttendedRef.transaction(function(usrLinkedInID) {
       //   return this.state.emailID ;
       // }).then(function () {
@@ -104,17 +155,6 @@ export default class Qrcode extends Component {
       //   .catch(function (error) {
       //     console.log('USER EMAIL ID NOT UPDATED: ' + error);
       //   });
-
-
-
-      Alert.alert(
-        this.state.whooshBits + ' Whoosh Bits Redeemed!',
-        'Thanks for attending! \n \nWe look forward to seeing you again!',
-        [
-          { text: 'Thanks!', onPress: () => this.addWhooshBitsToUser() },
-        ],
-        { cancelable: false }
-      )
     }
     else {
       Alert.alert(
@@ -141,11 +181,11 @@ export default class Qrcode extends Component {
     var eventID = Object.keys(eventsObject)
     console.log(eventID[0]);
     console.log(eventID[1]);
-}
+  }
 
-errData = (err) => {
+  errData = (err) => {
     console.log(err);
-}
+  }
 
   addWhooshBitsToUser() {
     console.log("ADDING WHOOSH BITS TO USER")
