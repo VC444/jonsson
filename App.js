@@ -60,7 +60,14 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
-  Redeem: { screen: Redeem },
+  Redeem: {
+    screen: Redeem,
+    navigationOptions: ({ navigation }) => ({
+      title: "Redeem Whoosh Bits",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12' },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+  },
   CodeDisplay: {screen: CodeDisplay},
   Help: {
     screen: Help,

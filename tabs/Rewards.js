@@ -127,7 +127,7 @@ export default class Rewards extends Component {
         }}>
     
             <View style={{
-                width: '50%', height: '15%', backgroundColor: 'white'}}>
+                width: '50%', height: '10%', backgroundColor: 'white'}}>
                 <Text style={{
                     textAlign:'center', 
                     fontSize: 17, 
@@ -139,7 +139,7 @@ export default class Rewards extends Component {
             </View>
 
             <View style={{
-                width: '50%', height: '15%', backgroundColor: 'white'}}>
+                width: '50%', height: '10%', backgroundColor: 'white'}}>
                 
                 <Text style={{
                     textAlign:'center', 
@@ -157,14 +157,27 @@ export default class Rewards extends Component {
             <Text style={{
                     textAlign:'center', 
                     fontSize: 20,
+                    //paddingBottom: 30,
                     color: '#c75b12',
                     fontWeight: 'bold'}}>
-                    Redeem Rewards!
+                    Tap here to
+            </Text>
+            <Text style={{
+                    textAlign:'center', 
+                    fontSize: 30,
+                    paddingBottom: 30,
+                    color: '#c75b12',
+                    fontWeight: 'bold'}}>
+                    Redeem Whoosh Bits!
             </Text>
         </TouchableOpacity>
 
                 
-        <View style={{width: '100%'}}>{
+        <View style={{
+                width: '100%',
+                paddingBottom: 30,
+            }}>
+            {
             <ListView 
             dataSource={this.state.dataSource}
             renderRow={this.renderRow.bind(this)} />

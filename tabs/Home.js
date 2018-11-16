@@ -24,15 +24,39 @@ export default class Home extends Component {
   studentUser = () => 
   {
     console.log('Current Student Pressed!')
+    let userRef = firebase.database().ref('Users/' + this.state.userID + '/');
+    console.log("USER ID FROM STUDENT USER FUNC IN HOME.JS: " + this.state.userID)
+      userRef.update({
+        classification: "student"
+      }).then(function () {
+        console.log('STUDENT CLASSIFICATION SUCCEEDED');
+      })
+        .catch(function (error) {
+          console.log('STUDENT CLASSIFICATION FAILED' + error);
+        });
   }
 
   alumniUser = () =>
   {
     console.log('Alumni Pressed!')
+    let userRef = firebase.database().ref('Users/' + this.state.userID + "/");
+    console.log("USER ID FROM ALUMNI USER FUNC IN HOME.JS: " + this.state.userID)
+      userRef.update({
+        classification: "alumni"
+      }).then(function () {
+        console.log('ALUMNI CLASSIFICATION SUCCEEDED');
+      })
+        .catch(function (error) {
+          console.log('ALUMNI CLASSIFICATION FAILED' + error);
+        });
   }
 
   async componentDidMount() {
-    
+
+    this.setState({
+      userID: await AsyncStorage.getItem('userID'),
+    });
+     
     Alert.alert(
       'I am a ...',
       'Please choose one of the options below. It will help us provide you with the most relevant news, events, & jobs!',
@@ -164,9 +188,9 @@ export default class Home extends Component {
           </View>
           <Content style={{ backgroundColor: '#FFFFFF' }}>
             <Card>
-              <CardItem bordered style={{ borderLeftColor: '#0039A6', borderLeftWidth: 2 }}>
+              <CardItem bordered style={{ borderLeftColor: '#0039A6', borderLeftWidth: 2}}>
                 <Body>
-                  <Text style={{ fontSize: 22, fontWeight: '600', color: '#C75B12' }}><Icon name='calendar' style={{ fontSize: 22, color: '#C75B12' }} /> {" "}{dayofweek}, {month} {day}</Text>
+                  <Text style={{ fontSize: 22, fontWeight: '800', color: '#C75B12' }}><Icon type='FontAwesome' name='newspaper-o' style={{ fontSize: 22, color: '#C75B12' }} /> {" "}Jonsson | News</Text>
                 </Body>
               </CardItem>
             </Card>
@@ -176,9 +200,9 @@ export default class Home extends Component {
             renderRow={(rowData) => {
               const { uri } = rowData;
               return (
-                <Content>
+                <Content style={{paddingBottom: 10}}>
                   <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
-                  <Text style={{ color: rowData.articleColor, fontSize: 10, fontWeight: '100', paddingLeft: 15, paddingRight: 5, paddingTop: 10, }}>
+                  <Text style={{ color: rowData.articleColor, fontSize: 10, fontWeight: '100', paddingLeft: 15, paddingRight: 10, paddingTop: 10, paddingBottom: 10}}>
                     <Icon name='ios-pricetag' style={{ fontSize: 10, color: rowData.articleColor }} />  {rowData.articleType}
                   </Text>
                   <Text onPress={() => this.props.navigation.navigate("ArticleDetails", { rowData })} style={styles.nameStyle}>
