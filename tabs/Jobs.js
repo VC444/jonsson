@@ -92,7 +92,7 @@
           <Card>
             <CardItem>
               <Body>
-                <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800'}}><Icon name='md-trending-up' style={{ fontSize: 26, color: '#c75b12'}}/> {" "}Jonsson | Careers</Text>
+                <Text style={{ color: '#c75b12', fontSize: 22, fontWeight: '800'}}><Icon name='md-trending-up' style={{ fontSize: 22, color: '#c75b12'}}/> {" "}Jonsson | Careers</Text>
               </Body>
             </CardItem>
           </Card>
@@ -130,7 +130,7 @@
              
            </Text>
            <Image
-             style={{ height: 75, width: '70%', borderRadius: 0, position: 'relative', resizeMode: 'contain' }}
+             style={{ height: 75, width: '70%', position: 'relative', resizeMode: 'contain' }}
              source={require('../images/handshake_logo_dark.png')}
            />
            </TouchableOpacity>

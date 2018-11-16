@@ -4,9 +4,10 @@
  */
 
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
-import { Container, Header, Content, Accordion, Form, Item, Input, Label } from "native-base";
+import { View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage, ImageBackground } from 'react-native';
+import { Container, Header, Content, Accordion, Form, Item, Input, Label, Card, CardItem, Body, Icon, Text } from "native-base";
 import CodeDisplay from './CodeDisplay';
+
 
 export default class Redeem extends Component {
 
@@ -54,15 +55,34 @@ export default class Redeem extends Component {
     render() {
         return (
             <ScrollView style={styles.masterView}>
+            <ImageBackground
+              style={{width: null, height: 130}}
+              blurRadius={0}
+              source={require('../images/image6.jpg')}>
+              <View style={{ paddingTop: 10, width: 400, backgroundColor: 'rgba(0,0,0,0)',
+               paddingLeft: 15,  alignItems: 'center', justifyContent: 'center',}}/>
+        </ImageBackground>
+        <Content style={{ backgroundColor: '#FFFFFF' }}>
+            <Card>
+              <CardItem bordered style={{ borderLeftColor: '#0039A6', borderLeftWidth: 2}}>
+                <Body>
+                  <Text style={{ fontSize: 22, fontWeight: '800', color: '#C75B12' }}><Icon type='FontAwesome' name='newspaper-o' style={{ fontSize: 22, color: '#C75B12' }} /> {" "}Redeem Whoosh Bits</Text>
+                </Body>
+              </CardItem>
+            </Card>
+          </Content>
+                <View style={styles.headStyle}>
+                <Text style = {styles.headerStyle}>To Redeem:</Text>
+                </View>
                 <View style={styles.infoStyle}>
-                    <Text style={fontWeight = "bold"}>Redeem Whoosh Bits!</Text>
-                    <Text>Go ahead and enter the number of points you want to redeem below and then hit the redeem button!</Text>
-                    <Text>Then, show the QR code to an attendant to approve your redeem points request!</Text>
+                    <Text style = {styles.bodyStyle}>1. Enter the number of whoosh bits you wish to redeem in the text box below.</Text>
+                    <Text style = {styles.bodyStyle}>2. Then, tap on the "Redeem Whoosh Bits" button below to generate a personal QR code.</Text>
+                    <Text style = {styles.bodyStyle}>3. Now, show this QR code to an attendant to approve your redeem points request!</Text>
+                    <Text style = {styles.bodyStyle}>4. Thanks for attending!</Text>
                 </View>
                 
                 <Form style={styles.formView}>
                     <Item stackedLabel>
-                        <Label>Whoosh Bits to Redeem?</Label>
                         <Input onChangeText={(w)=>{(this.redeemPointsUpdater(w))}} name="whooshBits" />
                         {console.log('Whoosh Bits value entered: ' + this.state.whooshBitsValue)}
                     </Item>
@@ -102,7 +122,20 @@ const styles = StyleSheet.create({
     formView: {
         paddingTop: 40,
     },
+    headerStyle: {
+        paddingVertical: 20,
+        fontSize: 20,
+    },
+    bodyStyle: {
+        fontSize: 15,
+    },
     infoStyle: {
         textAlign: "center",
+        paddingHorizontal: 20,
+    },
+
+    headStyle: {
+        textAlign: "center",
+        paddingHorizontal: 10,
     }
 });

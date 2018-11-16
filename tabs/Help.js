@@ -97,11 +97,22 @@ export default class Help extends Component {
     }
 
     feedbackSubmitted = () => {
-        Alert.alert("Feedback has been submitted! Thank you");
-        this.setState({
-            isLoading :true
-        })
-        this.postFeedback(this.state.email, this.state.message);
+        if (this.state.email === null || this.state.message === null || this.state.email === '' || this.state.message === '' || this.state.email === ' ' || this.state.message === '')
+        {
+            console.log("AIYOO!");
+            Alert.alert("AIYOO! WHY SENSEI?");
+        }
+        else {
+            this.setState({
+                isLoading :true
+            })
+
+            Alert.alert("Feedback has been submitted! Thank you");
+            this.setState({
+                isLoading :true
+            })
+            this.postFeedback(this.state.email, this.state.message);
+        }
     }
 
     render() {
