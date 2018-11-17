@@ -101,6 +101,7 @@ export default class Help extends Component {
     }
 
     feedbackSubmitted = () => {
+
         if (this.hasWhitespace(this.state.email) || this.state.email === null)
         {
             Alert.alert(
