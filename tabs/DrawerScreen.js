@@ -139,7 +139,7 @@ export default class DrawerScreen extends Component {
                 </View>
 
                 <View style={styles.userInfo}>
-                  <Text style={{ fontSize: (20), fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
+                  <Text style={{ textAlign: 'center', fontSize: RF(3), fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
                   {/* <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.lastName.toString()}</Text> */}
                 </View>
 
@@ -289,6 +289,7 @@ const styles = {
   userInfo: {
     alignItems: 'center',
     justifyContent: 'center',
+    textAlign: 'center',
     paddingTop: 5,
     paddingBottom: 5
   },

@@ -16,7 +16,7 @@ export default class Redeem extends Component {
         this.state = {
             generateQRdata: '',
             redeemWhooshBits: false,
-            whooshBitsValue: '0',
+            whooshBitsValue: null,
             redeemPressed: false,
             userID: 'init',
         };
@@ -29,19 +29,37 @@ export default class Redeem extends Component {
           });
         
         }
+        
+    hasWhitespace(str) {
+        return (!str || str.length === 0 || /^\D*$/.test(str))
+        }
 
     redeemPointsUpdater(w) {
         this.setState({
-            whooshBitsValue: w
+            whooshBitsValue: w.replace(/[^0-9]/g, '')
         })
     }
 
     displayQRCode() {
+        if (this.state.whooshBitsValue !== null && this.hasWhitespace(this.state.whooshBitsValue) == false)
+        {
         var woosh = this.state.whooshBitsValue;
         var ourUserID = this.state.userID;
         console.log("FROM REDEEM PAGE: " + woosh);
         console.log("FROM REDEEM PAGE USER ID: " + ourUserID);
         this.props.navigation.navigate('CodeDisplay',{woosh, ourUserID});
+        }
+        else{
+            Alert.alert(
+                'Typo Alert!',
+                'We noticed that you made a typo. \n\nCould you please double check that you\'ve entered just numbers?',
+                [
+                    {text: 'Oops!', onPress: () => console.log('blankWhoooshbitValue acknowledged!')},
+                ],
+                {cancelable: false}
+            )
+        }
+        
     }
 
     whooshBitsRedeemed = () => {
@@ -83,7 +101,7 @@ export default class Redeem extends Component {
                 
                 <Form style={styles.formView}>
                     <Item stackedLabel>
-                        <Input onChangeText={(w)=>{(this.redeemPointsUpdater(w))}} name="whooshBits" />
+                        <Input keyboardType='numeric' onChangeText={(w)=>{(this.redeemPointsUpdater(w))}} name="whooshBits" />
                         {console.log('Whoosh Bits value entered: ' + this.state.whooshBitsValue)}
                     </Item>
                     <TouchableOpacity
