@@ -78,7 +78,7 @@ export default class Redeem extends Component {
             <ImageBackground
               style={{width: null, height: 130}}
               blurRadius={0}
-              source={require('../images/image6.jpg')}>
+              source={require('../images/image5.jpg')}>
               <View style={{ paddingTop: 10, width: 400, backgroundColor: 'rgba(0,0,0,0)',
                paddingLeft: 15,  alignItems: 'center', justifyContent: 'center',}}/>
         </ImageBackground>
