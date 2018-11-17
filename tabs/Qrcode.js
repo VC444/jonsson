@@ -101,7 +101,6 @@ export default class Qrcode extends Component {
       var userHasAttended;
 
       //this.state.hasRedeemed = true;
-      var jill = this.state.usrLinkedInID;
       console.log("RAP SONG USER ID: " + this.props.navigation.state.params.theUserID.toString())
       let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
       // let attendedFlag = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/').snapshot();
@@ -150,6 +149,12 @@ export default class Qrcode extends Component {
         eventLocation = data.eventLocation;
       });
 
+      /*
+
+      PROCESS HERE
+
+      */
+
       let outerDist = 0;
 
       Geocoder.from(eventLocation)
@@ -171,8 +176,8 @@ export default class Qrcode extends Component {
             let dist = this.distance(userLat, userLng, eventLat, eventLng, 'M');
             outerDist = dist;
 
-            if (dist < 0.2) {
-              if (userHasAttended) {
+            if (userHasAttended)  //ADD SECRET KEY CHECK HERE USING &&
+            {
                 Alert.alert(
                   'You have already scanned the QR code for this event.',
                   'Do not try to cheat the system bruh. \n \nLololol',
@@ -182,20 +187,19 @@ export default class Qrcode extends Component {
                   { cancelable: false }
                 )
                 this.props.navigation.navigate('Agenda');
-              } else {
-
+              } else if (!true)   //this.state.validSecretKey
+              {
                 Alert.alert(
-                  this.state.whooshBits + ' Whoosh Bits Redeemed!',
-                  'Thanks for attending! \n \nWe look forward to seeing you again!',
+                  'INVALID SECRET KEY!',
+                  'YOU TRYIN TO USE FAKE QR CODE??!. \n \nGood try tho',
                   [
-                    { text: 'Thanks!', onPress: () => this.addWhooshBitsToUser() },
+                    { text: 'But...But...How?', onPress: () => console.log('User tried to cheat the system') },
                   ],
                   { cancelable: false }
                 )
                 this.props.navigation.navigate('Agenda');
-              }
-              console.log('Distance between user and event: ' + dist + ' miles');
-            } else {
+                console.log('Distance between user and event: ' + dist + ' miles');
+            } else if (!(dist < 0.2)){
               Alert.alert(
                 'Gotta come to the event to rake the points dawg.',
                 'You should be at least 50 yards within the event location. \n \nGood try tho',
@@ -206,6 +210,20 @@ export default class Qrcode extends Component {
               )
               this.props.navigation.navigate('Agenda');
               console.log('Distance between user and event: ' + dist + ' miles');
+            }
+
+            else
+            {
+              Alert.alert(
+                this.state.whooshBits + ' Whoosh Bits Redeemed!',
+                'Thanks for attending! \n \nWe look forward to seeing you again!',
+                [
+                  { text: 'Thanks!', onPress: () => this.addWhooshBitsToUser() },
+                ],
+                { cancelable: false }
+              )
+              this.props.navigation.navigate('Agenda');
+            console.log('Distance between user and event: ' + dist + ' miles');
             }
           });
         })
