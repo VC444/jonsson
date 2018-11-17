@@ -186,7 +186,7 @@ export default class Qrcode extends Component {
                   ],
                   { cancelable: false }
                 )
-                this.props.navigation.navigate('Agenda');
+                this.props.navigation.goBack(null);
               } else if (!true)   //this.state.validSecretKey
               {
                 Alert.alert(
@@ -197,7 +197,7 @@ export default class Qrcode extends Component {
                   ],
                   { cancelable: false }
                 )
-                this.props.navigation.navigate('Agenda');
+                this.props.navigation.goBack(null);
                 console.log('Distance between user and event: ' + dist + ' miles');
             } else if (!(dist < 0.2)){
               Alert.alert(
@@ -208,7 +208,7 @@ export default class Qrcode extends Component {
                 ],
                 { cancelable: false }
               )
-              this.props.navigation.navigate('Agenda');
+              this.props.navigation.goBack(null);
               console.log('Distance between user and event: ' + dist + ' miles');
             }
 
@@ -222,7 +222,7 @@ export default class Qrcode extends Component {
                 ],
                 { cancelable: false }
               )
-              this.props.navigation.navigate('Agenda');
+              this.props.navigation.goBack(null);
             console.log('Distance between user and event: ' + dist + ' miles');
             }
           });

@@ -145,6 +145,7 @@ export default class DrawerScreen extends Component {
     var month = monthNames[date.getMonth()]
     var dateNum = date.getDate()
     console.log(month + ' ' + dateNum);
+    var theUserID = this.state.userID;
 
     return (
       <View>
@@ -219,6 +220,19 @@ export default class DrawerScreen extends Component {
               </Text>
             </TouchableOpacity>
 
+            <TouchableOpacity style={styles.sidebar}>
+              {/* <Icon name='help-circle' size={10} /> */}
+              <Image
+              //source={require('../images/hicon.png')}
+              fadeDuration={0}
+              style={{width: 30, height: 30}}
+              />
+              <Icon type="MaterialCommunityIcons" name='qrcode-scan' style={{color: '#c75b12'}}/>
+              <Text style={styles.settingsStyle} onPress={() => this.props.navigation.navigate('Qrcode', {theUserID})}>
+                Scan QR Code
+              </Text>
+            </TouchableOpacity>
+
             {/* <TouchableOpacity style={styles.sidebar}
               transparent onPress={() => navigation.navigate('Profile')
               }>
@@ -280,7 +294,9 @@ const styles = {
   },
   settingsStyle: {
     paddingLeft: 10,
-    textAlign: 'auto'
+    textAlign: 'auto',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
   sidebarDate: {
     padding: 20,
