@@ -91,16 +91,38 @@ export default class Help extends Component {
         }
     };
 
+    hasWhitespace(str) {
+        return (!str || str.length === 0 || /^\s*$/.test(str))
+      }
+
 
     giveFeedbackPressed = () => {
         this.setState({ giveFeedback: true });
     }
 
     feedbackSubmitted = () => {
-        if (this.state.email === null || this.state.message === null || this.state.email === '' || this.state.message === '' || this.state.email === ' ' || this.state.message === '')
+
+        if (this.hasWhitespace(this.state.email) || this.state.email === null)
         {
-            console.log("AIYOO!");
-            Alert.alert("AIYOO! WHY SENSEI?");
+            Alert.alert(
+                'Oops!',
+                'We noticed that the email field is blank. \n\nDid you tap the feedback button by mistake?',
+                [
+                    {text: 'LOL, Yea!', onPress: () => console.log('blankFeedbackEmail acknowledged!')},
+                ],
+                {cancelable: false}
+            )
+        }
+        else if (this.hasWhitespace(this.state.message) || this.state.message === null)
+        {
+            Alert.alert(
+                'Oops!',
+                'We noticed that the message field is blank. \n\nDid you tap the feedback button by mistake?',
+                [
+                    {text: 'LOL, Yea!', onPress: () => console.log('blankFeedbackMessage acknowledged!')},
+                ],
+                {cancelable: false}
+            )
         }
         else {
             this.setState({

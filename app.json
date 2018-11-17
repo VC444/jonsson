@@ -1,7 +1,10 @@
-{
+﻿{
   "expo": {
     "name": "Jonsson Connect",
-    "icon": "./images/temoc_icon.png",
+    "splash": {
+    "image": "./images/sscreen.png"
+    },
+    "icon": "./images/appicon.png",
     "orientation": "portrait",
     "version": "2.1.5",
     "slug": "jonsson",

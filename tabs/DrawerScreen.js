@@ -8,6 +8,7 @@ import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import { ScrollView, Text, View, Linking, TouchableOpacity, ActivityIndicator, AsyncStorage, ImageBackground, Image } from 'react-native';
 import { DrawerActions } from 'react-navigation';
+import RF from 'react-native-responsive-fontsize';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, Icon, ListItem, Item, Input, Title, Button, Left, Body, Right, H1, H2, H3 } from 'native-base';
 import { Permissions, Notifications } from 'expo';
 import * as firebase from 'firebase';
@@ -132,22 +133,28 @@ export default class DrawerScreen extends Component {
         <ScrollView>
           <View>
               <View>
-                <ImageBackground style={styles.backdrop} source={require('../images/image7.jpg')}>
+                <ImageBackground style={styles.backdrop} source={require('../images/image7.jpg')} blurRadius={1.5}>
                 <View style={styles.photo} >
                   <Thumbnail large source={{ uri: this.state.userPhoto.toString() }} />
                 </View>
 
                 <View style={styles.userInfo}>
-                  <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()}</Text>
-                  <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.lastName.toString()}</Text>
+                  <Text style={{ textAlign: 'center', fontSize: RF(3), fontWeight: '700', color: '#FFFFFF' }} >{this.state.firstName.toString()} {this.state.lastName.toString()}</Text>
+                  {/* <Text style={{ fontSize: 20, fontWeight: '700', color: '#FFFFFF' }} >{this.state.lastName.toString()}</Text> */}
                 </View>
 
                 <View style={styles.industryInfo}>
-                  <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}</Text>
+                  <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} >
+                  <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} />
+                  {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}
+                  </Text>
                 </View>
 
                 <View style={styles.industryInfo}>
-                  <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} > <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} /> {this.state.industry.toString()}</Text>
+                  <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} >
+                  <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} />
+                  {this.state.industry.toString()}
+                  </Text>
                 </View>
                 </ImageBackground>
               </View>
@@ -158,7 +165,12 @@ export default class DrawerScreen extends Component {
             </View>
 
             <TouchableOpacity style={styles.sidebar}>
-              <Icon type="FontAwesome" name='gift' size={5} />
+              {/* <Icon type="FontAwesome" name='gift' size={5} /> */}
+              <Image
+              source={require('../images/ccicon.png')}
+              fadeDuration={0}
+              style={{width: 30, height: 30}}
+              />
               <Text style={styles.settingsStyle} onPress={() => this.navigateToRewardsPage()}>
                 Rewards
               </Text>
@@ -166,14 +178,24 @@ export default class DrawerScreen extends Component {
 
             <TouchableOpacity style={styles.sidebar}
               onPress={() => { Linking.openURL('https://giving.utdallas.edu/ECS') }}>
-              <Icon type="FontAwesome" name='dollar' size={10} />
+              {/* <Icon type="FontAwesome" name='dollar' size={10} /> */}
+              <Image
+              source={require('../images/dicon.png')}
+              fadeDuration={0}
+              style={{width: 30, height: 30}}
+              />
               <Text style={styles.settingsStyle} onPress={this.navigateToScreen()}>
                 Donate Now
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}>
-              <Icon name='help-circle' size={10} />
+              {/* <Icon name='help-circle' size={10} /> */}
+              <Image
+              source={require('../images/hicon.png')}
+              fadeDuration={0}
+              style={{width: 30, height: 30}}
+              />
               <Text style={styles.settingsStyle} onPress={() => this.navigateToHelpPage()}>
                 Help & Feedback
               </Text>
@@ -206,7 +228,7 @@ const styles = {
   backdrop: {
     width: '100%',
     height: '100%',
-    flex: 1
+    flex: 1,
   },
 
   sidebar: {
@@ -267,6 +289,7 @@ const styles = {
   userInfo: {
     alignItems: 'center',
     justifyContent: 'center',
+    textAlign: 'center',
     paddingTop: 5,
     paddingBottom: 5
   },

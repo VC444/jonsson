@@ -4,7 +4,9 @@
  */
 
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage, ImageBackground } from 'react-native';
+
+import { View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage, ImageBackground, Image } from 'react-native';
+
 import { Container, Header, Content, Accordion, Form, Item, Input, Label, Card, CardItem, Body, Icon, Text } from "native-base";
 import CodeDisplay from './CodeDisplay';
 
@@ -16,7 +18,7 @@ export default class Redeem extends Component {
         this.state = {
             generateQRdata: '',
             redeemWhooshBits: false,
-            whooshBitsValue: '0',
+            whooshBitsValue: null,
             redeemPressed: false,
             userID: 'init',
         };
@@ -29,19 +31,37 @@ export default class Redeem extends Component {
           });
         
         }
+        
+    hasWhitespace(str) {
+        return (!str || str.length === 0 || /^\D*$/.test(str))
+        }
 
     redeemPointsUpdater(w) {
         this.setState({
-            whooshBitsValue: w
+            whooshBitsValue: w.replace(/[^0-9]/g, '')
         })
     }
 
     displayQRCode() {
+        if (this.state.whooshBitsValue !== null && this.hasWhitespace(this.state.whooshBitsValue) == false)
+        {
         var woosh = this.state.whooshBitsValue;
         var ourUserID = this.state.userID;
         console.log("FROM REDEEM PAGE: " + woosh);
         console.log("FROM REDEEM PAGE USER ID: " + ourUserID);
         this.props.navigation.navigate('CodeDisplay',{woosh, ourUserID});
+        }
+        else{
+            Alert.alert(
+                'Typo Alert!',
+                'We noticed that you made a typo. \n\nCould you please double check that you\'ve entered just numbers?',
+                [
+                    {text: 'Oops!', onPress: () => console.log('blankWhoooshbitValue acknowledged!')},
+                ],
+                {cancelable: false}
+            )
+        }
+        
     }
 
     whooshBitsRedeemed = () => {
@@ -76,21 +96,26 @@ export default class Redeem extends Component {
                 </View>
                 <View style={styles.infoStyle}>
                     <Text style = {styles.bodyStyle}>1. Enter the number of whoosh bits you wish to redeem in the text box below.</Text>
-                    <Text style = {styles.bodyStyle}>2. Then, tap on the "Redeem Whoosh Bits" button below to generate a personal QR code.</Text>
-                    <Text style = {styles.bodyStyle}>3. Now, show this QR code to an attendant to approve your redeem points request!</Text>
-                    <Text style = {styles.bodyStyle}>4. Thanks for attending!</Text>
+                    <Text style = {styles.bodyStyle}>2. Then, tap on the Whoosh Bits icon below to generate your personal QR code!</Text>
+                    <Text style = {styles.bodyStyle}>3. And you're done! That's it!</Text>
+                    <Text style = {styles.bodyStyle}>4. Just show this QR code to an attendant to approve your redeem points request!</Text>
                 </View>
                 
                 <Form style={styles.formView}>
                     <Item stackedLabel>
-                        <Input onChangeText={(w)=>{(this.redeemPointsUpdater(w))}} name="whooshBits" />
+                        <Input keyboardType='numeric' onChangeText={(w)=>{(this.redeemPointsUpdater(w))}} name="whooshBits" />
                         {console.log('Whoosh Bits value entered: ' + this.state.whooshBitsValue)}
                     </Item>
                     <TouchableOpacity
                         onPress={() => this.displayQRCode()}
                         style={styles.button}
                     >
-                        <Text style={styles.buttonText}>{this.state.isLoading ? 'Redeeming...' : 'Redeem Whoosh Bits!'}</Text>
+                    <Image
+                    source={require('../images/wbicon.png')}
+                    fadeDuration={0}
+                    style={{width: 120, height: 120, alignItems: 'center'}}
+                    />
+                        {/* <Text style={styles.buttonText}>{this.state.isLoading ? 'Redeeming...' : 'Tap to Redeem!'}</Text> */}
                     </TouchableOpacity>
                 </Form>
             </ScrollView>
