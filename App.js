@@ -68,7 +68,14 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
-  CodeDisplay: {screen: CodeDisplay},
+  CodeDisplay: {
+    screen: CodeDisplay,
+    navigationOptions: ({ navigation }) => ({
+      title: "QR Code",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12' },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+  },
   Help: {
     screen: Help,
     navigationOptions: ({ navigation }) => ({
