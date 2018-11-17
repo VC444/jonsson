@@ -93,14 +93,32 @@ export default class DrawerScreen extends Component {
     let userRef = firebase.database().ref('Users/' + userID);
     userRef.update({
       notificationToken: token,
-      firstName: firstName,
-      lastName: lastName
     }).then(function () {
-      console.log('Synchronization succeeded');
+      console.log('Notification Token Assigned!');
     })
       .catch(function (error) {
-        console.log('Synchronization failed' + error);
+        console.log('NOTIFICATION TOKEN WAS NOT ASSIGNED!' + error);
       });
+
+    userRef.update({
+      firstName: firstName,
+      lastName: lastName,
+    }).then(function () {
+      console.log('User\'s First Name & Last Name set successfully!');
+    })
+      .catch(function (error) {
+        console.log('FIRST NAME & LAST NAME NOT SET!' + error);
+      });
+
+      userRef.update({
+        numOfEvents: 0,
+        points: 0,
+      }).then(function () {
+        console.log('numOfEvents & points initialized successfully!');
+      })
+        .catch(function (error) {
+          console.log('NUM OF EVENTS & POINTS NOT INITIALIZED' + error);
+        });
   }
 
   render() {
