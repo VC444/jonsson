@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Alert, AsyncStorage } from 'react-native';
 import { Constants, BarCodeScanner, Permissions, Location } from 'expo';
 import * as firebase from 'firebase';
+import Geocoder from 'react-native-geocoding';
 
 export default class Qrcode extends Component {
 
@@ -20,18 +21,32 @@ export default class Qrcode extends Component {
   async componentDidMount() {
     this._requestCameraPermission();
 
-    // navigator.geolocation.getCurrentPosition(position => {
-    //   console.log('lat is ' + position.coords.latitude);
-    //   console.log('long is ' + position.coords.longitude);
-    // });
-
-    // var latlng = Expo.Location.geocodeAsync("800 W Campbell Rd, Richardson, TX 75080");
-    // console.log(latlng);
-
     this.setState({
       emailID: await AsyncStorage.getItem('email'),
       //emailLoading: false,
     });
+  }
+
+  distance = (lat1, lon1, lat2, lon2, unit) => {
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+      return 0;
+    }
+    else {
+      var radlat1 = Math.PI * lat1 / 180;
+      var radlat2 = Math.PI * lat2 / 180;
+      var theta = lon1 - lon2;
+      var radtheta = Math.PI * theta / 180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180 / Math.PI;
+      dist = dist * 60 * 1.1515;
+      if (unit == "K") { dist = dist * 1.609344 }
+      if (unit == "N") { dist = dist * 0.8684 }
+      return dist;
+    }
   }
 
   _requestCameraPermission = async () => {
@@ -44,10 +59,9 @@ export default class Qrcode extends Component {
   checkBarcodeRead = (data) => {
     // this.setState({isBarcodeRead: false});
     this._handleBarCodeRead(data)
-
   }
 
-  _handleBarCodeRead = data => {
+  async _handleBarCodeRead(data) {
     var temp = JSON.stringify(data);
     var temp2 = temp.split(':');
     var temp3 = temp2[2].split('\"');
@@ -90,13 +104,13 @@ export default class Qrcode extends Component {
       var jill = this.state.usrLinkedInID;
       console.log("RAP SONG USER ID: " + this.props.navigation.state.params.theUserID.toString())
       let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
-     // let attendedFlag = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/').snapshot();
-     var testing = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
-     testing.child(userId).once('value', function(snapshot) {
-      var exists = (snapshot.val() !== null) 
-      console.log("DOES EXISTS:" + exists)
-      userHasAttended = exists;
-     });
+      // let attendedFlag = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/').snapshot();
+      var testing = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
+      testing.child(userId).once('value', function (snapshot) {
+        var exists = (snapshot.val() !== null)
+        console.log("DOES EXISTS:" + exists)
+        userHasAttended = exists;
+      });
       {
         console.log('User inside loop attended!')
       }
@@ -126,6 +140,83 @@ export default class Qrcode extends Component {
           console.log('User not added to attended list!' + error);
         });
 
+      Geocoder.init('AIzaSyAb53PEyP1lP9m4X4BUTpBUbA-7hxAcPmc'); // use a valid API key
+
+      let eventRef = firebase.database().ref('Events/' + this.state.ourEventID);
+      let eventLocation;
+      eventRef.once('value', function (snapshot) {
+        let data = snapshot.val();
+        console.log('Event Address: ' + data.eventLocation);
+        eventLocation = data.eventLocation;
+      });
+
+      let outerDist = 0;
+
+      Geocoder.from(eventLocation)
+        .then(json => {
+          var eventLat, eventLng;
+          var userLat, userLng;
+
+          var location = json.results[0].geometry.location;
+          console.log('Event address coords: ' + location.lat + ' ' + location.lng);
+          eventLat = location.lat;
+          eventLng = location.lng;
+
+          navigator.geolocation.getCurrentPosition(position => {
+            userLat = position.coords.latitude;
+            userLng = position.coords.longitude;
+            console.log('userLat is ' + userLat);
+            console.log('userLng is ' + userLng);
+
+            let dist = this.distance(userLat, userLng, eventLat, eventLng, 'M');
+            outerDist = dist;
+
+            if (dist < 0.2) {
+              if (userHasAttended) {
+                Alert.alert(
+                  'You have already scanned the QR code for this event.',
+                  'Do not try to cheat the system bruh. \n \nLololol',
+                  [
+                    { text: 'Damn It', onPress: () => console.log('User tried to cheat the system') },
+                  ],
+                  { cancelable: false }
+                )
+                this.props.navigation.navigate('Agenda');
+              } else {
+
+                Alert.alert(
+                  this.state.whooshBits + ' Whoosh Bits Redeemed!',
+                  'Thanks for attending! \n \nWe look forward to seeing you again!',
+                  [
+                    { text: 'Thanks!', onPress: () => this.addWhooshBitsToUser() },
+                  ],
+                  { cancelable: false }
+                )
+                this.props.navigation.navigate('Agenda');
+              }
+              console.log('Distance between user and event: ' + dist + ' miles');
+            } else {
+              Alert.alert(
+                'Gotta come to the event to rake the points dawg.',
+                'You should be at least 50 yards within the event location. \n \nGood try tho',
+                [
+                  { text: 'Damn It', onPress: () => console.log('User tried to cheat the system') },
+                ],
+                { cancelable: false }
+              )
+              this.props.navigation.navigate('Agenda');
+              console.log('Distance between user and event: ' + dist + ' miles');
+            }
+          });
+        })
+        .catch(error => console.warn(error));
+
+      console.log('lat is ' + userlat);
+      console.log('long is ' + userlng);
+
+      console.log('Event lat is: ' + eventLat);
+      console.log('Event long is: ' + eventLng);
+
 
       if (userHasAttended) {
         Alert.alert(
@@ -137,6 +228,7 @@ export default class Qrcode extends Component {
           { cancelable: false }
         )
       } else {
+
         Alert.alert(
           this.state.whooshBits + ' Whoosh Bits Redeemed!',
           'Thanks for attending! \n \nWe look forward to seeing you again!',
