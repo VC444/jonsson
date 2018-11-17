@@ -51,21 +51,39 @@ export default class Home extends Component {
         });
   }
 
+      gotData = (data) => {
+        var studentClassification = data.val()
+        console.log("The classification is " + studentClassification)
+
+        if(studentClassification === null)
+        {
+          Alert.alert(
+            'I am a ...',
+            'Please choose one of the options below. It will help us provide you with the most relevant news, events, & jobs!',
+            [
+              {text: 'Current Student', onPress: () => this.studentUser() },
+              {text: 'Alumnus', onPress: () => this.alumniUser()},
+            ],
+            { cancelable: false }
+          )
+        }
+        console.log("The classification is " + studentClassification)
+
+    }
+
+    errData = (err) => {
+        console.log(err);
+    }
+
   async componentDidMount() {
 
     this.setState({
       userID: await AsyncStorage.getItem('userID'),
     });
      
-    Alert.alert(
-      'I am a ...',
-      'Please choose one of the options below. It will help us provide you with the most relevant news, events, & jobs!',
-      [
-        {text: 'Current Student', onPress: () => this.studentUser() },
-        {text: 'Alumnus', onPress: () => this.alumniUser()},
-      ],
-      { cancelable: false }
-    )
+    var classificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
+    classificationRef.on('value', this.gotData, this.errData);
+
     
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
