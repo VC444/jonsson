@@ -91,7 +91,7 @@ export default class DrawerScreen extends Component {
 
     // Writing user's firstname, lastname, and notification token to firebase
     let userRef = firebase.database().ref('Users/' + userID);
-    userRef.set({
+    userRef.update({
       notificationToken: token,
       firstName: firstName,
       lastName: lastName
