@@ -51,7 +51,16 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
-  ArticleDetails: { screen: ArticleDetails },
+
+  ArticleDetails: {
+    screen: ArticleDetails,
+    navigationOptions: ({ navigation }) => ({
+      title: "News Article",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12' },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+  },
+
   Rewards: {
     screen: Rewards,
     navigationOptions: ({ navigation }) => ({
@@ -60,6 +69,7 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
+
   Redeem: {
     screen: Redeem,
     navigationOptions: ({ navigation }) => ({
@@ -68,6 +78,7 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
+
   CodeDisplay: {
     screen: CodeDisplay,
     navigationOptions: ({ navigation }) => ({
@@ -76,10 +87,11 @@ export const HomeFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
+
   Help: {
     screen: Help,
     navigationOptions: ({ navigation }) => ({
-      title: "FAQ",
+      title: "Help & Feedback",
       headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
