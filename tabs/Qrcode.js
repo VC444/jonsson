@@ -21,7 +21,8 @@ export default class Qrcode extends Component {
     userLongitude: '',
     eventLatitude: '',
     eventLongitude: '',
-    ourDistance: '',
+    ourDistance: 0,
+    withinFiftyYards: false,
   };
 
   async componentDidMount() {
@@ -91,9 +92,23 @@ export default class Qrcode extends Component {
       this.state.userLongitude = userLong;
 
       let dist = this.distance(this.state.userLatitude, this.state.userLongitude, this.state.eventLatitude, this.state.eventLongitude, 'M');
-      console.log("Distance Between User & Event: " + dist + " miles!");
+      
       this.state.ourDistance = dist;
-      console.log("Distance Between User & Event: " + this.state.ourDistance + " miles!");
+      console.log("DIST Between User & Event: " + dist + " miles!");
+      console.log("THIS SET STATE OUR DISTANCE Between User & Event: " + this.state.ourDistance + " miles!");
+
+      if (this.state.ourDistance < 0.02841)
+      {
+        
+          this.state.withinFiftyYards = true
+       
+      }
+      else
+      {
+        console.log("OUR DISTANCE ELSE STATEMENT VALUE: " + this.state.ourDistance + " miles!");
+        console.log("OUR WITHIN FIFTY YARDS VALUE: " + this.state.withinFiftyYards);
+        
+      }
     }
     else {
         this.failedGeolocation();
@@ -198,7 +213,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (this.state.validSecretKey)   //    !this.state.validSecretKey
+      else if (false)   //    !this.state.validSecretKey
       {
         Alert.alert(
           'INVALID SECRET KEY!',
@@ -211,7 +226,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (false) {    //this.state.ourDistance < 0.02841
+      else if (!this.state.withinFiftyYards) {    //this.state.ourDistance < 0.02841
         Alert.alert(
           'Gotta come to the event to rake the points dawg.',
           'You should be at least 50 yards within the event location. \n \nGood try tho',
@@ -221,7 +236,7 @@ export default class Qrcode extends Component {
           { cancelable: false }
         )
         this.props.navigation.goBack(null);
-        console.log('Distance between user and event: ' + this.state.ourDistance + ' miles');
+        
       }
       else {
         Alert.alert(
