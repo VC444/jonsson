@@ -93,6 +93,7 @@ export default class Qrcode extends Component {
       let dist = this.distance(this.state.userLatitude, this.state.userLongitude, this.state.eventLatitude, this.state.eventLongitude, 'M');
       console.log("Distance Between User & Event: " + dist + " miles!");
       this.state.ourDistance = dist;
+      console.log("Distance Between User & Event: " + this.state.ourDistance + " miles!");
     }
     else {
         this.failedGeolocation();
