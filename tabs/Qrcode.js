@@ -16,8 +16,12 @@ export default class Qrcode extends Component {
     hasRedeemed: false,
     usrLinkedInID: '',
     attendedFlag: false,
-    // validSecretKey: false,
-    // ourDistance: '',
+    validSecretKey: false,
+    userLatitude: '',
+    userLongitude: '',
+    eventLatitude: '',
+    eventLongitude: '',
+    ourDistance: '',
   };
 
   async componentDidMount() {
@@ -62,29 +66,37 @@ export default class Qrcode extends Component {
       eventLocation = data.eventLocation;
     });
 
-    // Geocoder.from(eventLocation)
-    //   .then(json => {
-    //     var location = json.results[0].geometry.location; //EVENT LOCATOIN
-    //     eventLat = location.lat;
-    //     eventLng = location.lng;
-    //     var jimmy = navigator.geolocation.getCurrentPosition(this.successGeolocation(userLat), this.failedGeolocation(), { timeout: 10000 });  //USER LOCATION
-    //     console.log("JIMMY IS: "+ jimmy);
-    //     console.log('Event lat is: ' + eventLat);
-    //     console.log('Event long is: ' + eventLng);
-    //     // console.log('User Lat is ' + userLat);
-    //     // console.log('User Long is ' + userLng);
-
-    //     // let dist = this.distance(userLat, userLng, eventLat, eventLng, 'M');
-    //     // this.state.ourDistance = dist;
-
-    //   })
-    //   .catch(error => console.log(error));
+    Geocoder.from(eventLocation)
+      .then(json => {
+        var location = json.results[0].geometry.location; //EVENT LOCATOIN
+        eventLat = location.lat;
+        eventLng = location.lng;
+        navigator.geolocation.getCurrentPosition(this.successGeolocation);  //USER LOCATION
+        console.log('Event lat is: ' + eventLat);
+        console.log('Event long is: ' + eventLng);
+        this.state.eventLatitude = eventLat;
+        this.state.eventLongitude = eventLng;
+      })
+      .catch(error => console.log(error));
   }
 
-  successGeolocation = () => {
+  successGeolocation = (position) => {
 
-    // console.log('USER LAT is ' + userLat);
-    // console.log('USER LONG is ' + userLong);
+    if (position) {
+      var userLat = position.coords.latitude;
+      var userLong = position.coords.longitude;
+      console.log('USER LAT is ' + userLat);
+      console.log('USER LONG is ' + userLong);
+      this.state.userLatitude = userLat;
+      this.state.userLongitude = userLong;
+
+      let dist = this.distance(this.state.userLatitude, this.state.userLongitude, this.state.eventLatitude, this.state.eventLongitude, 'M');
+      console.log("Distance Between User & Event: " + dist + " miles!");
+      this.state.ourDistance = dist;
+    }
+    else {
+        this.failedGeolocation();
+    }
 
   }
 
@@ -98,6 +110,15 @@ export default class Qrcode extends Component {
       ],
       { cancelable: false }
     )
+  }
+
+  secretKeyValidity = () => {
+
+    /*
+      SECRET KEY STUFF GOES HERE
+
+    */
+
   }
 
   _requestCameraPermission = async () => {
@@ -162,18 +183,7 @@ export default class Qrcode extends Component {
 
       this.geoLocationHandler();
 
-      var linkedInID = this.state.usrLinkedInID;
-      userHasAttendedRef.set({
-        [linkedInID]: this.state.emailID
-      }).then(function () {
-        console.log('User added to attended list!');
-      })
-        .catch(function (error) {
-          console.log('User not added to attended list!' + error);
-        });
-
-      if (userHasAttended)
-      {
+      if (userHasAttended) {
         Alert.alert(
           'You have already scanned the QR code for this event.',
           'Do not try to cheat the system bruh. \n \nLololol',
@@ -185,7 +195,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (!true)   //this.state.validSecretKey
+      else if (this.state.validSecretKey)   //    !this.state.validSecretKey
       {
         Alert.alert(
           'INVALID SECRET KEY!',
@@ -198,7 +208,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (!true) { //       !(this.state.ourDistance < 0.028)
+      else if (this.state.ourDistance < 0.02841) {
         Alert.alert(
           'Gotta come to the event to rake the points dawg.',
           'You should be at least 50 yards within the event location. \n \nGood try tho',
@@ -210,7 +220,6 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
         console.log('Distance between user and event: ' + this.state.ourDistance + ' miles');
       }
-
       else {
         Alert.alert(
           this.state.whooshBits + ' Whoosh Bits Redeemed!',
@@ -256,7 +265,19 @@ export default class Qrcode extends Component {
   }
 
   addWhooshBitsToUser() {
-    console.log("ADDING WHOOSH BITS TO USER")
+    console.log("ADDING WHOOSH BITS TO USER & ATTDING USER TO ATTENDED LIST")
+
+    var linkedInID = this.state.usrLinkedInID;
+      userHasAttendedRef.set({
+        [linkedInID]: this.state.emailID
+      }).then(function () {
+        console.log('User added to attended list!');
+      })
+        .catch(function (error) {
+          console.log('User not added to attended list!' + error);
+        });
+
+
     console.log('USER ID FROM QR CODE PAGE: ' + this.props.navigation.state.params.theUserID.toString())
 
     var eventObjectData = firebase.database().ref("Events/");
