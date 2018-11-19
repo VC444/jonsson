@@ -207,15 +207,23 @@ export default class Rewards extends Component {
                     paddingLeft: 8
                 }
             }>
+       
+
         <ScrollView>
             <View style={{width: '100%',flexGrow:1}}>
                 <Text style={{color: '#008542'}}>{events.eventTitle}</Text>
-                <Text style={{color: '#008542', paddingTop:10}}>{this.utcToLocal(events.eventDate.toString())}</Text>
+                <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
+                <Text style={{color: '#008542'}}>{this.utcToLocal(events.eventDate.toString())} </Text>
+                <Text style={{color: '#008542'}}>{events.whooshBits} </Text>
+                </View>
             </View>
             <View style={{marginTop: 15, paddingLeft: 300, flex:0, width: '100%'}}>
                 <Text style={{color: '#008542',fontWeight: 'bold', fontSize: 16}}>{events.attandingCount}</Text>
             </View>
         </ScrollView>
+
+
+
         </View>
         );
     }
@@ -223,3 +231,5 @@ export default class Rewards extends Component {
     
 } //Class
 
+
+        
