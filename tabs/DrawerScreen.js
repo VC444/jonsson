@@ -103,7 +103,6 @@ export default class DrawerScreen extends Component {
     userRef.update({
       firstName: firstName,
       lastName: lastName,
-      isAdmin: false,
     }).then(function () {
       console.log('User\'s First Name & Last Name set successfully!');
     })
