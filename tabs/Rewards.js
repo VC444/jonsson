@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView, ActivityIndicator, AsyncStorage} from 'react-native';
-import { Container, List } from 'native-base';
+import { Container, List, Right } from 'native-base';
 import * as firebase from 'firebase';
 
 import firebaseApp from './EventDetails';
@@ -92,10 +92,8 @@ export default class Rewards extends Component {
       }
 
       utcToLocal = (time) => {
-        var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm a");
-        var splitTime = localTime.split(',');
-        console.log(splitTime[2]);
-        return splitTime[2];
+        var localTime = moment(time).local().format("MMMM Do YYYY, h:mm a");
+        return localTime;
       }
 
     render() {
