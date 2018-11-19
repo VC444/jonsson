@@ -287,9 +287,7 @@ export default class Qrcode extends Component {
 
 let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
 var linkedInID = this.state.usrLinkedInID;
-      userHasAttendedRef.set({
-        [linkedInID]: this.state.emailID
-      }).then(function () {
+      userHasAttendedRef.child(linkedInID).set(this.state.emailID).then(function () {
         console.log('User added to attended list!');
       })
         .catch(function (error) {
