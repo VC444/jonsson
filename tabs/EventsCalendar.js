@@ -50,15 +50,31 @@ export default class EventsCalendar extends Component {
         this.setState({ userClassification: userInfo });
         var dateOfEvent = firebase.database().ref("Events/");
 
+        // If user is an admin, show all events
         if (userInfo == 'admin')
             dateOfEvent.on('value', this.gotData, this.errData);
         else {
-            dateOfEvent.orderByChild('eventClassification').equalTo(this.state.userClassification).on('value', this.gotData, this.errData);
+            var totalData = [];
+            // Get events that match user's classification and push it to totalData
+            dateOfEvent.orderByChild('eventClassification').equalTo(this.state.userClassification).once('value', snapshot => {
+                snapshot.forEach(snap => {
+                    totalData.push(snap.val());
+                })
+            });
+
+            // Get events that are classified as 'both' and push it to totalData
+            dateOfEvent.orderByChild('eventClassification').equalTo('both').once('value', bothEvents => {
+                bothEvents.forEach(snap => {
+                    totalData.push(snap.val());
+                })
+            }).then(() => {
+                this.gotData(totalData); // send totalData to gotData function
+            })
         }
     }
 
     gotData = (data) => {
-        var dates = data.val()
+        var dates = data;
         var keys = Object.keys(dates)
         var formattedDate = []
 
