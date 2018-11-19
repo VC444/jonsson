@@ -16,13 +16,13 @@ export default class Qrcode extends Component {
     hasRedeemed: false,
     usrLinkedInID: '',
     attendedFlag: false,
-    validSecretKey: false,
     userLatitude: '',
     userLongitude: '',
     eventLatitude: '',
     eventLongitude: '',
     ourDistance: 0,
     withinFiftyYards: false,
+    isValidSecretKey: ''
   };
 
   async componentDidMount() {
@@ -149,6 +149,20 @@ export default class Qrcode extends Component {
     this._handleBarCodeRead(data)
   }
 
+  secretKeyData = (data) => {
+    var secretKey = data.val()
+    console.log("The secrey KEY is " + secretKey)
+ 
+      this.state.isValidSecretKey = secretKey
+
+
+  
+  }
+  
+  errData = (err) => {
+    console.log(err);
+  }
+
   async _handleBarCodeRead(data) {
     var temp = JSON.stringify(data);
     var temp2 = temp.split(':');
@@ -197,9 +211,41 @@ export default class Qrcode extends Component {
         userHasAttended = exists;
       });
 
-      this.geoLocationHandler();
+      //this.geoLocationHandler();
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+var secretKeyRef = firebase.database().ref("Events/" + this.state.ourEventID + "/eventSecretKey/");
+secretKeyRef.on('value', this.secretKeyData, this.errData);
 
 
+console.log("IS VALID SECRET KEY:" + this.state.isValidSecretKey)
+
+var isValidSecretKeyCheck = false;
+
+if(this.state.secretKey===this.state.isValidSecretKey)
+{
+  isValidSecretKeyCheck = true;
+}
+else
+{
+  isValidSecretKeyCheck = false;
+}
+
+//VALID SECRET KEY CODE GOES HERE
+// GET SECRET KEY FROM FIREBASE
+// if (this.state.secretKey === secretKeyFromFirebase)
+// {
+//   var validSecretKey = true;
+// }
+
+// else{
+//   var validSecretKey = false;
+// }
+
+// 1. go online & manually create a qr code with different secret key but all other data is same
+// 2. get qr code from admin portal and check to see if it works
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
       if (userHasAttended) {
         Alert.alert(
@@ -213,7 +259,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (false)   //    !this.state.validSecretKey
+      if (!isValidSecretKeyCheck)   //    !this.state.validSecretKey
       {
         Alert.alert(
           'INVALID SECRET KEY!',
@@ -226,7 +272,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (!this.state.withinFiftyYards) {    //this.state.ourDistance < 0.02841
+      else if (false) {    //this.state.ourDistance < 0.02841
         Alert.alert(
           'Gotta come to the event to rake the points dawg.',
           'You should be at least 50 yards within the event location. \n \nGood try tho',
