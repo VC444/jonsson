@@ -39,19 +39,20 @@ export default class EventsCalendar extends Component {
     // Checks if the user is classified as a (student/alumni/admin), and sends that data to gotUserData()
     async componentDidMount() {
         this.setState({ userID: await AsyncStorage.getItem('userID') });
-        var classificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
+        var classificationRef = firebase.database().ref("Users/" + this.state.userID + "/isAdmin/");
         classificationRef.once('value', this.gotUserData, this.errData);
     }
 
     // Filters event results based on user classification
     gotUserData = (data) => {
         var userInfo = data.val();
+        console.log('isAdmin: ' + userInfo)
         //console.log('class vc ' + userInfo);
         this.setState({ userClassification: userInfo });
         var dateOfEvent = firebase.database().ref("Events/");
 
         // If user is an admin, show all events
-        if (userInfo == 'admin')
+        if (userInfo == true)
             dateOfEvent.on('value', this.gotData, this.errData);
         else {
             var totalData = [];
