@@ -46,7 +46,7 @@ export default class EventsCalendar extends Component {
     // Filters event results based on user classification
     gotUserData = (data) => {
         var userInfo = data.val();
-        console.log('class vc ' + userInfo);
+        //console.log('class vc ' + userInfo);
         this.setState({ userClassification: userInfo });
         var dateOfEvent = firebase.database().ref("Events/");
 

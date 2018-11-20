@@ -131,7 +131,7 @@ export default class DrawerScreen extends Component {
       );
     }
 
-    console.log('These are all the state values' + this.state.firstName + this.state.lastName);
+   // console.log('These are all the state values' + this.state.firstName + this.state.lastName);
 
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
@@ -144,7 +144,7 @@ export default class DrawerScreen extends Component {
     let day = days[date.getDay()]
     var month = monthNames[date.getMonth()]
     var dateNum = date.getDate()
-    console.log(month + ' ' + dateNum);
+    //console.log(month + ' ' + dateNum);
     var theUserID = this.state.userID;
 
     return (
