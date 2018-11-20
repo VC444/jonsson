@@ -53,6 +53,22 @@ export default class Rewards extends Component {
           .then((responseJson) => {
               //console.log(responseJson);
               var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+              var userId = this.state.userID;
+            
+            for(var key in responseJson){
+                if(responseJson.hasOwnProperty(key)){
+                    //console.log('users',responseJson[key].usersRsvp)
+                    if(responseJson[key].usersRsvp){
+                    if(responseJson[key].usersRsvp.hasOwnProperty(userId)){
+
+                    }else{
+                        delete responseJson[key]
+                    }
+                }else{
+                    delete responseJson[key]
+                }
+                }
+            }       
             this.setState({
               isLoading: false,
               dataSource: ds.cloneWithRows(responseJson),
@@ -125,7 +141,7 @@ export default class Rewards extends Component {
         }}>
     
             <View style={{
-                width: '50%', height: '10%', backgroundColor: 'white'}}>
+                width: '50%', height: '20%', backgroundColor: 'white'}}>
                 <Text style={{
                     textAlign:'center', 
                     fontSize: 17, 
@@ -137,7 +153,7 @@ export default class Rewards extends Component {
             </View>
 
             <View style={{
-                width: '50%', height: '10%', backgroundColor: 'white'}}>
+                width: '50%', height: '20%', backgroundColor: 'white'}}>
                 
                 <Text style={{
                     textAlign:'center', 
@@ -155,6 +171,7 @@ export default class Rewards extends Component {
             <Text style={{
                     textAlign:'center', 
                     fontSize: 20,
+                    paddingTop:25,
                     //paddingBottom: 30,
                     color: '#c75b12',
                     fontWeight: 'bold'}}>
@@ -212,7 +229,7 @@ export default class Rewards extends Component {
                 <Text style={{color: '#008542'}}>{events.eventTitle}</Text>
                 <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
                 <Text style={{color: '#008542'}}>{this.utcToLocal(events.eventDate.toString())} </Text>
-                <Text style={{color: '#008542'}}>{events.whooshBits}{"          "}</Text>
+                <Text style={{color: '#008542'}}>{events.whooshBits} </Text>
                 </View>
             </View>
             <View style={{marginTop: 15, paddingLeft: 300, flex:0, width: '100%'}}>
