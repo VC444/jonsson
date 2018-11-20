@@ -6,7 +6,7 @@
 import { CalendarList } from 'react-native-calendars';
 
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 
 import * as firebase from 'firebase';
 
@@ -31,33 +31,51 @@ export default class EventsCalendar extends Component {
         this.state = {
             marked: false,
             formattedDate: [],
+            userID: 'userID',
+            userClassification: 'clasification',
         }
     }
 
-    componentWillMount = () => {
-        // var eventsRef = firebase.database().ref('Events');
-        // var dateArray = [];
-        // eventsRef.orderByChild('eventDate').on('child_added', function(snapshot) {
-        //     console.log(snapshot.key + " has event date " + snapshot.val().eventDate);
-        //     dateArray.push(snapshot.val().eventDate);
-        //     var splitArray = dateArray.split('T');
-        //     console.log('this is the dateArray vccc' + dateArray);
-        // });
-        // queryDates.once('value', data => {
-        //     var goodData = data.val();
-        //     for (var date in goodData) {
-        //         console.log('These are the date values that vc wrote' + date);
-        //     }
-        // });
-        // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
-        /******************************************************************************************************** */
+    // Checks if the user is classified as a (student/alumni/admin), and sends that data to gotUserData()
+    async componentDidMount() {
+        this.setState({ userID: await AsyncStorage.getItem('userID') });
+        var classificationRef = firebase.database().ref("Users/" + this.state.userID + "/isAdmin/");
+        classificationRef.once('value', this.gotUserData, this.errData);
+    }
+
+    // Filters event results based on user classification
+    gotUserData = (data) => {
+        var userInfo = data.val();
+        console.log('isAdmin: ' + userInfo)
+        //console.log('class vc ' + userInfo);
+        this.setState({ userClassification: userInfo });
         var dateOfEvent = firebase.database().ref("Events/");
-        dateOfEvent.on('value', this.gotData, this.errData);
-        /************************************************************************************************** */
+
+        // If user is an admin, show all events
+        if (userInfo == true)
+            dateOfEvent.on('value', this.gotData, this.errData);
+        else {
+            var totalData = [];
+            // Get events that match user's classification and push it to totalData
+            dateOfEvent.orderByChild('eventClassification').equalTo(this.state.userClassification).once('value', snapshot => {
+                snapshot.forEach(snap => {
+                    totalData.push(snap.val());
+                })
+            });
+
+            // Get events that are classified as 'both' and push it to totalData
+            dateOfEvent.orderByChild('eventClassification').equalTo('both').once('value', bothEvents => {
+                bothEvents.forEach(snap => {
+                    totalData.push(snap.val());
+                })
+            }).then(() => {
+                this.gotData(totalData); // send totalData to gotData function
+            })
+        }
     }
 
     gotData = (data) => {
-        var dates = data.val()
+        var dates = data;
         var keys = Object.keys(dates)
         var formattedDate = []
 
@@ -124,6 +142,7 @@ export default class EventsCalendar extends Component {
     }
 
     render() {
+
         const date = new Date()
         var year = date.getFullYear()
         var month = date.getMonth() + 1;

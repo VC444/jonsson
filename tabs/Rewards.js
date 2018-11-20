@@ -222,6 +222,8 @@ export default class Rewards extends Component {
                     paddingLeft: 8
                 }
             }>
+       
+
         <ScrollView>
             <View style={{width: '100%',flexGrow:1}}>
                 <Text style={{color: '#008542'}}>{events.eventTitle}</Text>
@@ -234,6 +236,9 @@ export default class Rewards extends Component {
                 <Text style={{color: '#008542',fontWeight: 'bold', fontSize: 16}}>{events.attandingCount}</Text>
             </View>
         </ScrollView>
+
+
+
         </View>
         );
     }
@@ -241,3 +246,5 @@ export default class Rewards extends Component {
     
 } //Class
 
+
+        
