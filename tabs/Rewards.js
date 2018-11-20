@@ -58,8 +58,8 @@ export default class Rewards extends Component {
             for(var key in responseJson){
                 if(responseJson.hasOwnProperty(key)){
                     //console.log('users',responseJson[key].usersRsvp)
-                    if(responseJson[key].usersRsvp){
-                    if(responseJson[key].usersRsvp.hasOwnProperty(userId)){
+                    if(responseJson[key].usersAttended){
+                    if(responseJson[key].usersAttended.hasOwnProperty(userId)){
 
                     }else{
                         delete responseJson[key]
