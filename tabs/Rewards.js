@@ -212,7 +212,7 @@ export default class Rewards extends Component {
                 <Text style={{color: '#008542'}}>{events.eventTitle}</Text>
                 <View style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
                 <Text style={{color: '#008542'}}>{this.utcToLocal(events.eventDate.toString())} </Text>
-                <Text style={{color: '#008542'}}>{events.whooshBits} </Text>
+                <Text style={{color: '#008542'}}>{events.whooshBits}{"          "}</Text>
                 </View>
             </View>
             <View style={{marginTop: 15, paddingLeft: 300, flex:0, width: '100%'}}>

@@ -30,90 +30,87 @@ export default class Qrcode extends Component {
 
     this.setState({
       emailID: await AsyncStorage.getItem('email'),
-      //emailLoading: false,
     });
-  }
-
-  distance = (lat1, lon1, lat2, lon2, unit) => {
-    if ((lat1 == lat2) && (lon1 == lon2)) {
-      return 0;
-    }
-    else {
-      var radlat1 = Math.PI * lat1 / 180;
-      var radlat2 = Math.PI * lat2 / 180;
-      var theta = lon1 - lon2;
-      var radtheta = Math.PI * theta / 180;
-      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-      if (dist > 1) {
-        dist = 1;
-      }
-      dist = Math.acos(dist);
-      dist = dist * 180 / Math.PI;
-      dist = dist * 60 * 1.1515;
-      if (unit == "K") { dist = dist * 1.609344 }
-      if (unit == "N") { dist = dist * 0.8684 }
-      return dist;
-    }
-  }
-
-  geoLocationHandler = () => {
-    Geocoder.init('AIzaSyAb53PEyP1lP9m4X4BUTpBUbA-7hxAcPmc');
-
-    let eventRef = firebase.database().ref('Events/' + this.state.ourEventID + '/');
-    let eventLocation;
-    eventRef.once('value', function (snapshot) {
-      let data = snapshot.val();
-      console.log('Event Address: ' + data.eventLocation);
-      eventLocation = data.eventLocation;
-    });
-
-    Geocoder.from(eventLocation)
-      .then(json => {
-        var location = json.results[0].geometry.location; //EVENT LOCATOIN
-        eventLat = location.lat;
-        eventLng = location.lng;
-        navigator.geolocation.getCurrentPosition(this.successGeolocation);  //USER LOCATION
-        console.log('Event lat is: ' + eventLat);
-        console.log('Event long is: ' + eventLng);
-        this.state.eventLatitude = eventLat;
-        this.state.eventLongitude = eventLng;
-      })
-      .catch(error => console.log(error));
   }
 
   successGeolocation = (position) => {
-
+    console.log("POSITION VARIABLE DATA (OUTSIDE): " + JSON.stringify(position));
     if (position) {
+      console.log("POSITION VARIABLE DATA (INSIDE): " + JSON.stringify(position));
       var userLat = position.coords.latitude;
       var userLong = position.coords.longitude;
-      console.log('USER LAT is ' + userLat);
-      console.log('USER LONG is ' + userLong);
       this.state.userLatitude = userLat;
       this.state.userLongitude = userLong;
 
-      let dist = this.distance(this.state.userLatitude, this.state.userLongitude, this.state.eventLatitude, this.state.eventLongitude, 'M');
-      
-      this.state.ourDistance = dist;
-      console.log("DIST Between User & Event: " + dist + " miles!");
-      console.log("THIS SET STATE OUR DISTANCE Between User & Event: " + this.state.ourDistance + " miles!");
+      Geocoder.init('AIzaSyAb53PEyP1lP9m4X4BUTpBUbA-7hxAcPmc');
+      let eventRef = firebase.database().ref('Events/' + this.state.ourEventID + '/');
+      let eventLocation;
+      eventRef.once('value', function (snapshot) {
+        let data = snapshot.val();
+        console.log('Event Address: ' + data.eventLocation);
+        eventLocation = data.eventLocation;
+      });
+      Geocoder.from(eventLocation)
+        .then(json => {
+          //var location = json.results[0].geometry.location; //EVENT LOCATOIN
+          var eventLat = json.results[0].geometry.location.lat;
+          var eventLng = json.results[0].geometry.location.lng;
 
-      if (this.state.ourDistance < 0.02841)
-      {
-        
-          this.state.withinFiftyYards = true
-       
-      }
-      else
-      {
-        console.log("OUR DISTANCE ELSE STATEMENT VALUE: " + this.state.ourDistance + " miles!");
-        console.log("OUR WITHIN FIFTY YARDS VALUE: " + this.state.withinFiftyYards);
-        
-      }
+          this.state.eventLatitude = eventLat;
+          this.state.eventLongitude = eventLng;
+
+          console.log("USER LATITUDE: " + this.state.userLatitude);
+          console.log("USER LONGITUDE: " + this.state.userLongitude);
+          console.log("EVENT LATITUDE: " + this.state.eventLatitude);
+          console.log("EVENT LONGITUDE: " + this.state.eventLongitude);
+
+          var lat1 = this.state.userLatitude;
+          var lon1 = this.state.userLongitude;
+          var lat2 = this.state.eventLatitude;
+          var lon2 = this.state.eventLongitude;
+
+          console.log("1 USER LATITUDE: " + lat1);
+          console.log("1 USER LONGITUDE: " + lon1);
+          console.log("1 EVENT LATITUDE: " + lat2);
+          console.log("1 EVENT LONGITUDE: " + lon2);
+
+
+
+          var radlat1 = Math.PI * lat1 / 180;
+          var radlat2 = Math.PI * lat2 / 180;
+          var theta = lon1 - lon2;
+          var radtheta = Math.PI * theta / 180;
+          var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+
+          if (dist > 1) {
+            dist = 1;
+          }
+
+          dist = Math.acos(dist);
+          dist = dist * 180 / Math.PI;
+          dist = dist * 60 * 1.1515;
+          
+          this.state.ourDistance = dist;
+          console.log("DIST Between User & Event: " + this.state.ourDistance + " miles!");
+          if (this.state.ourDistance < 0.02841) {
+
+            this.state.withinFiftyYards = true;
+            // console.log("OUR DISTANCE (IF) STATEMENT VALUE: " + dist + " miles!");
+            console.log("OUR (IF) WITHIN FIFTY YARDS VALUE: " + this.state.withinFiftyYards);
+
+          }
+          else {
+            this.state.withinFiftyYards = false;
+            // console.log("OUR DISTANCE (ELSE) STATEMENT VALUE: " + dist + " miles!");
+            console.log("OUR (ELSE) WITHIN FIFTY YARDS VALUE: " + this.state.withinFiftyYards);
+          }
+        })
+        .catch(error => console.log(error));
     }
     else {
-        this.failedGeolocation();
+      console.log("*****INAVLID COORDINATES RECIEVED!***** \n" + position)
+      this.failedGeolocation();
     }
-
   }
 
   failedGeolocation = () => {
@@ -126,15 +123,6 @@ export default class Qrcode extends Component {
       ],
       { cancelable: false }
     )
-  }
-
-  secretKeyValidity = () => {
-
-    /*
-      SECRET KEY STUFF GOES HERE
-
-    */
-
   }
 
   _requestCameraPermission = async () => {
@@ -152,13 +140,10 @@ export default class Qrcode extends Component {
   secretKeyData = (data) => {
     var secretKey = data.val()
     console.log("The secrey KEY is " + secretKey)
- 
-      this.state.isValidSecretKey = secretKey
 
-
-  
+    this.state.isValidSecretKey = secretKey
   }
-  
+
   errData = (err) => {
     console.log(err);
   }
@@ -185,6 +170,13 @@ export default class Qrcode extends Component {
     this.state.usrLinkedInID = this.props.navigation.state.params.theUserID.toString();
     var data2 = 'Whoosh Bits: ' + this.state.whooshBits;
 
+    ////////////////////////////////////////////
+    //var isAdminCheck
+    // isAdmin read from firebase
+    // If true, set isAdminCheck to true, else set to false.
+
+    ///////////////////////////////////////////
+
     if (this.state.mode == 'app') //YET TO ADD CHECK IN FIREBASE FOR ADMIN ==> USE isAdmin IN FIREBASE UNDER USERID UNDER USERS
     {
       Alert.alert(
@@ -205,47 +197,43 @@ export default class Qrcode extends Component {
       console.log("RAP SONG USER ID: " + this.props.navigation.state.params.theUserID.toString())
       let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
 
-      userHasAttendedRef.child(userId).once('value', function (snapshot) {
+      userHasAttendedRef.child(userId).on('value', function (snapshot) {
         var exists = (snapshot.val() !== null)
         console.log("Has User Already Attended?:" + exists)
         userHasAttended = exists;
       });
 
-      //this.geoLocationHandler();
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-var secretKeyRef = firebase.database().ref("Events/" + this.state.ourEventID + "/eventSecretKey/");
-secretKeyRef.on('value', this.secretKeyData, this.errData);
+      var secretKeyRef = firebase.database().ref("Events/" + this.state.ourEventID + "/eventSecretKey/");
+      secretKeyRef.on('value', this.secretKeyData, this.errData);
 
 
-console.log("IS VALID SECRET KEY:" + this.state.isValidSecretKey)
+      console.log("IS VALID SECRET KEY:" + this.state.isValidSecretKey)
 
-var isValidSecretKeyCheck = false;
+      var isValidSecretKeyCheck = false;
 
-if(this.state.secretKey===this.state.isValidSecretKey)
-{
-  isValidSecretKeyCheck = true;
-}
-else
-{
-  isValidSecretKeyCheck = false;
-}
+      if (this.state.secretKey === this.state.isValidSecretKey) {
+        isValidSecretKeyCheck = true;
+      }
+      else {
+        isValidSecretKeyCheck = false;
+      }
 
-//VALID SECRET KEY CODE GOES HERE
-// GET SECRET KEY FROM FIREBASE
-// if (this.state.secretKey === secretKeyFromFirebase)
-// {
-//   var validSecretKey = true;
-// }
+      Geocoder.init('AIzaSyAb53PEyP1lP9m4X4BUTpBUbA-7hxAcPmc');
 
-// else{
-//   var validSecretKey = false;
-// }
+      let eventRef = firebase.database().ref('Events/' + this.state.ourEventID + '/');
+      let eventLocation;
+      eventRef.once('value', function (snapshot) {
+        let data = snapshot.val();
+        console.log('Event Address: ' + data.eventLocation);
+        eventLocation = data.eventLocation;
+      });
 
-// 1. go online & manually create a qr code with different secret key but all other data is same
-// 2. get qr code from admin portal and check to see if it works
+      navigator.geolocation.getCurrentPosition(this.successGeolocation);  //USER LOCATION
 
-/////////////////////////////////////////////////////////////////////////////////////////////
+      var finalAttendedCheck = true;
+      var finalGeoLocationCheck = true;
+      var finalValidSecretKeyCheck = true;
 
       if (userHasAttended) {
         Alert.alert(
@@ -256,10 +244,11 @@ else
           ],
           { cancelable: false }
         )
+        finalAttendedCheck = false;
         this.props.navigation.goBack(null);
       }
 
-      if (!isValidSecretKeyCheck)   //    !this.state.validSecretKey
+      else if (!isValidSecretKeyCheck)   //    !this.state.validSecretKey
       {
         Alert.alert(
           'INVALID SECRET KEY!',
@@ -269,10 +258,11 @@ else
           ],
           { cancelable: false }
         )
+        finalValidSecretKeyCheck = false;
         this.props.navigation.goBack(null);
       }
 
-      else if (false) {    //this.state.ourDistance < 0.02841
+      else if (!(this.state.withinFiftyYards)) {    //this.state.ourDistance < 0.02841
         Alert.alert(
           'Gotta come to the event to rake the points dawg.',
           'You should be at least 50 yards within the event location. \n \nGood try tho',
@@ -281,10 +271,11 @@ else
           ],
           { cancelable: false }
         )
+        finalGeoLocationCheck = false;
         this.props.navigation.goBack(null);
-        
+
       }
-      else {
+      else if (finalAttendedCheck && finalValidSecretKeyCheck && finalGeoLocationCheck) {
         Alert.alert(
           this.state.whooshBits + ' Whoosh Bits Redeemed!',
           'Thanks for attending! \n \nWe look forward to seeing you again!',
@@ -307,7 +298,7 @@ else
         { cancelable: false }
       )
     }
-  };
+  }
 
   approveWhooshBitsRedeem() {
     console.log("WHOOSH BITS APPROVED!");
@@ -331,14 +322,14 @@ else
   addWhooshBitsToUser() {
     console.log("ADDING WHOOSH BITS TO USER & ATTDING USER TO ATTENDED LIST")
 
-let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
-var linkedInID = this.state.usrLinkedInID;
-      userHasAttendedRef.child(linkedInID).set(this.state.emailID).then(function () {
-        console.log('User added to attended list!');
-      })
-        .catch(function (error) {
-          console.log('User not added to attended list!' + error);
-        });
+    let userHasAttendedRef = firebase.database().ref('Events/' + this.state.ourEventID + '/usersAttended/');
+    var linkedInID = this.state.usrLinkedInID;
+    userHasAttendedRef.child(linkedInID).set(this.state.emailID).then(function () {
+      console.log('User added to attended list!');
+    })
+      .catch(function (error) {
+        console.log('User not added to attended list!' + error);
+      });
 
     console.log('USER ID FROM QR CODE PAGE: ' + this.props.navigation.state.params.theUserID.toString())
 
