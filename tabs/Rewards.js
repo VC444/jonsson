@@ -54,13 +54,13 @@ export default class Rewards extends Component {
               //console.log(responseJson);
               var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
               var userId = this.state.userID;
-            
+            var  pointsCount = 0;
             for(var key in responseJson){
                 if(responseJson.hasOwnProperty(key)){
                     //console.log('users',responseJson[key].usersRsvp)
-                    if(responseJson[key].usersRsvp){
-                    if(responseJson[key].usersRsvp.hasOwnProperty(userId)){
-
+                    if(responseJson[key].usersAttended){
+                    if(responseJson[key].usersAttended.hasOwnProperty(userId)){
+                        pointsCount += Number(responseJson[key].whooshBits);
                     }else{
                         delete responseJson[key]
                     }
@@ -68,11 +68,14 @@ export default class Rewards extends Component {
                     delete responseJson[key]
                 }
                 }
-            }       
+            }   
+            console.log(responseJson)    
             this.setState({
               isLoading: false,
               dataSource: ds.cloneWithRows(responseJson),
               data: responseJson.Events,
+              numOfEvents: Object.keys(responseJson).length,
+              points : pointsCount
             }, function () {
               // do something with new state
             });
