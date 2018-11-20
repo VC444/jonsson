@@ -27,7 +27,9 @@ export default class Home extends Component {
     let userRef = firebase.database().ref('Users/' + this.state.userID + '/');
     console.log("USER ID FROM STUDENT USER FUNC IN HOME.JS: " + this.state.userID)
       userRef.update({
-        classification: "student"
+        classification: "student",
+        userStatus: "approved",
+        isAdmin: "false",
       }).then(function () {
         console.log('STUDENT CLASSIFICATION SUCCEEDED');
       })
@@ -42,7 +44,9 @@ export default class Home extends Component {
     let userRef = firebase.database().ref('Users/' + this.state.userID + "/");
     console.log("USER ID FROM ALUMNI USER FUNC IN HOME.JS: " + this.state.userID)
       userRef.update({
-        classification: "alumni"
+        classification: "student",
+        userStatus: "waiting",
+        isAdmin: "false",
       }).then(function () {
         console.log('ALUMNI CLASSIFICATION SUCCEEDED');
       })

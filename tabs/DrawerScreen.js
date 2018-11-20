@@ -113,6 +113,7 @@ export default class DrawerScreen extends Component {
       userRef.update({
         numOfEvents: 0,
         points: 0,
+        classification: 'student',
       }).then(function () {
         console.log('numOfEvents & points initialized successfully!');
       })
