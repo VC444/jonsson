@@ -58,8 +58,10 @@ export default class EventsCalendar extends Component {
             var totalData = [];
             // Get events that match user's classification and push it to totalData
             dateOfEvent.orderByChild('eventClassification').equalTo(this.state.userClassification).once('value', snapshot => {
+                console.log("SNAPSHOT KEY!!!" + JSON.stringify(snapshot.key))
                 snapshot.forEach(snap => {
                     totalData.push(snap.val());
+                    
                 })
             });
 
@@ -69,21 +71,34 @@ export default class EventsCalendar extends Component {
                     totalData.push(snap.val());
                 })
             }).then(() => {
+                console.log("CHECK TO SEE IF EVENT ID EXISTS INSIDE: " + JSON.stringify(totalData))
                 this.gotData(totalData); // send totalData to gotData function
             })
+
+            dateOfEvent.once('value', snapsht => {
+                console.log("SNAPSHOT KEY!!!" + JSON.stringify(snapsht))
+            });
         }
     }
 
     gotData = (data) => {
         var dates = data;
         var keys = Object.keys(dates)
+        console.log("THIS IS KEYS FROM EVENT CALENDAR: " + dates.key)
         var formattedDate = []
 
         for (var i = 0; i < keys.length; i++) {
             var k = keys[i];
-            var date_of_event = dates[k].eventDate;
-            var format_res = date_of_event.substring(0, 10);
-            formattedDate[i] = format_res
+            // var date_of_event = dates[k].eventDate;
+            var date = new Date(dates[k].eventDate);
+            var temp = date.toLocaleDateString();
+            var temp2 = temp.split("/");
+            var myDate = temp2[1];
+            var myMonth = temp2[0];
+            var myHalfYear = temp2[2];
+            var myFullYear = "20" + myHalfYear;
+            var dandanakka = myFullYear + '-' + myMonth + '-' + myDate;
+            formattedDate[i] = dandanakka;
         }
 
         // Set formattedDate array that is initialized in state to values of local formattedDate array 
@@ -155,6 +170,11 @@ export default class EventsCalendar extends Component {
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
 
+
+
+
+
+
         return (
             <View>
                 <CalendarList
@@ -174,7 +194,7 @@ export default class EventsCalendar extends Component {
                     onDayPress={(day) => {
                         //if (someVariable == true)
                         //{
-                        console.log("STRINGIFY: " + JSON.stringify(day.dateString));
+                        console.log("STRINGIFY EVENTS CALENDAR: " + JSON.stringify(day.dateString));
                         var hasEvent = false;
                         for (var date in this.state.marked) {
                             console.log('This is marked state object: ' + date);
