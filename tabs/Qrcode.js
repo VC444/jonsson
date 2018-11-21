@@ -16,8 +16,7 @@ export default class Qrcode extends Component {
     hasRedeemed: false,
     usrLinkedInID: '',
     attendedFlag: false,
-    withinFiftyYards: false,
-    isValidSecretKey: '',
+    isValidSecretKey: ''
   };
 
   async componentDidMount() {
@@ -27,7 +26,6 @@ export default class Qrcode extends Component {
       emailID: await AsyncStorage.getItem('email'),
     });
   }
-
   _requestCameraPermission = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({
@@ -36,7 +34,6 @@ export default class Qrcode extends Component {
   };
 
   checkBarcodeRead = (data) => {
-    // this.setState({isBarcodeRead: false});
     this._handleBarCodeRead(data)
   }
 
@@ -197,6 +194,7 @@ export default class Qrcode extends Component {
       }
 
       var finalAttendedCheck = true;
+      var finalGeoLocationCheck = true;
       var finalValidSecretKeyCheck = true;
 
       try {
@@ -243,7 +241,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (!isValidSecretKeyCheck)   //    !this.state.validSecretKey
+      else if (!isValidSecretKeyCheck) 
       {
         Alert.alert(
           'INVALID SECRET KEY!',
