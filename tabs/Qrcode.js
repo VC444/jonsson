@@ -173,7 +173,7 @@ export default class Qrcode extends Component {
     }
     
 
-    var data1 = 'userID: ' + this.props.navigation.state.params.theUserID.toString();  //COMES FROM Agenda.js
+    var data1 = 'userID: ' + splitData[1];  //COMES FROM Agenda.js
     this.state.usrLinkedInID = this.props.navigation.state.params.theUserID.toString();
     var data2 = 'Whoosh Bits: ' + this.state.whooshBits;
 
@@ -185,7 +185,7 @@ export default class Qrcode extends Component {
         [
 
           { text: 'Deny', style: 'cancel', onPress: () => this.denyWhooshBitsRedeem() },
-          { text: 'Approve', onPress: () => this.approveWhooshBitsRedeem() },
+          { text: 'Approve', onPress: () => this.approveWhooshBitsRedeem(this.state.whooshBits, splitData[1]) },
         ],
         { cancelable: false }
       )
@@ -294,24 +294,12 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
     }
-
-    else if ((this.props.navigation.state.params.kaiser.toString() === 'true')) {
-      Alert.alert(
-        'Aw Snap!',
-        'To redeem Whoosh Bits, please show the QR code to an approved event coordinator.',
-        [
-          { text: 'OK' },
-        ],
-        { cancelable: false }
-      )
-      this.props.navigation.goBack(null);
-    }
     else{
       Alert.alert(
         'Oh Dear!',
-        "We're terribly sorry but something went wrong. Would you please scan the QR code again?",
+        "We're terribly sorry but something somewhere took a hard left turn. We'd recommend scanning the QR code once again or showing the QR code to an approved event coordinator.",
         [
-          { text: 'Sure!' },
+          { text: 'You Got It!' },
         ],
         { cancelable: false }
       )
@@ -320,12 +308,44 @@ export default class Qrcode extends Component {
     
   }
 
-  approveWhooshBitsRedeem() {
+  approveWhooshBitsRedeem(redeemVal, usersID) {
     console.log("WHOOSH BITS APPROVED!");
+
+    let pointsRef = firebase.database().ref('Users/' + usersID + '/points/');
+    pointsRef.transaction(function (points) {
+      return (points) - redeemVal;
+    }).then(function () {
+      console.log('POINTS UPDATED IN FIREBASE!');
+    })
+      .catch(function (error) {
+        console.log('POINTS NOT UPDATED: ' + error);
+      });
+
+
+      Alert.alert(
+        'Yay!',
+        "Whoosh Bits Redeemed!",
+        [
+          { text: 'Cool!' },
+        ],
+        { cancelable: false }
+      )
+      this.props.navigation.goBack(null);
   }
 
   denyWhooshBitsRedeem() {
     console.log("WHOOSH BITS DENIED!");
+
+    Alert.alert(
+      'DENIED!',
+      "The redeem request has been denied!",
+      [
+        { text: 'Thanks!' },
+      ],
+      { cancelable: false }
+    )
+    this.props.navigation.goBack(null);
+    
   }
 
   getEventData = (data) => {
