@@ -39,26 +39,26 @@ export default class EventsCalendar extends Component {
     // Checks if the user is classified as a (student/alumni/admin), and sends that data to gotUserData()
     async componentDidMount() {
         this.setState({ userID: await AsyncStorage.getItem('userID') });
-        var classificationRef = firebase.database().ref("Users/" + this.state.userID + "/isAdmin/");
+        var classificationRef = firebase.database().ref("Users/" + this.state.userID);
         classificationRef.once('value', this.gotUserData, this.errData);
     }
 
     // Filters event results based on user classification
     gotUserData = (data) => {
         var userInfo = data.val();
-        console.log('isAdmin: ' + userInfo)
+        var userClassification = userInfo.classification;
+        var isAdmin = userInfo.isAdmin;
         //console.log('class vc ' + userInfo);
-        this.setState({ userClassification: userInfo });
+        this.setState({ userClassification });
         var dateOfEvent = firebase.database().ref("Events/");
 
         // If user is an admin, show all events
-        if (userInfo == true)
+        if (isAdmin == true)
             dateOfEvent.on('value', this.gotData, this.errData);
         else {
             var totalData = [];
             // Get events that match user's classification and push it to totalData
             dateOfEvent.orderByChild('eventClassification').equalTo(this.state.userClassification).once('value', snapshot => {
-                console.log("SNAPSHOT KEY!!!" + JSON.stringify(snapshot.key))
                 snapshot.forEach(snap => {
                     totalData.push(snap.val());
 
@@ -71,7 +71,6 @@ export default class EventsCalendar extends Component {
                     totalData.push(snap.val());
                 })
             }).then(() => {
-                console.log("CHECK TO SEE IF EVENT ID EXISTS INSIDE: " + JSON.stringify(totalData))
                 this.gotData(totalData); // send totalData to gotData function
             })
 
