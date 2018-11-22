@@ -16,7 +16,8 @@ export default class Qrcode extends Component {
     hasRedeemed: false,
     usrLinkedInID: '',
     attendedFlag: false,
-    isValidSecretKey: ''
+    isValidSecretKey: '',
+    isAdminCheck: false,
   };
 
   async componentDidMount() {
@@ -119,8 +120,18 @@ export default class Qrcode extends Component {
     })
   }
 
+  isAdminData = (data) => {
+    var isAdmin = data.val()
+    console.log("The admin  is " + isAdmin)
+    this.setState({
+      isAdminCheck: isAdmin,
+  });
+    
+  }
 
-
+  isAdminerrData = (err) => {
+    console.log(err);
+  }
 
   async _handleBarCodeRead(data) {
     var temp = JSON.stringify(data);
@@ -129,16 +140,29 @@ export default class Qrcode extends Component {
     var eventId;
     console.log("TEMP3 DATA[1]: " + temp3[1]);
     var splitData = temp3[1].split(',');
-    console.log("Mode (app/web): " + splitData[0]);
-    console.log("Event ID: " + splitData[1]);
-    console.log("Secret Key: " + splitData[2]);
-    console.log("Whoosh Bits: " + splitData[3]);
     eventId = splitData[1];
     this.state.mode = splitData[0];
-    this.state.ourEventID = splitData[1];
-    this.state.secretKey = splitData[2];
-    this.state.whooshBits = splitData[3];
-    console.log("EMAIL ID FROM QRCODE.JS: " + this.state.emailID)
+    if (this.state.mode === 'web') {  //[0] = mode, [1] = event ID, [2] = secret key, [3] = whooshbits
+      this.state.ourEventID = splitData[1];
+      this.state.secretKey = splitData[2];
+      this.state.whooshBits = splitData[3];
+      console.log("Mode (app/web): " + splitData[0]);
+      console.log("Event ID: " + splitData[1]);
+      console.log("Secret Key: " + splitData[2]);
+      console.log("Whoosh Bits: " + splitData[3]);
+    }
+    else if (this.state.mode === 'app') {    //[0] = mode, [1] = user's linked ID, [2] = whooshbits to redeem
+      this.state.ourEventID = null;
+      this.state.usrLinkedInID = splitData[1];
+      this.state.whooshBits = splitData[2];
+      console.log("Mode (app/web): " + splitData[0]);
+      console.log("User ID: " + splitData[1]);
+      console.log("Whoosh Bits: " + splitData[2]);
+    }
+    else {
+      console.log("EMAIL ID FROM QRCODE.JS: " + this.state.emailID)
+    }
+    
 
     var data1 = 'userID: ' + this.props.navigation.state.params.theUserID.toString();  //COMES FROM Agenda.js
     this.state.usrLinkedInID = this.props.navigation.state.params.theUserID.toString();
@@ -149,9 +173,16 @@ export default class Qrcode extends Component {
     // isAdmin read from firebase
     // If true, set isAdminCheck to true, else set to false.
 
+
+
+    var isAdminRef = firebase.database().ref("Users/" + this.props.navigation.state.params.theUserID.toString() + "/isAdmin/");
+    isAdminRef.on('value', this.isAdminData, this.isAdminerrData);
+
+
+    console.log("IS ADMIN CHECK STATE:" + this.state.isAdminCheck)
     ///////////////////////////////////////////
 
-    if (this.state.mode == 'app') //YET TO ADD CHECK IN FIREBASE FOR ADMIN ==> USE isAdmin IN FIREBASE UNDER USERID UNDER USERS
+    if (this.state.mode == 'app' && this.state.isAdminCheck) //YET TO ADD CHECK IN FIREBASE FOR ADMIN ==> USE isAdmin IN FIREBASE UNDER USERID UNDER USERS
     {
       Alert.alert(
         'Admin Approval!',
@@ -163,6 +194,7 @@ export default class Qrcode extends Component {
         ],
         { cancelable: false }
       )
+      this.props.navigation.goBack(null);
     }
     else if (this.state.mode == 'web' && (!this.state.hasRedeemed)) {
       let userId = this.props.navigation.state.params.theUserID.toString();
@@ -217,7 +249,7 @@ export default class Qrcode extends Component {
         console.log(error);
       }
 
-      if (distance > 0.02) {
+      if (distance > 0.0284091) {
         Alert.alert(
           'You are more than 50 yards from the event.',
           'Y u try to cheat system dawg. \n \nsmh',
@@ -226,7 +258,9 @@ export default class Qrcode extends Component {
           ],
           { cancelable: false }
         )
-      } 
+        finalGeoLocationCheck = false;
+        this.props.navigation.goBack(null);
+      }
 
       else if (userHasAttended) {
         Alert.alert(
@@ -241,8 +275,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
 
-      else if (!isValidSecretKeyCheck) 
-      {
+      else if (!isValidSecretKeyCheck) {
         Alert.alert(
           'INVALID SECRET KEY!',
           'YOU TRYIN TO USE FAKE QR CODE??!. \n \nGood try tho',
@@ -254,7 +287,7 @@ export default class Qrcode extends Component {
         finalValidSecretKeyCheck = false;
         this.props.navigation.goBack(null);
       }
-      else if (finalAttendedCheck && finalValidSecretKeyCheck) {
+      else if (finalAttendedCheck && finalValidSecretKeyCheck && finalGeoLocationCheck) {
         Alert.alert(
           this.state.whooshBits + ' Whoosh Bits Redeemed!',
           'Thanks for attending! \n \nWe look forward to seeing you again!',
@@ -277,6 +310,7 @@ export default class Qrcode extends Component {
         { cancelable: false }
       )
     }
+    this.props.navigation.goBack(null);
   }
 
   approveWhooshBitsRedeem() {
