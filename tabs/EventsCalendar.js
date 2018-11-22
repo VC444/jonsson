@@ -22,7 +22,7 @@ const dot_color = { color: 'white' }; // Constant dot color
 // const blah = { color: 'yellow'};
 // const fee = { color: 'black'};
 
-
+var ourEventIdArray = []
 export default class EventsCalendar extends Component {
 
     constructor(props) {
@@ -61,7 +61,7 @@ export default class EventsCalendar extends Component {
                 console.log("SNAPSHOT KEY!!!" + JSON.stringify(snapshot.key))
                 snapshot.forEach(snap => {
                     totalData.push(snap.val());
-                    
+
                 })
             });
 
@@ -81,11 +81,30 @@ export default class EventsCalendar extends Component {
         }
     }
 
+    getEventId = (data) => {
+        var eventIdData = data.val()
+
+        for(var i=0; i<Object.keys(eventIdData).length; i++)
+        {
+                ourEventIdArray.push(Object.keys(eventIdData)[i])
+        }
+        console.log("EVENT ID DATA KEYS: " + Object.keys(eventIdData))
+        console.log("GLOBAL EVENT ID: " + ourEventIdArray)
+
+
+    }
+
+    idErrData = (err) => {
+        console.log("GOT AN ERROR IN ID ERR DATA: " + err)
+    }
     gotData = (data) => {
         var dates = data;
         var keys = Object.keys(dates)
         console.log("THIS IS KEYS FROM EVENT CALENDAR: " + dates.key)
         var formattedDate = []
+
+        var eventIdRef = firebase.database().ref("Events/");
+        eventIdRef.on('value', this.getEventId, this.idErrData);
 
         for (var i = 0; i < keys.length; i++) {
             var k = keys[i];
@@ -99,12 +118,25 @@ export default class EventsCalendar extends Component {
             var myFullYear = "20" + myHalfYear;
             var dandanakka = myFullYear + '-' + myMonth + '-' + myDate;
             formattedDate[i] = dandanakka;
-        }
-
+            }
         // Set formattedDate array that is initialized in state to values of local formattedDate array 
         // and then call anotherFunc
         this.setState({ formattedDate }, this.anotherFunc);
 
+
+        
+        // var modifiedDateRef = firebase.database().ref("Events/" + ourEventIdArray[i]);
+
+        // modifiedDateRef.update({
+        //     modifiedDate: formattedDate[i]
+        //   }).then(function () {
+        //     console.log('STUDENT CLASSIFICATION SUCCEEDED');
+        //   })
+        //     .catch(function (error) {
+        //       console.log('STUDENT CLASSIFICATION FAILED' + error);
+        //     });
+
+            
         console.log('formatted date in state is ' + this.state.formattedDate);
     }
 
