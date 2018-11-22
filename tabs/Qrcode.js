@@ -295,7 +295,7 @@ export default class Qrcode extends Component {
       }
     }
 
-    else {
+    else if ((this.props.navigation.state.params.kaiser.toString() === 'true')) {
       Alert.alert(
         'Aw Snap!',
         'To redeem Whoosh Bits, please show the QR code to an approved event coordinator.',
@@ -304,8 +304,20 @@ export default class Qrcode extends Component {
         ],
         { cancelable: false }
       )
+      this.props.navigation.goBack(null);
     }
-    this.props.navigation.goBack(null);
+    else{
+      Alert.alert(
+        'Oh Dear!',
+        "We're terribly sorry but something went wrong. Would you please scan the QR code again?",
+        [
+          { text: 'Sure!' },
+        ],
+        { cancelable: false }
+      )
+      this.props.navigation.goBack(null);
+    }
+    
   }
 
   approveWhooshBitsRedeem() {
