@@ -109,16 +109,6 @@ export default class DrawerScreen extends Component {
       .catch(function (error) {
         console.log('FIRST NAME & LAST NAME NOT SET!' + error);
       });
-
-      userRef.update({
-        numOfEvents: 0,
-        points: 0,
-      }).then(function () {
-        console.log('numOfEvents & points initialized successfully!');
-      })
-        .catch(function (error) {
-          console.log('NUM OF EVENTS & POINTS NOT INITIALIZED' + error);
-        });
   }
 
   render() {
