@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
 import { Container, Header, Content, Accordion, Form, Item, Input, Label } from "native-base";
 import * as firebase from 'firebase';
 import Axios from 'axios';
@@ -19,7 +19,8 @@ export default class Help extends Component {
             giveFeedback: false,
             email : '',
             message : '',
-            isLoading : false 
+            isLoading : false,
+            userEmail: '',
         };
         this.feedbackSubmitted = this.feedbackSubmitted.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -35,6 +36,12 @@ export default class Help extends Component {
         this.setState({
             message : e
         })
+    }
+
+    async componentDidMount() {
+        this.setState({
+            userEmail: await AsyncStorage.getItem('email'),
+        });
     }
     /****************************************/
     postFeedback = (email, message, emailClear, messageClear) =>{
@@ -102,18 +109,18 @@ export default class Help extends Component {
 
     feedbackSubmitted = () => {
 
-        if (this.hasWhitespace(this.state.email) || this.state.email === null)
-        {
-            Alert.alert(
-                'Oops!',
-                'We noticed that the email field is blank. \n\nDid you tap the feedback button by mistake?',
-                [
-                    {text: 'LOL, Yea!', onPress: () => console.log('blankFeedbackEmail acknowledged!')},
-                ],
-                {cancelable: false}
-            )
-        }
-        else if (this.hasWhitespace(this.state.message) || this.state.message === null)
+        // if (this.hasWhitespace(this.state.email) || this.state.email === null)
+        // {
+        //     Alert.alert(
+        //         'Oops!',
+        //         'We noticed that the email field is blank. \n\nDid you tap the feedback button by mistake?',
+        //         [
+        //             {text: 'LOL, Yea!', onPress: () => console.log('blankFeedbackEmail acknowledged!')},
+        //         ],
+        //         {cancelable: false}
+        //     )
+        // }
+        if (this.hasWhitespace(this.state.message) || this.state.message === null)
         {
             Alert.alert(
                 'Oops!',
@@ -133,7 +140,7 @@ export default class Help extends Component {
             this.setState({
                 isLoading :true
             })
-            this.postFeedback(this.state.email, this.state.message);
+            this.postFeedback(this.state.userEmail, this.state.message);
         }
     }
 
@@ -169,10 +176,10 @@ export default class Help extends Component {
                     </View>
 
                     <Form style={styles.formView}>
-                        <Item stackedLabel>
+                        {/* <Item stackedLabel>
                             <Label>Email ID (@utdallas.edu is preferred!)</Label>
                             <Input value={this.state.email} onChangeText={(e)=>{this.handleEmailChange(e)}} name="email"/>
-                        </Item>
+                        </Item> */}
                         <Item stackedLabel>
                             <Label>How can we improve?</Label>
                             <Input value={this.state.message} onChangeText={(e)=>{this.handleMessageChange(e)}} name="message"/>
@@ -184,6 +191,10 @@ export default class Help extends Component {
                         >
                             <Text style={styles.buttonText}>{this.state.isLoading?'Submitting... Give Us A Sec!':'Submit'}</Text>
                         </TouchableOpacity>
+
+                        <Text style={{paddingHorizontal: 40, textAlign: 'center', paddingVertical: 25 }}>
+                        The email ID that you used to sign into the app will be sent along with your feedback.
+                        This will help us reach out to you if we need to after hearing from you!</Text>
 
                     </Form>
 
