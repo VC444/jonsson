@@ -123,9 +123,7 @@ export default class Qrcode extends Component {
   isAdminData = (data) => {
     var isAdmin = data.val()
     console.log("The admin  is " + isAdmin)
-    this.setState({
-      isAdminCheck: isAdmin,
-  });
+    this.state.isAdminCheck = isAdmin;
     
   }
 
