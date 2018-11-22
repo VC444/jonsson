@@ -29,13 +29,14 @@ export default class Events extends Component {
       isLoading: true,
       refreshing: false,
       userIdLoading: true,
-      userID: 'SuperstarRajani',
+      userID: '',
     }
   }
 
   async componentDidMount() {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
     var hardcodeDate = this.props.navigation.state.params.day.dateString
+
     var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
 
 
@@ -79,11 +80,37 @@ export default class Events extends Component {
     this.props.navigation.navigate('Qrcode', { theUserID });
   }
 
+  tConvert = (time) => {
+    // Check correct time format and split into components
+    time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  
+    if (time.length > 1) { // If time format correct
+      time = time.slice (1);  // Remove full string match value
+      time[5] = +time[0] < 12 ? ':AM' : ':PM'; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+      // time[0] = time[0] + 1;
+    }
+    return time.join (''); // return adjusted time or original string
+  }
+
   utcToLocal = (time) => {
-    var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm a");
-    var splitTime = localTime.split(',');
-    console.log(splitTime[2]);
-    return splitTime[2];
+
+    var date = new Date(time);
+    console.log(date)
+    console.log(date.toLocaleDateString())
+    var year = date.getFullYear()
+    var month = date.getMonth() + 1;
+    if (month <= 9)
+      month = '0' + month;
+    var day = date.getDate();
+    if (day <= 9)
+      day = '0' + day;
+    var fullDate = year + '-' + month + '-' + day;
+    var splitTime = this.tConvert(date.toLocaleTimeString())
+
+    var splitTimeByColon = splitTime.split(":")
+    var stringDate = splitTimeByColon[0] + ":" + splitTimeByColon[1] + " "+splitTimeByColon[3]
+    return stringDate;
   }
 
   render() {
