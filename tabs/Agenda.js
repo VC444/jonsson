@@ -30,6 +30,7 @@ export default class Events extends Component {
       refreshing: false,
       userIdLoading: true,
       userID: '',
+      isAdminCheck: false,
     }
   }
 
@@ -77,7 +78,8 @@ export default class Events extends Component {
   qrCodePressed = () => {
     console.log('qrcode button pressed');
     var theUserID = this.state.userID;
-    this.props.navigation.navigate('Qrcode', { theUserID });
+    var kaiser = this.state.isAdminCheck;
+    this.props.navigation.navigate('Qrcode', { theUserID, kaiser });
   }
 
   tConvert = (time) => {
@@ -113,7 +115,21 @@ export default class Events extends Component {
     return stringDate;
   }
 
+  isAdminData = (data) => {
+    this.state.isAdminCheck = data.val()
+    console.log("@@@@@@@@@@ The admin  is " + this.state.isAdminCheck)
+    //this.state.isAdminCheck = isAdmin;
+    
+  }
+
+  isAdminerrData = (err) => {
+    console.log(err);
+  }
+
   render() {
+    var isAdminRef = firebase.database().ref("Users/" + this.state.userID + "/isAdmin/");
+    isAdminRef.on('value', this.isAdminData, this.isAdminerrData);
+
     if (this.state.isLoading || this.state.userIdLoading) {
       return (
         <View style={{ flex: 1, paddingTop: 20 }}>

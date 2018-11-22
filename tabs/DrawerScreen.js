@@ -20,6 +20,7 @@ export default class DrawerScreen extends Component {
     super(props);
     this.state = {
       isLoading: true,
+      isAdminCheck: false,
     }
   }
 
@@ -111,7 +112,21 @@ export default class DrawerScreen extends Component {
       });
   }
 
+  isAdminData = (data) => {
+    this.state.isAdminCheck = data.val()
+    console.log("@@@@@@@@@@ The admin  is " + this.state.isAdminCheck)
+    //this.state.isAdminCheck = isAdmin;
+    
+  }
+
+  isAdminerrData = (err) => {
+    console.log(err);
+  }
+
   render() {
+
+    var isAdminRef = firebase.database().ref("Users/" + this.state.userID + "/isAdmin/");
+    isAdminRef.on('value', this.isAdminData, this.isAdminerrData);
 
     if (!this.state.firstName) {
       return (
@@ -136,6 +151,8 @@ export default class DrawerScreen extends Component {
     var dateNum = date.getDate()
     //console.log(month + ' ' + dateNum);
     var theUserID = this.state.userID;
+
+    var kaiser = this.state.isAdminCheck;
 
     return (
       <View>
@@ -218,7 +235,7 @@ export default class DrawerScreen extends Component {
               style={{width: 30, height: 30}}
               />
               <Icon type="MaterialCommunityIcons" name='qrcode-scan' style={{color: '#c75b12'}}/>
-              <Text style={styles.settingsStyle} onPress={() => this.props.navigation.navigate('Qrcode', {theUserID})}>
+              <Text style={styles.settingsStyle} onPress={() => this.props.navigation.navigate('Qrcode', {theUserID, kaiser})}>
                 Scan QR Code
               </Text>
             </TouchableOpacity>
