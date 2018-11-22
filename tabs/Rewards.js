@@ -114,7 +114,8 @@ export default class Rewards extends Component {
     }
 
     onRedeemPressed = () => {
-        this.props.navigation.navigate('Redeem');
+        var localPoints = this.state.points
+        this.props.navigation.navigate('Redeem', {localPoints});
     }
 
     utcToLocal = (time) => {

@@ -21,6 +21,7 @@ export default class Redeem extends Component {
             whooshBitsValue: null,
             redeemPressed: false,
             userID: 'init',
+            points: 0,
         };
     }
     
@@ -42,8 +43,23 @@ export default class Redeem extends Component {
         })
     }
 
+    validWhooshBitsRedeemValue(wbVal)
+    {
+        this.state.points = wbVal;
+        console.log("&&&&& THIS.STATE POINTS: " + this.state.points);
+        console.log("&&&&& RAP SONG POINTS: " + this.props.navigation.state.params.localPoints.toString());
+        if (this.state.whooshBitsValue <= wbVal)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     displayQRCode() {
-        if (this.state.whooshBitsValue !== null && this.hasWhitespace(this.state.whooshBitsValue) == false)
+        console.log("&&&&& RAP SONG POINTS: " + this.props.navigation.state.params.localPoints.toString());
+        if (this.state.whooshBitsValue !== null && this.hasWhitespace(this.state.whooshBitsValue) == false && this.validWhooshBitsRedeemValue(this.props.navigation.state.params.localPoints.toString()))
         {
         var woosh = this.state.whooshBitsValue;
         var ourUserID = this.state.userID;
@@ -51,12 +67,24 @@ export default class Redeem extends Component {
         console.log("FROM REDEEM PAGE USER ID: " + ourUserID);
         this.props.navigation.navigate('CodeDisplay',{woosh, ourUserID});
         }
+        else if (!this.validWhooshBitsRedeemValue(this.state.points))
+        {
+            Alert.alert(
+                "That's wayy too much!",
+                'We noticed that you\'re trying to redeem more whoosh bits than available.\n\nPlease enter a value less than or equal to ' + this.state.points + '!',
+                [
+                    {text: 'Got it!', onPress: () => console.log('User tried to scam us!')},
+                ],
+                {cancelable: false}
+            )
+            this.props.navigation.goBack(null);
+        }
         else{
             Alert.alert(
                 'Typo Alert!',
                 'We noticed that you made a typo. \n\nCould you please double check that you\'ve entered just numbers?',
                 [
-                    {text: 'Oops!', onPress: () => console.log('blankWhoooshbitValue acknowledged!')},
+                    {text: 'Oops!', onPress: () => console.log('User tried entering invalid characters!')},
                 ],
                 {cancelable: false}
             )
