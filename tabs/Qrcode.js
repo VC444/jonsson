@@ -17,7 +17,7 @@ export default class Qrcode extends Component {
     usrLinkedInID: '',
     attendedFlag: false,
     isValidSecretKey: '',
-    isAdminCheck: false,
+    //isAdminCheck: false,
   };
 
   async componentDidMount() {
@@ -120,16 +120,27 @@ export default class Qrcode extends Component {
     })
   }
 
-  isAdminData = (data) => {
-    var isAdmin = data.val()
-    console.log("The admin  is " + isAdmin)
-    this.state.isAdminCheck = isAdmin;
+  // isAdminData = (data) => {
+  //   this.state.isAdminCheck = data.val()
+  //   console.log("The admin  is " + this.state.isAdminCheck)
+  //   //this.state.isAdminCheck = isAdmin;
     
-  }
+  // }
 
-  isAdminerrData = (err) => {
-    console.log(err);
-  }
+  // isAdminerrData = (err) => {
+  //   console.log(err);
+  // }
+
+  // isAdminUpdate = (updatedStateValue) => {
+
+  //   if (updatedStateValue)
+  //   {
+  //     return true;
+  //   }
+  //   else{
+  //     return false;
+  //   }
+  // }
 
   async _handleBarCodeRead(data) {
     var temp = JSON.stringify(data);
@@ -166,21 +177,7 @@ export default class Qrcode extends Component {
     this.state.usrLinkedInID = this.props.navigation.state.params.theUserID.toString();
     var data2 = 'Whoosh Bits: ' + this.state.whooshBits;
 
-    ////////////////////////////////////////////
-    //var isAdminCheck
-    // isAdmin read from firebase
-    // If true, set isAdminCheck to true, else set to false.
-
-
-
-    var isAdminRef = firebase.database().ref("Users/" + this.props.navigation.state.params.theUserID.toString() + "/isAdmin/");
-    isAdminRef.on('value', this.isAdminData, this.isAdminerrData);
-
-
-    console.log("IS ADMIN CHECK STATE:" + this.state.isAdminCheck)
-    ///////////////////////////////////////////
-
-    if (this.state.mode == 'app' && this.state.isAdminCheck) //YET TO ADD CHECK IN FIREBASE FOR ADMIN ==> USE isAdmin IN FIREBASE UNDER USERID UNDER USERS
+    if (this.state.mode == 'app' && (this.props.navigation.state.params.kaiser.toString() === 'true')) //YET TO ADD CHECK IN FIREBASE FOR ADMIN ==> USE isAdmin IN FIREBASE UNDER USERID UNDER USERS
     {
       Alert.alert(
         'Admin Approval!',
