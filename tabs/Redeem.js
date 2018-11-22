@@ -45,10 +45,11 @@ export default class Redeem extends Component {
 
     validWhooshBitsRedeemValue(wbVal)
     {
-        this.state.points = wbVal;
-        console.log("&&&&& THIS.STATE POINTS: " + this.state.points);
-        console.log("&&&&& RAP SONG POINTS: " + this.props.navigation.state.params.localPoints.toString());
-        if (this.state.whooshBitsValue <= wbVal)
+        //this.state.points = wbVal;        //wbVal IS THE POINTS FROM USER'S FIREBASE & STATE WHOOSH BITS IS POINTS ENTERED
+        //console.log("&&&&& THIS.STATE POINTS: " + this.state.points);
+        console.log("&&&&& RAP SONG POINTS: " + wbVal);
+        console.log("&&&&& STATE WHOOSH BITS VALUE: " + this.state.whooshBitsValue)
+        if (parseInt(this.state.whooshBitsValue) <= parseInt(wbVal))
         {
             return true;
         }
@@ -67,7 +68,7 @@ export default class Redeem extends Component {
         console.log("FROM REDEEM PAGE USER ID: " + ourUserID);
         this.props.navigation.navigate('CodeDisplay',{woosh, ourUserID});
         }
-        else if (!this.validWhooshBitsRedeemValue(this.state.points))
+        else if (!this.validWhooshBitsRedeemValue(this.props.navigation.state.params.localPoints.toString()))
         {
             Alert.alert(
                 "That's wayy too much!",
