@@ -38,7 +38,7 @@ export default class Events extends Component {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
     var hardcodeDate = this.props.navigation.state.params.day.dateString
 
-    var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
+    var dateOfEvent = firebase.database().ref("Events/").orderByChild("modifiedDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
 
 
     dateOfEvent.on('value', this.gotData, this.errData);
