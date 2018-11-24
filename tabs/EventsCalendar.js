@@ -6,7 +6,7 @@
 import { CalendarList } from 'react-native-calendars';
 
 import React, { Component } from 'react';
-import { View, AsyncStorage } from 'react-native';
+import { View } from 'react-native';
 
 import * as firebase from 'firebase';
 
@@ -22,7 +22,7 @@ const dot_color = { color: 'white' }; // Constant dot color
 // const blah = { color: 'yellow'};
 // const fee = { color: 'black'};
 
-var ourEventIdArray = []
+
 export default class EventsCalendar extends Component {
 
     constructor(props) {
@@ -31,111 +31,47 @@ export default class EventsCalendar extends Component {
         this.state = {
             marked: false,
             formattedDate: [],
-            userID: 'userID',
-            userClassification: 'clasification',
         }
     }
 
-    // Checks if the user is classified as a (student/alumni/admin), and sends that data to gotUserData()
-    async componentDidMount() {
-        this.setState({ userID: await AsyncStorage.getItem('userID') });
-        var classificationRef = firebase.database().ref("Users/" + this.state.userID);
-        classificationRef.once('value', this.gotUserData, this.errData);
-    }
-
-    // Filters event results based on user classification
-    gotUserData = (data) => {
-        var userInfo = data.val();
-        var userClassification = userInfo.classification;
-        var isAdmin = userInfo.isAdmin;
-        //console.log('class vc ' + userInfo);
-        this.setState({ userClassification });
+    componentWillMount = () => {
+        // var eventsRef = firebase.database().ref('Events');
+        // var dateArray = [];
+        // eventsRef.orderByChild('eventDate').on('child_added', function(snapshot) {
+        //     console.log(snapshot.key + " has event date " + snapshot.val().eventDate);
+        //     dateArray.push(snapshot.val().eventDate);
+        //     var splitArray = dateArray.split('T');
+        //     console.log('this is the dateArray vccc' + dateArray);
+        // });
+        // queryDates.once('value', data => {
+        //     var goodData = data.val();
+        //     for (var date in goodData) {
+        //         console.log('These are the date values that vc wrote' + date);
+        //     }
+        // });
+        // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
+        /******************************************************************************************************** */
         var dateOfEvent = firebase.database().ref("Events/");
-
-        // If user is an admin, show all events
-        if (isAdmin == true)
-            dateOfEvent.on('value', this.gotData, this.errData);
-        else {
-            var totalData = [];
-            // Get events that match user's classification and push it to totalData
-            dateOfEvent.orderByChild('eventClassification').equalTo(this.state.userClassification).once('value', snapshot => {
-                snapshot.forEach(snap => {
-                    totalData.push(snap.val());
-
-                })
-            });
-
-            // Get events that are classified as 'both' and push it to totalData
-            dateOfEvent.orderByChild('eventClassification').equalTo('both').once('value', bothEvents => {
-                bothEvents.forEach(snap => {
-                    totalData.push(snap.val());
-                })
-            }).then(() => {
-                this.gotData(totalData); // send totalData to gotData function
-            })
-
-            dateOfEvent.once('value', snapsht => {
-                console.log("SNAPSHOT KEY!!!" + JSON.stringify(snapsht))
-            });
-        }
+        dateOfEvent.on('value', this.gotData, this.errData);
+        /************************************************************************************************** */
     }
 
-    getEventId = (data) => {
-        var eventIdData = data.val()
-
-        for(var i=0; i<Object.keys(eventIdData).length; i++)
-        {
-                ourEventIdArray.push(Object.keys(eventIdData)[i])
-        }
-        console.log("EVENT ID DATA KEYS: " + Object.keys(eventIdData))
-        console.log("GLOBAL EVENT ID: " + ourEventIdArray)
-
-
-    }
-
-    idErrData = (err) => {
-        console.log("GOT AN ERROR IN ID ERR DATA: " + err)
-    }
     gotData = (data) => {
-        var dates = data;
+        var dates = data.val()
         var keys = Object.keys(dates)
-        console.log("THIS IS KEYS FROM EVENT CALENDAR: " + dates.key)
         var formattedDate = []
-
-        var eventIdRef = firebase.database().ref("Events/");
-        eventIdRef.on('value', this.getEventId, this.idErrData);
 
         for (var i = 0; i < keys.length; i++) {
             var k = keys[i];
-            // var date_of_event = dates[k].eventDate;
-            var date = new Date(dates[k].eventDate);
-            var temp = date.toLocaleDateString();
-            var temp2 = temp.split("/");
-            var myDate = temp2[1];
-            var myMonth = temp2[0];
-            var myHalfYear = temp2[2];
-            var myFullYear = "20" + myHalfYear;
-            var dandanakka = myFullYear + '-' + myMonth + '-' + myDate;
-            formattedDate[i] = dandanakka;
-            }
+            var date_of_event = dates[k].modifiedDate;
+            var format_res = date_of_event;
+            formattedDate[i] = format_res
+        }
+
         // Set formattedDate array that is initialized in state to values of local formattedDate array 
         // and then call anotherFunc
         this.setState({ formattedDate }, this.anotherFunc);
 
-
-        
-        // var modifiedDateRef = firebase.database().ref("Events/" + ourEventIdArray[i]);
-
-        // modifiedDateRef.update({
-        //     modifiedDate: formattedDate[i]
-        //   }).then(function () {
-        //     console.log('STUDENT CLASSIFICATION SUCCEEDED');
-        //   })
-        //     .catch(function (error) {
-        //       console.log('STUDENT CLASSIFICATION FAILED' + error);
-        //     });
-
-            
         console.log('formatted date in state is ' + this.state.formattedDate);
     }
 
@@ -188,7 +124,6 @@ export default class EventsCalendar extends Component {
     }
 
     render() {
-
         const date = new Date()
         var year = date.getFullYear()
         var month = date.getMonth() + 1;
@@ -200,11 +135,6 @@ export default class EventsCalendar extends Component {
         var fullDate = year + '-' + month + '-' + day;
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
-
-
-
-
-
 
         return (
             <View>
@@ -225,7 +155,7 @@ export default class EventsCalendar extends Component {
                     onDayPress={(day) => {
                         //if (someVariable == true)
                         //{
-                        console.log("STRINGIFY EVENTS CALENDAR: " + JSON.stringify(day.dateString));
+                        console.log("STRINGIFY: " + JSON.stringify(day.dateString));
                         var hasEvent = false;
                         for (var date in this.state.marked) {
                             console.log('This is marked state object: ' + date);
