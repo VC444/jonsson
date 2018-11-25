@@ -244,7 +244,7 @@ export default class Qrcode extends Component {
         console.log(error);
       }
 
-      if (distance > 0.0284091) {
+      if (distance > 0.0852273) {
         Alert.alert(
           'You are more than 50 yards from the event.',
           'Y u try to cheat system dawg. \n \nsmh',

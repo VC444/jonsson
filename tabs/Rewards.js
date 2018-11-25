@@ -163,20 +163,6 @@ export default class Rewards extends Component {
                     <View style={{
                         width: '50%', height: '20%', backgroundColor: 'white'
                     }}>
-                        <Text style={{
-                            textAlign: 'center',
-                            fontSize: 17,
-                            paddingTop: 15,
-                            color: '#008542',
-                            fontWeight: 'bold'
-                        }}>
-                            {this.state.points} {"\n"}{"\n"}
-                            Whoosh Bits</Text>
-                    </View>
-
-                    <View style={{
-                        width: '50%', height: '20%', backgroundColor: 'white'
-                    }}>
 
                         <Text style={{
                             textAlign: 'center',
@@ -186,6 +172,20 @@ export default class Rewards extends Component {
                             fontWeight: 'bold'
                         }}> {this.state.numOfEvents} {"\n"}{"\n"}
                             Events attended </Text>
+                    </View>
+
+                    <View style={{
+                        width: '50%', height: '20%', backgroundColor: 'white'
+                    }}>
+                        <Text style={{
+                            textAlign: 'center',
+                            fontSize: 17,
+                            paddingTop: 15,
+                            color: '#008542',
+                            fontWeight: 'bold'
+                        }}>
+                            {this.state.points} {"\n"}{"\n"}
+                            Whoosh Bits</Text>
                     </View>
 
                     <TouchableOpacity onPress={this.onRedeemPressed}
