@@ -70,6 +70,9 @@
                <Text style={styles.contentStyle}>{this.props.navigation.state.params.rowData.articleContent}</Text>
              </Body>
            </CardItem>
+           <CardItem>
+           <Image source={{uri: 'http://ecs.utdallas.edu/aseegsw17/images/jonsson-school-logo.jpg'}} style={{ height: 200, width: null }}></Image>
+           </CardItem>
          </Card>
        </Content>
        </Container>

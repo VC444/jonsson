@@ -11,8 +11,6 @@ import * as firebase from 'firebase';
 import firebaseApp from '../App';
 import rootRef from '../App';
 
-global.eventCalendarLoad = false;
-
 export default class Home extends Component {
 
   constructor(props) {
@@ -20,11 +18,10 @@ export default class Home extends Component {
     this.state = {
       isLoading: true,
       refreshing: false,
-
     }
   }
 
-  async studentUser() 
+  studentUser = () => 
   {
     console.log('Current Student Pressed!')
     let userRef = firebase.database().ref('Users/' + this.state.userID + '/');
@@ -39,13 +36,9 @@ export default class Home extends Component {
         .catch(function (error) {
           console.log('STUDENT CLASSIFICATION FAILED' + error);
         });
-        
-        AsyncStorage.setItem('userClassification', 'student')
-        global.eventCalendarLoad = true;
-
   }
 
- async alumniUser()
+  alumniUser = () =>
   {
     console.log('Alumni Pressed!')
     let userRef = firebase.database().ref('Users/' + this.state.userID + "/");
@@ -60,9 +53,6 @@ export default class Home extends Component {
         .catch(function (error) {
           console.log('ALUMNI CLASSIFICATION FAILED' + error);
         });
-
-        AsyncStorage.setItem('userClassification', 'alumni')
-        global.eventCalendarLoad = true;
   }
 
       gotData = (data) => {
@@ -93,13 +83,6 @@ export default class Home extends Component {
 
     this.setState({
       userID: await AsyncStorage.getItem('userID'),
-      firstName: await AsyncStorage.getItem('firstName'),
-      lastName: await AsyncStorage.getItem('lastName'),
-      userPhoto: await AsyncStorage.getItem('userPhoto'),
-      headline: await AsyncStorage.getItem('headline'),
-      location: await AsyncStorage.getItem('location'),
-      industry: await AsyncStorage.getItem('industry'),
-      userClassificationAsync:  await AsyncStorage.getItem('userClassification')
     });
      
     var classificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
@@ -111,6 +94,14 @@ export default class Home extends Component {
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
 
+    this.setState({
+      firstName: await AsyncStorage.getItem('firstName'),
+      lastName: await AsyncStorage.getItem('lastName'),
+      userPhoto: await AsyncStorage.getItem('userPhoto'),
+      headline: await AsyncStorage.getItem('headline'),
+      location: await AsyncStorage.getItem('location'),
+      industry: await AsyncStorage.getItem('industry'),
+    });
     //return fetch('https://jonssonconnect.firebaseio.com/.json') // NOTE: As of Aug-2018, Firebase rules prevent this
     return fetch('https://jonssonconnect.firebaseio.com/Articles.json')
       //return fetch('/Users/mendoza/Downloads/articles.json')
@@ -196,6 +187,7 @@ export default class Home extends Component {
     var year = date.getFullYear()
     var day = date.getDate()
     var dayofweek = days[date.getDay()]
+
     return (
       <Container style={styles.containerStyle}>
         <Content
