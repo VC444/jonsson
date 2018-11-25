@@ -48,7 +48,7 @@
    render() {
      if (this.state.isLoading) {
        return (
-         <View style={{flex: 1, paddingTop: 20}}>
+         <View style={{flex: 1}}>
            <ActivityIndicator />
          </View>
        );
@@ -56,22 +56,19 @@
      return (
        <Container>
        <Content>
-       <Image source={{uri: this.props.navigation.state.params.rowData.articleImageURL}} style={{ height: 200, width: null }}></Image>
-       <Card style={{flex: 0}}>
+       <Image source={{uri: this.props.navigation.state.params.rowData.articleImageURL}} style={{ height: 300 }}></Image>
+       <Card>
            <CardItem>
              <Body>
                <Text style={styles.articlenameStyle}>{this.props.navigation.state.params.rowData.articleName}</Text>
                <Text style={{fontSize: 14, fontWeight: '800'}}></Text>
                <Text style={{fontSize: 14, color: '#808080',}}><Icon name='ios-clock-outline' style={{ fontSize: 14}}/> Published on {new Date(this.props.navigation.state.params.rowData.postedOn).toLocaleDateString("en-US", { month:'short', day:'numeric', year:'numeric' })}</Text>
                <Text style={{fontSize: 12, fontWeight: '100', color: "#b6b6b6",}}>_____________________________________________________________</Text>
-               <Text style={{fontSize: 12, fontWeight: '800'}}></Text>
-               <Text style={{fontSize: 14, fontWeight: '800'}}> <Icon name='ios-paper-outline' style={{ fontSize: 14}}/> Article Highlights</Text>
-               <Text style={{fontSize: 12, fontWeight: '100'}}></Text>
-               <Text style={styles.contentStyle}>{this.props.navigation.state.params.rowData.articleContent}</Text>
+               <Text style={styles.contentStyle}>{'\n\t\t\t\t\t' + this.props.navigation.state.params.rowData.articleContent + '\n\n'}</Text>
+               <Text style={{fontSize: 14, fontWeight: '800', alignSelf: 'center'}}>Thanks For Reading! {'\t'} :) {'\n\n'}</Text>
+               <Text style={{fontSize: 10, fontWeight: '100', color:'#b6b6b6', alignSelf: 'center'}}> --- End of News Article ---</Text>
+               
              </Body>
-           </CardItem>
-           <CardItem>
-           <Image source={{uri: 'http://ecs.utdallas.edu/aseegsw17/images/jonsson-school-logo.jpg'}} style={{ height: 200, width: null }}></Image>
            </CardItem>
          </Card>
        </Content>
