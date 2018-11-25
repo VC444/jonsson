@@ -46,11 +46,7 @@ export default class Events extends Component {
     this.setState({
       userID: await AsyncStorage.getItem('userID'),
       userIdLoading: false,
-      userClassificationAsync:  await AsyncStorage.getItem('userClassification')
-
     });
-    console.log("USER CLASSIFICATION FROM ASYNC STORAGE IN AGENDA: " + this.state.userClassificationAsync)
-
   }
 
 
@@ -58,7 +54,6 @@ export default class Events extends Component {
   gotData = (data) => {
     const { goBack } = this.props.navigation;
     var dates = data.val()
-    console.log("USER CLASSIFICATION FROM ASYNC STORAGE IN AGENDA: " + this.state.userClassificationAsync)
 
     console.log("The Dates by child: " + JSON.stringify(dates))
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });

@@ -31,17 +31,9 @@ export default class EventsCalendar extends Component {
         this.state = {
             marked: false,
             formattedDate: [],
-            // userClassificationAsync: null,
         }
     }
 
-    gotClass = (data) => {
-        var userClass = data.val();
-        console.log("USER CLASSIFICATION FROM FIREBASE REF IN EVECAL: " + userClass)
-        this.setState({
-            userClassificationAsync: userClass
-          });
-    }
 
     async componentWillMount (){
         // var eventsRef = firebase.database().ref('Events');
@@ -60,15 +52,19 @@ export default class EventsCalendar extends Component {
         // });
         // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
         /******************************************************************************************************** */
-        var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.userClassificationAsync).endAt(this.state.userClassificationAsync + "\uf8ff");
-        dateOfEvent.on('value', this.gotData, this.errData);
-        /************************************************************************************************** */
         this.setState({
-            userID: await AsyncStorage.getItem('userID')
+            userID: await AsyncStorage.getItem('userID'),
           });
-          let userID = await this.state.userID;
-        var userClassificationRef = firebase.database().ref("Users/" + userID + "/classification");
-        userClassificationRef.on('value', this.gotClass, this.errClass);
+        console.log("OUR USER ID@%$&$^%*$^*$: " + this.state.userID)
+
+        var userClassificationRef = firebase.database().ref("Users/" +this.state.userID +"/classification/");
+        //userClassificationRef.on('value', this.gotData, this.errData);
+
+
+        var dateOfEvent = firebase.database().ref("Events/");
+        dateOfEvent.on('value', this.gotData, this.errData);
+        
+        /************************************************************************************************** */
     }
 
     gotData = (data) => {
