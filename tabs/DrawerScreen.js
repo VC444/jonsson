@@ -184,9 +184,14 @@ export default class DrawerScreen extends Component {
                 </View>
                 </ImageBackground>
               </View>
+            <View style={styles.sidebarDay}>
+              <Text style={styles.day} onPress={this.navigateToScreen()}>
+                {day + ','}
+              </Text>
+            </View>
             <View style={styles.sidebarDate}>
-              <Text style={styles.date} onPress={this.navigateToScreen()}>
-                {day + ', ' + month + ' ' + dateNum}
+            <Text style={styles.date} onPress={this.navigateToScreen()}>
+                {month + ' ' + dateNum}
               </Text>
             </View>
 
@@ -281,10 +286,15 @@ const styles = {
     justifyContent: 'flex-start'
 
   },
+  day: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    paddingTop: 10
+  },
   date: {
     fontWeight: 'bold',
-    fontSize: 19,
-    paddingTop: 10
+    fontSize: 20,
+    paddingBottom: 10
   },
   logOut: {
     color: 'red',
@@ -305,9 +315,16 @@ const styles = {
     fontWeight: 'bold',
     fontSize: 15,
   },
+  sidebarDay: {
+    paddingTop: 10,
+    paddingLeft: 20,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
   sidebarDate: {
-    padding: 20,
-
+    paddingLeft: 20,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',

@@ -6,7 +6,7 @@
 import { CalendarList } from 'react-native-calendars';
 
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 
 import * as firebase from 'firebase';
 
@@ -31,10 +31,19 @@ export default class EventsCalendar extends Component {
         this.state = {
             marked: false,
             formattedDate: [],
+            // userClassificationAsync: null,
         }
     }
 
-    componentWillMount = () => {
+    gotClass = (data) => {
+        var userClass = data.val();
+        console.log("USER CLASSIFICATION FROM FIREBASE REF IN EVECAL: " + userClass)
+        this.setState({
+            userClassificationAsync: userClass
+          });
+    }
+
+    async componentWillMount (){
         // var eventsRef = firebase.database().ref('Events');
         // var dateArray = [];
         // eventsRef.orderByChild('eventDate').on('child_added', function(snapshot) {
@@ -51,9 +60,15 @@ export default class EventsCalendar extends Component {
         // });
         // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
         /******************************************************************************************************** */
-        var dateOfEvent = firebase.database().ref("Events/");
+        var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.userClassificationAsync).endAt(this.state.userClassificationAsync + "\uf8ff");
         dateOfEvent.on('value', this.gotData, this.errData);
         /************************************************************************************************** */
+        this.setState({
+            userID: await AsyncStorage.getItem('userID')
+          });
+          let userID = await this.state.userID;
+        var userClassificationRef = firebase.database().ref("Users/" + userID + "/classification");
+        userClassificationRef.on('value', this.gotClass, this.errClass);
     }
 
     gotData = (data) => {
