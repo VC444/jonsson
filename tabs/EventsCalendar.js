@@ -6,7 +6,7 @@
 import { CalendarList } from 'react-native-calendars';
 
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 
 import * as firebase from 'firebase';
 
@@ -34,7 +34,8 @@ export default class EventsCalendar extends Component {
         }
     }
 
-    componentWillMount = () => {
+
+    async componentWillMount (){
         // var eventsRef = firebase.database().ref('Events');
         // var dateArray = [];
         // eventsRef.orderByChild('eventDate').on('child_added', function(snapshot) {
@@ -51,8 +52,18 @@ export default class EventsCalendar extends Component {
         // });
         // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
         /******************************************************************************************************** */
+        this.setState({
+            userID: await AsyncStorage.getItem('userID'),
+          });
+        console.log("OUR USER ID@%$&$^%*$^*$: " + this.state.userID)
+
+        var userClassificationRef = firebase.database().ref("Users/" +this.state.userID +"/classification/");
+        //userClassificationRef.on('value', this.gotData, this.errData);
+
+
         var dateOfEvent = firebase.database().ref("Events/");
         dateOfEvent.on('value', this.gotData, this.errData);
+        
         /************************************************************************************************** */
     }
 
