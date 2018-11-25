@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Alert, AsyncStorage } from 'react-native';
+import { Text, View, StyleSheet, Alert, AsyncStorage, Camera } from 'react-native';
 import { Constants, BarCodeScanner, Permissions, Location } from 'expo';
 import * as firebase from 'firebase';
 import Geocoder from 'react-native-geocoding';
@@ -124,7 +124,7 @@ export default class Qrcode extends Component {
   //   this.state.isAdminCheck = data.val()
   //   console.log("The admin  is " + this.state.isAdminCheck)
   //   //this.state.isAdminCheck = isAdmin;
-    
+
   // }
 
   // isAdminerrData = (err) => {
@@ -171,7 +171,7 @@ export default class Qrcode extends Component {
     else {
       console.log("EMAIL ID FROM QRCODE.JS: " + this.state.emailID)
     }
-    
+
 
     var data1 = 'userID: ' + splitData[1];  //COMES FROM Agenda.js
     this.state.usrLinkedInID = this.props.navigation.state.params.theUserID.toString();
@@ -294,7 +294,7 @@ export default class Qrcode extends Component {
         this.props.navigation.goBack(null);
       }
     }
-    else{
+    else {
       Alert.alert(
         'Oh Dear!',
         "We're terribly sorry but something somewhere took a hard left turn. We'd recommend scanning the QR code once again or showing the QR code to an approved event coordinator.",
@@ -305,7 +305,7 @@ export default class Qrcode extends Component {
       )
       this.props.navigation.goBack(null);
     }
-    
+
   }
 
   approveWhooshBitsRedeem(redeemVal, usersID) {
@@ -322,15 +322,15 @@ export default class Qrcode extends Component {
       });
 
 
-      Alert.alert(
-        'Yay!',
-        "Whoosh Bits Redeemed!",
-        [
-          { text: 'Cool!' },
-        ],
-        { cancelable: false }
-      )
-      this.props.navigation.goBack(null);
+    Alert.alert(
+      'Yay!',
+      "Whoosh Bits Redeemed!",
+      [
+        { text: 'Cool!' },
+      ],
+      { cancelable: false }
+    )
+    this.props.navigation.goBack(null);
   }
 
   denyWhooshBitsRedeem() {
@@ -345,7 +345,7 @@ export default class Qrcode extends Component {
       { cancelable: false }
     )
     this.props.navigation.goBack(null);
-    
+
   }
 
   getEventData = (data) => {
@@ -403,14 +403,15 @@ export default class Qrcode extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.titleText}>Scan QR Code Here</Text>
         {this.state.hasCameraPermission === null ?
           <Text>Requesting permission to use camera ...</Text> :
           this.state.hasCameraPermission === false ?
             <Text>Camera permission is not granted</Text> :
             <BarCodeScanner
               onBarCodeRead={this.checkBarcodeRead}
-              style={{ height: 400, width: 400 }}
+              style={{ height: '100%', width: '100%' }}
+              // aspect={Camera.constants.Aspect.fill}
+              // playSoundOnCapture
             />
         }
       </View>
@@ -423,8 +424,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#C75B12',
+    //paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#000000',
   },
   titleText: {
     fontSize: 20,
