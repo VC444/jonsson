@@ -113,7 +113,13 @@ export const EventsFeedStack = createStackNavigator({
     screen: Agenda,
     headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 }
   },
-  Qrcode: { screen: Qrcode },
+  Qrcode: { screen: Qrcode,
+    navigationOptions: ({ navigation }) => ({
+      title: "Scan QR Code Here",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+  },
   Rsvp: { screen: Rsvp }
 });
 
