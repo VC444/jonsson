@@ -31,11 +31,15 @@ export default class EventsCalendar extends Component {
         this.state = {
             marked: false,
             formattedDate: [],
+            'classi': ''
         }
+
+        this.gotClassificationData = this.gotClassificationData.bind(this)
+
     }
 
 
-    async componentWillMount (){
+    async componentWillMount() {
         // var eventsRef = firebase.database().ref('Events');
         // var dateArray = [];
         // eventsRef.orderByChild('eventDate').on('child_added', function(snapshot) {
@@ -54,17 +58,45 @@ export default class EventsCalendar extends Component {
         /******************************************************************************************************** */
         this.setState({
             userID: await AsyncStorage.getItem('userID'),
-          });
+            classi: await AsyncStorage.getItem('classi')
+        });
         console.log("OUR USER ID@%$&$^%*$^*$: " + this.state.userID)
 
-        var userClassificationRef = firebase.database().ref("Users/" +this.state.userID +"/classification/");
-        //userClassificationRef.on('value', this.gotData, this.errData);
+        var userClassificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
+        userClassificationRef.on('value', this.gotClassificationData, this.classificationerrData);
 
 
-        var dateOfEvent = firebase.database().ref("Events/");
-        dateOfEvent.on('value', this.gotData, this.errData);
+        console.log("CLALASLSDA: " + this.state.classi)
         
+
+        if (this.state.classi === null) {
+            var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
+            dateOfEvent.on('value', this.gotData, this.errData);
+        }
+        else {
+            var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classi.toString()).endAt(this.state.classi.toString() + "\uf8ff");
+            dateOfEvent.on('value', this.gotData, this.errData);
+        }
+
+
+
         /************************************************************************************************** */
+    }
+
+    gotClassificationData = (data) => {
+
+
+        AsyncStorage.setItem('classi', data.val());
+        this.setState({ 'classi': data.val() });
+
+
+        this.setState({ classi: data.val() });
+
+
+    }
+
+    classificationerrData = (err) => {
+        console.log(err);
     }
 
     gotData = (data) => {
@@ -75,6 +107,20 @@ export default class EventsCalendar extends Component {
         for (var i = 0; i < keys.length; i++) {
             var k = keys[i];
             var date_of_event = dates[k].modifiedDate;
+
+            var myDates = date_of_event.split("-")
+            var yearKalasala = myDates[0]
+            var moKalasala = myDates[1]
+            var daKalasala = myDates[2]
+
+
+            if (parseInt(moKalasala) <= 9)
+                moKalasala = '0' + moKalasala;
+            if (parseInt(daKalasala) <= 9)
+                daKalasala = '0' + daKalasala;
+
+                date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
+
             var format_res = date_of_event;
             formattedDate[i] = format_res
         }
@@ -95,11 +141,13 @@ export default class EventsCalendar extends Component {
     anotherFunc = () => {
         var nextDay = this.state.formattedDate;
 
-        console.log(nextDay)
+        console.log("KALASALA NNEXT DAY :" + nextDay)
 
 
 
-        var sorted_arr = nextDay.slice().sort(); // You can define the comparing function here. 
+        var sorted_arr = nextDay.slice().sort(); // You can define the comparing function here. \\
+
+        console.log("KALASALA SORTED: " + sorted_arr)
         // JS by default uses a crappy string compare.
         // (we use slice to clone the array so the
         // original array won't be modified)
