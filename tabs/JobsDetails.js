@@ -59,7 +59,7 @@ export default class JobsDetails extends Component {
           <View style={styles.container2}>
             <ImageBackground
               style={styles.backdrop}
-              blurRadius={5}
+              blurRadius={3}
               source={{ uri: this.props.navigation.state.params.rowData.backgroundURL }}>
               <View style={styles.backdropView}>
                 <Thumbnail square source={{ uri: this.props.navigation.state.params.rowData.companyImageURL }} />
@@ -71,22 +71,21 @@ export default class JobsDetails extends Component {
           </View>
           <Card style={{ backgroundColor: '#f8f6f6' }}>
             <Button full style={styles.buttonStyle} onPress={() => { Linking.openURL(this.props.navigation.state.params.rowData.applicationURL) }}>
-              <Text style={{ fontSize: 14, fontWeight: '500' }}><Icon name='ios-link' style={{ fontSize: 14, color: '#ffffff' }} /> Apply Now</Text>
+              <Text style={{ fontSize: 18, fontWeight: '500', textAlign: 'center' }}><Icon name='ios-link' style={{ fontSize: 18, color: '#ffffff' }} /> Apply Now</Text>
             </Button>
           </Card>
-          <Text style={{ fontSize: 14, fontWeight: '800', paddingLeft: 15, paddingTop: 10 }}><Icon name='ios-flash' style={{ fontSize: 14 }} /> Position Overview</Text>
-          <Text style={styles.descriptionStyle}>{this.props.navigation.state.params.rowData.positionOverview}</Text>
-          <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
-          <Text style={{ fontSize: 14, fontWeight: '800', paddingLeft: 15, paddingTop: 10 }}><Icon name='ios-stats' style={{ fontSize: 14 }} /> Qualifications</Text>
-          <Text style={styles.descriptionStyle}>{this.props.navigation.state.params.rowData.positionQualifications}</Text>
-          <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
-          <Text style={{ fontSize: 14, fontWeight: '800', paddingLeft: 15, paddingTop: 10 }}><Icon name='ios-school' style={{ fontSize: 14 }} /> Desired Majors</Text>
-          <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
-          <Text style={styles.descriptionStyle}>{this.props.navigation.state.params.rowData.desiredMajors}</Text>
-          <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
-          <Text style={{ fontSize: 14, fontWeight: '800', paddingLeft: 15, paddingTop: 10 }}><Icon type='MaterialCommunityIcons' name='worker' style={{ fontSize: 14 }} /> Job-Type</Text>
-          <Text style={{ fontSize: 14, fontWeight: '800' }}></Text>
-          <Text style={styles.descriptionStyle}>{this.props.navigation.state.params.rowData.jobType + '\n\n'}</Text>
+          <Text style={{ fontSize:18, fontWeight: '200', paddingLeft: 15, paddingTop: 10, color: '#C75B12', textAlign: 'center' }}><Icon name='ios-flash' style={{ fontSize: 20, color: '#C75B12' }} /> Position Overview</Text>
+          <Text style={styles.descriptionStyle}>{'\n' + this.props.navigation.state.params.rowData.positionOverview + '\n\n'}</Text>
+          
+          <Text style={{ fontSize: 18, fontWeight: '200', paddingLeft: 15, paddingTop: 10, color: '#C75B12', textAlign: 'center' }}><Icon name='ios-stats' style={{ fontSize: 20, color: '#C75B12' }} /> Qualifications</Text>
+          <Text style={styles.descriptionStyle2}>{'\n' + this.props.navigation.state.params.rowData.positionQualifications + '\n\n'}</Text>
+          
+          <Text style={{ fontSize: 18, fontWeight: '200', paddingLeft: 15, paddingTop: 10, color: '#C75B12', textAlign: 'center' }}><Icon name='ios-school' style={{ fontSize: 20, color: '#C75B12' }} /> Desired Major(s)</Text>
+          <Text style={styles.descriptionStyle}>{'\n' + this.props.navigation.state.params.rowData.desiredMajors + '\n\n'}</Text>
+          
+          <Text style={{ fontSize: 18, fontWeight: '200', paddingLeft: 15, paddingTop: 10, color: '#C75B12', textAlign: 'center' }}><Icon type='MaterialCommunityIcons' name='worker' style={{ fontSize: 20, color: '#C75B12' }} /> Job-Type</Text>
+          <Text style={styles.descriptionStyle}>{'\n' + this.props.navigation.state.params.rowData.jobType + '\n\n'}</Text>
+
           <Text style={{ fontSize: 14, fontWeight: '800', alignSelf: 'center' }}>Check Us Out On Handshake! {'\t'} :) {'\n\n'}</Text>
           <Text style={{ fontSize: 10, fontWeight: '100', color: '#b6b6b6', alignSelf: 'center' }}> --- End of Job Details --- {'\n'}</Text>
 
@@ -105,18 +104,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   buttonStyle: {
-    backgroundColor: '#5BC6E8',
+    backgroundColor: '#008542',
     height: 40,
   },
   nameStyle: {
     fontWeight: '600',
     fontSize: 16,
   },
+  descriptionStyle2: {
+    fontWeight: '100',
+    fontSize: 15,
+    paddingHorizontal: 20,
+  },
   descriptionStyle: {
     fontWeight: '100',
-    fontSize: 12,
-    paddingLeft: 15,
-    paddingTop: 10,
+    fontSize: 15,
+    paddingHorizontal: 20,
+    textAlign: 'center'
   },
   hostStyle: {
     fontSize: 12,
@@ -131,8 +135,8 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     paddingTop: 60,
-    width: null,
-    height: 230
+    width: '100%',
+    height: 300
   },
   backdropView: {
     height: 230,

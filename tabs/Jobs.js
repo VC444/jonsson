@@ -104,7 +104,7 @@ export default class Jobs extends Component {
               return (
                 <Content>
                  <List style={{ backgroundColor: '#FFFFFF'}}>
-                   <ListItem style={{ margin: StyleSheet.hairlineWidth}}>
+                   <CardItem style={{ margin: 0}}>
                      <Left>
                        <Thumbnail square source={{uri: rowData.companyImageURL}} />
                        <Body>
@@ -119,7 +119,7 @@ export default class Jobs extends Component {
                          </Text>
                        </Body>
                      </Left>
-                   </ListItem>
+                   </CardItem>
                  </List>
                </Content>
               )
