@@ -47,9 +47,9 @@ export default class Redeem extends Component {
     {
         //this.state.points = wbVal;        //wbVal IS THE POINTS FROM USER'S FIREBASE & STATE WHOOSH BITS IS POINTS ENTERED
         //console.log("&&&&& THIS.STATE POINTS: " + this.state.points);
-        console.log("&&&&& RAP SONG POINTS: " + wbVal);
-        console.log("&&&&& STATE WHOOSH BITS VALUE: " + this.state.whooshBitsValue)
-        if (parseInt(this.state.whooshBitsValue) <= parseInt(wbVal))
+        // console.log("&&&&& RAP SONG POINTS: " + wbVal);
+        // console.log("&&&&& STATE WHOOSH BITS VALUE: " + this.state.whooshBitsValue)
+        if ((parseInt(wbVal).toString() !== '0') && (parseInt(wbVal) > 0) && (parseInt(this.state.whooshBitsValue) <= parseInt(wbVal)))
         {
             return true;
         }
@@ -58,8 +58,23 @@ export default class Redeem extends Component {
         }
     }
 
+    // zeroCheck(zeroVal)
+    // {
+    //     //this.state.points = wbVal;        //wbVal IS THE POINTS FROM USER'S FIREBASE & STATE WHOOSH BITS IS POINTS ENTERED
+    //     //console.log("&&&&& THIS.STATE POINTS: " + this.state.points);
+    //     // console.log("&&&&& RAP SONG POINTS: " + wbVal);
+    //     // console.log("&&&&& STATE WHOOSH BITS VALUE: " + this.state.whooshBitsValue)
+    //     if (parseInt(zeroVal) > 0)
+    //     {
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    // }
+
     displayQRCode() {
-        console.log("&&&&& RAP SONG POINTS: " + this.props.navigation.state.params.localPoints.toString());
+        // console.log("&&&&& RAP SONG POINTS: " + this.props.navigation.state.params.localPoints.toString());
         if (this.state.whooshBitsValue !== null && this.hasWhitespace(this.state.whooshBitsValue) == false && this.validWhooshBitsRedeemValue(this.props.navigation.state.params.localPoints.toString()))
         {
         var woosh = this.state.whooshBitsValue;
@@ -68,11 +83,23 @@ export default class Redeem extends Component {
         console.log("FROM REDEEM PAGE USER ID: " + ourUserID);
         this.props.navigation.navigate('CodeDisplay',{woosh, ourUserID});
         }
+        else if (this.state.whooshBitsValue == null)
+        {
+            Alert.alert(
+                "Hmm...",
+                "That doesn't seem right. Did you mean to enter some other value?\n\nYou have " + this.props.navigation.state.params.localPoints.toString() + " whoosh bits remaining!",
+                [
+                    {text: 'Got it!', onPress: () => console.log('User tried to scam us!')},
+                ],
+                {cancelable: false}
+            )
+            this.props.navigation.goBack(null);
+        }
         else if (!this.validWhooshBitsRedeemValue(this.props.navigation.state.params.localPoints.toString()))
         {
             Alert.alert(
                 "That's wayy too much!",
-                'We noticed that you\'re trying to redeem more whoosh bits than available.\n\nPlease enter a value less than or equal to ' + this.state.points + '!',
+                'We noticed that you\'re trying to redeem more whoosh bits than available!\n\nYou can only redeem ' + this.props.navigation.state.params.localPoints.toString() + ' whoosh bits!',
                 [
                     {text: 'Got it!', onPress: () => console.log('User tried to scam us!')},
                 ],
@@ -115,7 +142,7 @@ export default class Redeem extends Component {
             <Card>
               <CardItem bordered style={{ borderLeftColor: '#0039A6', borderLeftWidth: 2}}>
                 <Body>
-                  <Text style={{ fontSize: 22, fontWeight: '800', color: '#C75B12' }}><Icon type='FontAwesome' name='newspaper-o' style={{ fontSize: 22, color: '#C75B12' }} /> {" "}Redeem Whoosh Bits</Text>
+                  <Text style={{ fontSize: 22, fontWeight: '800', color: '#C75B12' }}><Icon type='MaterialIcons' name='redeem' style={{ fontSize: 22, color: '#C75B12' }} /> {" "}Redeem Whoosh Bits</Text>
                 </Body>
               </CardItem>
             </Card>

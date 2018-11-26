@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView, ActivityIndicator, AsyncStorage, Image } from 'react-native';
 import { Container, List, Right, CardItem } from 'native-base';
 import * as firebase from 'firebase';
 
@@ -115,7 +115,7 @@ export default class Rewards extends Component {
 
     onRedeemPressed = () => {
         var localPoints = this.state.points
-        this.props.navigation.navigate('Redeem', {localPoints});
+        this.props.navigation.navigate('Redeem', { localPoints });
     }
 
     utcToLocal = (time) => {
@@ -125,12 +125,12 @@ export default class Rewards extends Component {
 
     render() {
 
-        var numOfEventsRef = firebase.database().ref("Users/" + this.state.userID + "/numOfEvents/");
-        var whooshBitsRef = firebase.database().ref("Users/" + this.state.userID + "/points/");
-        numOfEventsRef.on('value', this.numOfEventsUpdate, this.numOfEventsUpdateErr);
-        whooshBitsRef.on('value', this.whooshBitsUpdate, this.whooshBitsUpdateErr);
-        console.log("********** EVENTS ATTENDED: " + this.state.numOfEvents);
-        console.log("********** WHOOSH BITS: " + this.state.points);
+        // var numOfEventsRef = firebase.database().ref("Users/" + this.state.userID + "/numOfEvents/");
+        // var whooshBitsRef = firebase.database().ref("Users/" + this.state.userID + "/points/");
+        // numOfEventsRef.on('value', this.numOfEventsUpdate, this.numOfEventsUpdateErr);
+        // whooshBitsRef.on('value', this.whooshBitsUpdate, this.whooshBitsUpdateErr);
+        // console.log("********** EVENTS ATTENDED: " + this.state.numOfEvents);
+        // console.log("********** WHOOSH BITS: " + this.state.points);
 
         if (this.state.isLoading) {
             return (
@@ -144,89 +144,95 @@ export default class Rewards extends Component {
         return (
             <ScrollView>
                 <ImageBackground
-                    style={{ width: null, height: 130 }}
+                    style={{
+                        width: null,
+                        height: 130
+                    }}
                     blurRadius={0}
                     source={require('../images/image6.jpg')}>
                     <View style={{
-                        paddingTop: 10, width: 400, backgroundColor: 'rgba(0,0,0,0)',
-                        paddingLeft: 15, alignItems: 'center', justifyContent: 'center',
+                        paddingTop: 10,
+                        width: 400,
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        paddingLeft: 15,
+                        alignItems: 'center',
+                        justifyContent: 'center',
                     }} />
                 </ImageBackground>
-
                 <View style={{
                     flex: 1,
                     flexDirection: 'row',
                     flexWrap: 'wrap',
                     borderColor: '#008542',
                 }}>
-
                     <View style={{
-                        width: '50%', height: '20%', backgroundColor: 'white'
+                        width: '50%',
+                        height: '100%',
+                        backgroundColor: 'white'
                     }}>
-
                         <Text style={{
                             textAlign: 'center',
                             fontSize: 17,
-                            paddingTop: 15,
+                            paddingVertical: 20,
                             color: '#008542',
                             fontWeight: 'bold'
                         }}> {this.state.numOfEvents} {"\n"}{"\n"}
-                            Events attended </Text>
+                            Events Attended </Text>
                     </View>
-
                     <View style={{
-                        width: '50%', height: '20%', backgroundColor: 'white'
+                        width: '50%',
+                        height: '100%',
+                        backgroundColor: 'white'
                     }}>
                         <Text style={{
                             textAlign: 'center',
                             fontSize: 17,
-                            paddingTop: 15,
+                            paddingVertical: 20,
                             color: '#008542',
                             fontWeight: 'bold'
                         }}>
                             {this.state.points} {"\n"}{"\n"}
-                            Whoosh Bits</Text>
+                            Whoosh Bits Earned</Text>
                     </View>
-
+                </View>
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    borderColor: '#008542',
+                }}>
                     <TouchableOpacity onPress={this.onRedeemPressed}
                         style={{
-                            width: '100%', backgroundColor: 'white'
+                            width: '100%',
+                            backgroundColor: 'white',
                         }}>
                         <Text style={{
                             textAlign: 'center',
                             fontSize: 20,
-                            paddingTop: 25,
-                            //paddingBottom: 30,
+                            paddingTop: 20,
                             color: '#c75b12',
                             fontWeight: 'bold'
                         }}>
                             Tap here to
-            </Text>
+                        </Text>
                         <Text style={{
                             textAlign: 'center',
                             fontSize: 30,
-                            paddingBottom: 30,
+                            paddingBottom: 20,
                             color: '#c75b12',
                             fontWeight: 'bold'
                         }}>
                             Redeem Whoosh Bits!
-            </Text>
+                        </Text>
                     </TouchableOpacity>
-
-
                     <View style={{
-                        width: '100%',
-                        paddingBottom: 30,
+                        height: '100%',
                     }}>
-                        {
-                            <ListView
-                                dataSource={this.state.dataSource}
-                                renderRow={this.renderRow.bind(this)} />
-                        }
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={this.renderRow.bind(this)} />
                     </View>
-
                 </View>
-
             </ScrollView>
         ); //return
 
@@ -234,12 +240,11 @@ export default class Rewards extends Component {
 
     renderRow(events) {
         return (
-
             <View style={
                 {
                     display: "flex",
                     flexDirection: "row",
-                    borderBottomWidth: .5,
+                    borderBottomWidth: 0,
                     borderColor: '#d3d3d3',
                     width: '100%',
                     backgroundColor: 'white',
@@ -248,25 +253,68 @@ export default class Rewards extends Component {
                     paddingLeft: 8
                 }
             }>
-
-
                 <ScrollView>
-                    <CardItem>
-                    <View style={{ width: '100%', flexGrow: 1 }}>
-                        <Text style={{ color: '#008542' }}>{events.eventTitle}</Text>
-                        <View style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
-                            <Text style={{ color: '#008542' }}>{this.utcToLocal(events.eventDate.toString())} </Text>
-                            <Text style={{ color: '#008542' }}>{events.whooshBits} </Text>
+                    <CardItem >
+                        <View style={{
+                            width: '100%',
+                            flexGrow: 1
+                        }}>
+                            <Text style={{
+                                color: '#008542'
+                            }}>
+                                {events.eventTitle}
+                            </Text>
+                            <View style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                flexDirection: 'row'
+                            }}>
+                                <Text style={{
+                                    color: '#008542'
+                                }}>
+                                    {this.utcToLocal(events.eventDate.toString())}
+                                </Text>
+                                </View>
+                                <View style={{
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                flexDirection: 'row'
+                            }}>
+                                <Text style={{
+                                    color: '#008542',
+                                    paddingBottom: 5,
+                                    fontWeight: 'bold',
+                                    fontSize: 14,
+                                }}>
+                                    {events.whooshBits + '\t'}
+                                    
+                                </Text>
+                                <Image
+                                        source={require('../images/wbicon.png')}
+                                        fadeDuration={0}
+                                        style={{
+                                            width: 20,
+                                            height: 20,
+                                        }}
+                                    />
+                            </View>
                         </View>
-                    </View>
-                    <View style={{ marginTop: 15, paddingLeft: 300, flex: 0, width: '100%' }}>
-                        <Text style={{ color: '#008542', fontWeight: 'bold', fontSize: 16 }}>{events.attandingCount}</Text>
-                    </View>
+                        <View style={{
+                            marginTop: 15,
+                            paddingLeft: 300,
+                            flex: 0,
+                            width: '100%'
+                        }}>
+                            <Text style={{
+                                color: '#008542',
+                                fontWeight: 'bold',
+                                fontSize: 16
+                            }}>
+                                {events.attandingCount}
+                            </Text>
+                        </View>
                     </CardItem>
                 </ScrollView>
-
-
-
             </View>
         );
     }

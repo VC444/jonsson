@@ -30,6 +30,8 @@ export default class Home extends Component {
         classification: "student",
         userStatus: "approved",
         isAdmin: "false",
+        numOfEvents: 0,
+        points: 0
       }).then(function () {
         console.log('STUDENT CLASSIFICATION SUCCEEDED');
       })
@@ -47,6 +49,8 @@ export default class Home extends Component {
         classification: "student",
         userStatus: "waiting",
         isAdmin: "false",
+        numOfEvents: 0,
+        points: 0
       }).then(function () {
         console.log('ALUMNI CLASSIFICATION SUCCEEDED');
       })
