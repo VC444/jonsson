@@ -266,10 +266,10 @@ export default class Qrcode extends Component {
 
       if (!userHasRSVPd) {
         Alert.alert(
-          'RSVP DAWG!.',
-          'Y u try to cheat system? \n \nsmh',
+          'Oops!',
+          "Looks like you haven't RSVP'd for this event. Try to RSVP and scan again!",
           [
-            { text: 'Damn It', onPress: () => console.log('User tried to cheat the system') },
+            { text: 'Oh Ok', onPress: () => console.log('User tried to cheat the system') },
           ],
           { cancelable: false }
         )
@@ -278,10 +278,10 @@ export default class Qrcode extends Component {
       }
       else if (distance > 0.0852273) {
         Alert.alert(
-          'You are more than 50 yards from the event.',
-          'Y u try to cheat system dawg. \n \nsmh',
+          'Oops!',
+          "Looks like you're more than 150 yards away from the event. Maybe try getting closer and scanning again?",
           [
-            { text: 'Damn It', onPress: () => console.log('User tried to cheat the system') },
+            { text: 'Alright', onPress: () => console.log('User tried to cheat the system') },
           ],
           { cancelable: false }
         )
@@ -291,10 +291,10 @@ export default class Qrcode extends Component {
 
       else if (userHasAttended) {
         Alert.alert(
-          'You have already scanned the QR code for this event.',
-          'Do not try to cheat the system bruh. \n \nLololol',
+          'Oops!',
+          "Looks like you've already scanned this QR code. If you have an issue, please leave us a feedback!",
           [
-            { text: 'Damn It', onPress: () => console.log('User tried to cheat the system') },
+            { text: 'Cool!', onPress: () => console.log('User tried to cheat the system') },
           ],
           { cancelable: false }
         )
@@ -304,10 +304,10 @@ export default class Qrcode extends Component {
 
       else if (!isValidSecretKeyCheck) {
         Alert.alert(
-          'INVALID SECRET KEY!',
-          'YOU TRYIN TO USE FAKE QR CODE??!. \n \nGood try tho',
+          'Uh Oh',
+          "This QR code isn't what we're expecting!. Try scanning again or talk to an event coordinator.",
           [
-            { text: 'But...But...How?', onPress: () => console.log('User tried to cheat the system') },
+            { text: 'Ok', onPress: () => console.log('User tried to cheat the system') },
           ],
           { cancelable: false }
         )
