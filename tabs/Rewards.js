@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Linking, Dimensions, TouchableOpacity, ImageBackground, ListView, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
-import { Container, List, Right } from 'native-base';
+import { Container, List, Right, CardItem } from 'native-base';
 import * as firebase from 'firebase';
 
 import firebaseApp from './EventDetails';
@@ -251,6 +251,7 @@ export default class Rewards extends Component {
 
 
                 <ScrollView>
+                    <CardItem>
                     <View style={{ width: '100%', flexGrow: 1 }}>
                         <Text style={{ color: '#008542' }}>{events.eventTitle}</Text>
                         <View style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -261,6 +262,7 @@ export default class Rewards extends Component {
                     <View style={{ marginTop: 15, paddingLeft: 300, flex: 0, width: '100%' }}>
                         <Text style={{ color: '#008542', fontWeight: 'bold', fontSize: 16 }}>{events.attandingCount}</Text>
                     </View>
+                    </CardItem>
                 </ScrollView>
 
 

@@ -107,11 +107,21 @@ export const EventsFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
-  EventDetails: { screen: EventDetails },
+  EventDetails: { screen: EventDetails,
+    navigationOptions: ({ navigation }) => ({
+      title: "Event Details",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+  },
   EventsCalendar: { screen: EventsCalendar },
   Agenda: {
     screen: Agenda,
-    headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 }
+    navigationOptions: ({ navigation }) => ({
+      title: "Events List",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
   },
   Qrcode: { screen: Qrcode,
     navigationOptions: ({ navigation }) => ({
@@ -132,7 +142,13 @@ export const JobsFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
-  JobsDetails: { screen: JobsDetails },
+  JobsDetails: { screen: JobsDetails,
+    navigationOptions: ({ navigation }) => ({
+      title: "Job Details",
+      headerStyle: { paddingRight: 10, paddingLeft: 10, backgroundColor: '#C75B12', borderBottomWidth: 1 },
+      headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
+    })
+  },
 });
 
 export const AppScreenNavigator = createMaterialTopTabNavigator({
