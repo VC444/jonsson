@@ -75,12 +75,22 @@ export default class EventsCalendar extends Component {
         
 
         if (this.state.classi === null) {
+            console.log("CLASSI IS NULL STATEMENT: " + this.state.classi)
             var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
             dateOfEvent.on('value', this.gotData, this.errData);
         }
         else {
+            console.log("CLASSI IS NOT NULL STATEMENT: " + this.state.classi)
             var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classi.toString()).endAt(this.state.classi.toString() + "\uf8ff");
-            dateOfEvent.on('value', this.gotData, this.errData);
+            if (dateOfEvent === null)
+            {
+                console.log("CAUGHT NULL VALUE: " + JSON.stringify(dateOfEvent.val()))
+            }
+            else{
+                console.log("NOT A NULL VALUE: " + JSON.stringify(dateOfEvent))
+                dateOfEvent.on('value', this.gotData, this.errData);
+            }
+            
         }
 
 
@@ -130,14 +140,17 @@ export default class EventsCalendar extends Component {
 
     gotClassificationData = (data) => {
 
-
+        console.log("DATA FROM GOT CLASSIFICATION: " + JSON.stringify(data.val()))
+        
+        if (data.val() === null)
+        {
+            console.log("CAUGHT NULL VALUE DATA.VAL(): " + JSON.stringify(data.val()))
+        }
+        else{
         AsyncStorage.setItem('classi', data.val());
         this.setState({ 'classi': data.val() });
-
-
         this.setState({ classi: data.val() });
-
-
+        }
     }
 
     classificationerrData = (err) => {
@@ -240,7 +253,15 @@ export default class EventsCalendar extends Component {
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
 
-        var classificationToBePassedToAgenda = this.state.classi.toString()
+        var classificationToBePassedToAgenda
+        if (this.state.classi.toString() === null)
+        {
+            classificationToBePassedToAgenda = 'student';
+        }
+        else
+        {
+            classificationToBePassedToAgenda = this.state.classi.toString();
+        }
 
         return (
             <View>
