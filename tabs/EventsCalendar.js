@@ -31,8 +31,7 @@ export default class EventsCalendar extends Component {
         this.state = {
             marked: false,
             formattedDate: [],
-            'classi': '',
-            formattedBothDate: [],
+            'classi': ''
         }
 
         this.gotClassificationData = this.gotClassificationData.bind(this)
@@ -66,31 +65,17 @@ export default class EventsCalendar extends Component {
         var userClassificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
         userClassificationRef.on('value', this.gotClassificationData, this.classificationerrData);
 
+
         console.log("CLALASLSDA: " + this.state.classi)
-
-        var bothEventsRef = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("both").endAt("both" + "\uf8ff");
-        bothEventsRef.on('value', this.gotBothClassificationEventData, this.bothClassificationerrData);
-
-
         
 
         if (this.state.classi === null) {
-            console.log("CLASSI IS NULL STATEMENT: " + this.state.classi)
             var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
             dateOfEvent.on('value', this.gotData, this.errData);
         }
         else {
-            console.log("CLASSI IS NOT NULL STATEMENT: " + this.state.classi)
             var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classi.toString()).endAt(this.state.classi.toString() + "\uf8ff");
-            if (dateOfEvent === null)
-            {
-                console.log("CAUGHT NULL VALUE: " + JSON.stringify(dateOfEvent.val()))
-            }
-            else{
-                console.log("NOT A NULL VALUE: " + JSON.stringify(dateOfEvent))
-                dateOfEvent.on('value', this.gotData, this.errData);
-            }
-            
+            dateOfEvent.on('value', this.gotData, this.errData);
         }
 
 
@@ -98,59 +83,16 @@ export default class EventsCalendar extends Component {
         /************************************************************************************************** */
     }
 
-    gotBothClassificationEventData = (data) => {
-
-        console.log("DATA FROM GOT BOTH CLASSIFICATION: " + data.val())
-        var bothdates = data.val()
-        var keys = Object.keys(bothdates)
-        var formattedBothDate = []
-
-        for (var i = 0; i < keys.length; i++) {
-            var k = keys[i];
-            var date_of_event = bothdates[k].modifiedDate;
-
-            var myDates = date_of_event.split("-")
-            var yearKalasala = myDates[0]
-            var moKalasala = myDates[1]
-            var daKalasala = myDates[2]
-
-
-            if (parseInt(moKalasala) <= 9)
-                moKalasala = '0' + moKalasala;
-            if (parseInt(daKalasala) <= 9)
-                daKalasala = '0' + daKalasala;
-
-                date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
-
-            var format_res = date_of_event;
-            formattedBothDate[i] = format_res
-        }
-
-        // Set formattedDate array that is initialized in state to values of local formattedDate array 
-        // and then call anotherFunc
-        this.setState({ formattedBothDate: formattedBothDate });
-
-        console.log('FORMATTED BOTH DATE: ' + this.state.formattedBothDate);
-
-    }
-
-    bothClassificationerrData = (err) => {
-        console.log("ERROR FROM BOTH CLASSIFICATION")
-    }
-
     gotClassificationData = (data) => {
 
-        console.log("DATA FROM GOT CLASSIFICATION: " + JSON.stringify(data.val()))
-        
-        if (data.val() === null)
-        {
-            console.log("CAUGHT NULL VALUE DATA.VAL(): " + JSON.stringify(data.val()))
-        }
-        else{
+
         AsyncStorage.setItem('classi', data.val());
         this.setState({ 'classi': data.val() });
+
+
         this.setState({ classi: data.val() });
-        }
+
+
     }
 
     classificationerrData = (err) => {
@@ -197,7 +139,7 @@ export default class EventsCalendar extends Component {
     // call function after you successfully get value in nextDay array
 
     anotherFunc = () => {
-        var nextDay = this.state.formattedDate.concat(this.state.formattedBothDate);
+        var nextDay = this.state.formattedDate;
 
         console.log("KALASALA NNEXT DAY :" + nextDay)
 
@@ -253,16 +195,6 @@ export default class EventsCalendar extends Component {
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
 
-        var classificationToBePassedToAgenda
-        if (this.state.classi.toString() === null)
-        {
-            classificationToBePassedToAgenda = 'student';
-        }
-        else
-        {
-            classificationToBePassedToAgenda = this.state.classi.toString();
-        }
-
         return (
             <View>
                 <CalendarList
@@ -291,7 +223,7 @@ export default class EventsCalendar extends Component {
                             }
                         }
                         if (hasEvent) {
-                            this.props.navigation.navigate("Agenda", { day, classificationToBePassedToAgenda });
+                            this.props.navigation.navigate("Agenda", { day });
                         } else {
                             alert('Aw Snap! We don\'t have any events to show for this date. Sorry!');
                         }
