@@ -31,7 +31,8 @@ export default class EventsCalendar extends Component {
         this.state = {
             marked: false,
             formattedDate: [],
-            'classi': ''
+            'classi': '',
+            formattedBothDate: [],
         }
 
         this.gotClassificationData = this.gotClassificationData.bind(this)
@@ -65,8 +66,12 @@ export default class EventsCalendar extends Component {
         var userClassificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
         userClassificationRef.on('value', this.gotClassificationData, this.classificationerrData);
 
-
         console.log("CLALASLSDA: " + this.state.classi)
+
+        var bothEventsRef = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("both").endAt("both" + "\uf8ff");
+        bothEventsRef.on('value', this.gotBothClassificationEventData, this.bothClassificationerrData);
+
+
         
 
         if (this.state.classi === null) {
@@ -81,6 +86,46 @@ export default class EventsCalendar extends Component {
 
 
         /************************************************************************************************** */
+    }
+
+    gotBothClassificationEventData = (data) => {
+
+        console.log("DATA FROM GOT BOTH CLASSIFICATION: " + data.val())
+        var bothdates = data.val()
+        var keys = Object.keys(bothdates)
+        var formattedBothDate = []
+
+        for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            var date_of_event = bothdates[k].modifiedDate;
+
+            var myDates = date_of_event.split("-")
+            var yearKalasala = myDates[0]
+            var moKalasala = myDates[1]
+            var daKalasala = myDates[2]
+
+
+            if (parseInt(moKalasala) <= 9)
+                moKalasala = '0' + moKalasala;
+            if (parseInt(daKalasala) <= 9)
+                daKalasala = '0' + daKalasala;
+
+                date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
+
+            var format_res = date_of_event;
+            formattedBothDate[i] = format_res
+        }
+
+        // Set formattedDate array that is initialized in state to values of local formattedDate array 
+        // and then call anotherFunc
+        this.setState({ formattedBothDate: formattedBothDate });
+
+        console.log('FORMATTED BOTH DATE: ' + this.state.formattedBothDate);
+
+    }
+
+    bothClassificationerrData = (err) => {
+        console.log("ERROR FROM BOTH CLASSIFICATION")
     }
 
     gotClassificationData = (data) => {
@@ -139,7 +184,7 @@ export default class EventsCalendar extends Component {
     // call function after you successfully get value in nextDay array
 
     anotherFunc = () => {
-        var nextDay = this.state.formattedDate;
+        var nextDay = this.state.formattedDate.concat(this.state.formattedBothDate);
 
         console.log("KALASALA NNEXT DAY :" + nextDay)
 
@@ -195,6 +240,8 @@ export default class EventsCalendar extends Component {
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
 
+        var classificationToBePassedToAgenda = this.state.classi.toString()
+
         return (
             <View>
                 <CalendarList
@@ -223,7 +270,7 @@ export default class EventsCalendar extends Component {
                             }
                         }
                         if (hasEvent) {
-                            this.props.navigation.navigate("Agenda", { day });
+                            this.props.navigation.navigate("Agenda", { day, classificationToBePassedToAgenda });
                         } else {
                             alert('Aw Snap! We don\'t have any events to show for this date. Sorry!');
                         }
