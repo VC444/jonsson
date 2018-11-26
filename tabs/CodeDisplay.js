@@ -33,7 +33,8 @@ render() {
                 <Text style = {styles.headerStyle}>Your Personalized QR Code!</Text>
                 </View> */}
                 <View style={styles.infoStyle}>
-                    <Text style = {styles.bodyStyle}>{"\n\n\n"}Show this QR code to an attendant to approve your redeem request! {"\n\n\n"}</Text>
+                    <Text style = {styles.bodyStyle}>{"\n\n\n"}Show this QR code to an attendant to approve your redeem request! {"\n"}</Text>
+                    <Text style = {styles.bodyStyle3}>{"\n\n"}USER ID: {this.props.navigation.state.params.ourUserID.toString() + "\n\n\n"}</Text>
                 </View>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <QRCode
@@ -83,6 +84,11 @@ const styles = StyleSheet.create({
       fontSize: 15,
       textAlign: 'center',
   },
+  bodyStyle3: {
+    fontSize: 15,
+    textAlign: 'center',
+    fontWeight: 'bold'
+},
   infoStyle: {
       textAlign: "center",
       paddingHorizontal: 20,

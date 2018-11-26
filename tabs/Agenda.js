@@ -229,7 +229,7 @@ console.log("OBJECT TESTERERE:"+filteredObjects);
                           <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>
                           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "row", paddingTop: 5 }}>
                             <Text style={{ fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
-                              <Icon name='ios-people' style={{ fontSize: 25, color: '#f37735' }} /> {rowData.rsvpCount} people attending
+                              <Icon name='ios-people' style={{ fontSize: 25, color: '#f37735' }} /> {rowData.rsvpCount + ' '} People Attending
                             </Text>
                           </View>
                           <TouchableHighlight
