@@ -84,11 +84,11 @@ export default class DrawerScreen extends Component {
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync();
     console.log('The updated token is ' + token);
-    let userID = await this.state.userID;
+    let userID = await AsyncStorage.getItem('userID');
     
     // get firstname and lastname from state
-    let firstName = await this.state.firstName;
-    let lastName = await this.state.lastName;
+    let firstName = await AsyncStorage.getItem('firstName');
+    let lastName = await AsyncStorage.getItem('lastName');
 
     // Writing user's firstname, lastname, and notification token to firebase
     let userRef = firebase.database().ref('Users/' + userID);
