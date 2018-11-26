@@ -240,6 +240,8 @@ export default class EventsCalendar extends Component {
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
 
+        var classificationToBePassedToAgenda = this.state.classi.toString()
+
         return (
             <View>
                 <CalendarList
@@ -268,7 +270,7 @@ export default class EventsCalendar extends Component {
                             }
                         }
                         if (hasEvent) {
-                            this.props.navigation.navigate("Agenda", { day });
+                            this.props.navigation.navigate("Agenda", { day, classificationToBePassedToAgenda });
                         } else {
                             alert('Aw Snap! We don\'t have any events to show for this date. Sorry!');
                         }
