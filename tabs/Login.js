@@ -159,7 +159,7 @@ export default class Login extends React.Component {
   }
 
   chooseCategory = () => {
-    let category = 'Student';
+    let category = 'student';
     return category;
   }
 
