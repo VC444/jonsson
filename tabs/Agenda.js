@@ -38,22 +38,6 @@ export default class Events extends Component {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
     var hardcodeDate = this.props.navigation.state.params.day.dateString
 
-    console.log("CLASSIFICATION FROM EVENTS CALENDAR: " + this.props.navigation.state.params.classificationToBePassedToAgenda.toString())
-
-    var myDates = hardcodeDate.split("-")
-            var yearKalasala = myDates[0]
-            var moKalasala = myDates[1]
-            var daKalasala = myDates[2]
-
-
-            if (parseInt(moKalasala) <= 9)
-                moKalasala = moKalasala[1];
-            if (parseInt(daKalasala) <= 9)
-                daKalasala = daKalasala[1];
-
-                hardcodeDate = yearKalasala + "-" + moKalasala + "-" + daKalasala
-
-    console.log("HARDCODED DATE FROM AGENDA: " + hardcodeDate)
     var dateOfEvent = firebase.database().ref("Events/").orderByChild("modifiedDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
 
 
@@ -70,32 +54,13 @@ export default class Events extends Component {
   gotData = (data) => {
     const { goBack } = this.props.navigation;
     var dates = data.val()
-    console.log("DATES TEST: "+JSON.stringify(dates))
 
-
-    var keys = Object.keys(dates)
-    var filteredObjects = new Array();
-
-        for (var i = 0; i < keys.length; i++) 
-        {
-            var k = keys[i];
-            if(dates[k].eventClassification === this.props.navigation.state.params.classificationToBePassedToAgenda.toString() || dates[k].eventClassification === 'both')
-            {
-              filteredObjects.push(dates[k])
-              // console.log("FILTERED OBJECTS: "+JSON.stringify(dates[k]))
-            }
-        }
-
-console.log("OBJECT TESTERERE:"+filteredObjects);
-
-        console.log("FILTERED OBJECTS poRGU3U 5-9U]53 : "+JSON.stringify(filteredObjects))
-
-    // console.log("The Dates by child: " + JSON.stringify(dates))
+    console.log("The Dates by child: " + JSON.stringify(dates))
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
     this.setState({
       isLoading: false,
-      dataSource: ds.cloneWithRows(filteredObjects),
+      dataSource: ds.cloneWithRows(dates),
     }, function () {
       // do something with new state
     });
@@ -205,13 +170,6 @@ console.log("OBJECT TESTERERE:"+filteredObjects);
             dataSource={this.state.dataSource}
             renderRow={(rowData) => {
               const { uri } = rowData;
-
-              var myDates = rowData.modifiedDate.toString().split("-")
-            var yearKalasala = myDates[0]
-            var moKalasala = myDates[1]
-            var daKalasala = myDates[2]
-            var dates = new Date (rowData.eventDate)
-
               return (
                 <Content>
                   <List style={{ backgroundColor: '#FFFFFF' }}>
@@ -220,16 +178,16 @@ console.log("OBJECT TESTERERE:"+filteredObjects);
                         <Body>
                           <Text style={{ fontWeight: '800', fontSize: 16 }}>{rowData.eventTitle}</Text>
                           <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5 }}>
-                            <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {monthNames[parseInt(dates.getMonth())] + ' ' + dates.getDate() + ', ' + dates.getFullYear()}
+                            <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {monthNames[parseInt(rowData.eventDate.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(rowData.eventDate.toString().substr(8, 2))}, {rowData.eventDate.toString().substr(0, 4)}
                           </Text>
                           <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5 }}>
-                            <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {dates.toLocaleTimeString()}
+                            <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {this.utcToLocal(rowData.eventDate.toString())}
                           </Text>
                           <Text style={{ fontWeight: '100', fontSize: 12, color: '#757575', paddingTop: 5 }}><Icon name='ios-pin-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {rowData.eventLocation}</Text>
                           <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>
                           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "row", paddingTop: 5 }}>
                             <Text style={{ fontSize: 12, fontWeight: '100', paddingBottom: 5, paddingTop: 5, paddingLeft: 2, color: '#343d46' }}>
-                              <Icon name='ios-people' style={{ fontSize: 25, color: '#f37735' }} /> {rowData.rsvpCount + ' '} People Attending
+                              <Icon name='ios-people' style={{ fontSize: 25, color: '#f37735' }} /> {rowData.rsvpCount} people attending
                             </Text>
                           </View>
                           <TouchableHighlight
