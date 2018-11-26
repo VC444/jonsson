@@ -23,7 +23,6 @@ import Rewards from './tabs/Rewards';
 import Help from './tabs/Help';
 import Agenda from './tabs/Agenda';
 import Qrcode from './tabs/Qrcode';
-import Rsvp from './tabs/Rsvp';
 import Redeem from './tabs/Redeem';
 import CodeDisplay from './tabs/CodeDisplay';
 
@@ -130,7 +129,6 @@ export const EventsFeedStack = createStackNavigator({
       headerTitleStyle: { fontSize: 18, fontWeight: '100', color: 'white' },
     })
   },
-  Rsvp: { screen: Rsvp }
 });
 
 export const JobsFeedStack = createStackNavigator({

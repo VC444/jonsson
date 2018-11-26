@@ -114,7 +114,7 @@ export default class DrawerScreen extends Component {
 
   isAdminData = (data) => {
     this.state.isAdminCheck = data.val()
-    console.log("@@@@@@@@@@ The admin  is " + this.state.isAdminCheck)
+    // console.log("@@@@@@@@@@ The admin  is " + this.state.isAdminCheck)
     //this.state.isAdminCheck = isAdmin;
     
   }
@@ -184,9 +184,14 @@ export default class DrawerScreen extends Component {
                 </View>
                 </ImageBackground>
               </View>
+            <View style={styles.sidebarDay}>
+              <Text style={styles.day} onPress={this.navigateToScreen()}>
+                {day + ','}
+              </Text>
+            </View>
             <View style={styles.sidebarDate}>
-              <Text style={styles.date} onPress={this.navigateToScreen()}>
-                {day + ', ' + month + ' ' + dateNum}
+            <Text style={styles.date} onPress={this.navigateToScreen()}>
+                {month + ' ' + dateNum}
               </Text>
             </View>
 
@@ -248,12 +253,9 @@ export default class DrawerScreen extends Component {
                 Log Out
               </Text>
             </TouchableOpacity> */}
-            <View style={styles.bottom}>
-              <Text style={styles.buildStyle}>Build Number: 2.1.6</Text>
-            </View>
           </View>
         </ScrollView>
-      </View >
+      </View>
     );
   }
 }
@@ -274,17 +276,21 @@ const styles = {
 
     padding: 14,
     paddingLeft: 20,
-
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start'
 
   },
+  day: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    paddingTop: 20
+  },
   date: {
     fontWeight: 'bold',
-    fontSize: 19,
-    paddingTop: 10
+    fontSize: 20,
+    paddingBottom: 10
   },
   logOut: {
     color: 'red',
@@ -306,8 +312,14 @@ const styles = {
     fontSize: 15,
   },
   sidebarDate: {
-    padding: 20,
-
+    paddingLeft: 25,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  sidebarDay: {
+    paddingLeft: 25,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -339,17 +351,5 @@ const styles = {
     justifyContent: 'center',
     paddingTop: 4,
     paddingBottom: 4,
-  },
-
-  bottom: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginTop: 80
-  },
-
-  buildStyle: {
-    textAlign: 'center',
-    bottom: 0,
-    color: 'grey'
   }
 }

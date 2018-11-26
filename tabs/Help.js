@@ -177,9 +177,9 @@ export default class Help extends Component {
             console.log("USER EMAIL ID: " + this.state.userEmail)
             return (
                 <ScrollView style={styles.masterView}>
-                <Text style={{ paddingHorizontal: 20, textAlign: 'left', paddingVertical: 25, fontWeight: 'bold' }}>
-            Below, you will find some of the most Frequently Asked Questions (hence, FAQ) and their answers.
-            If you don't find the answers you are looking for, scroll down to the bottom and fill out the feedback form 
+                    <Text style={{ paddingHorizontal: 20, textAlign: 'left', paddingVertical: 25, fontWeight: 'bold' }}>
+                        Below, you will find some of the most Frequently Asked Questions (hence, FAQ) and their answers.
+                        If you don't find the answers you are looking for, scroll down to the bottom and fill out the feedback form
             and we'll get back to you ASAP.</Text>
                     <View>
                         <Accordion
@@ -195,7 +195,9 @@ export default class Help extends Component {
                     >
                         <Text style={styles.buttonText}>Give Feedback</Text>
                     </TouchableOpacity>
-
+                    <View style={styles.bottom1}>
+                        <Text style={styles.buildStyle}>Build Number: 2.1.10</Text>
+                    </View>
 
                 </ScrollView>
             );
@@ -203,9 +205,9 @@ export default class Help extends Component {
             console.log("USER EMAIL ID: " + this.state.userEmail)
             return (
                 <ScrollView style={styles.masterView}>
-                <Text style={{ paddingHorizontal: 20, textAlign: 'left', paddingVertical: 25, fontWeight: 'bold' }}>
-            Below, you will find some of the most Frequently Asked Questions (hence, FAQ) and their answers.
-            If you don't find the answers you are looking for, scroll down to the bottom and fill out the feedback form 
+                    <Text style={{ paddingHorizontal: 20, textAlign: 'left', paddingVertical: 25, fontWeight: 'bold' }}>
+                        Below, you will find some of the most Frequently Asked Questions (hence, FAQ) and their answers.
+                        If you don't find the answers you are looking for, scroll down to the bottom and fill out the feedback form
             and we'll get back to you ASAP.</Text>
                     <View>
                         <Accordion
@@ -219,6 +221,9 @@ export default class Help extends Component {
                             <Label>Email ID (@utdallas.edu is preferred!)</Label>
                             <Input value={this.state.email} onChangeText={(e)=>{this.handleEmailChange(e)}} name="email"/>
                         </Item> */}
+                        <Text style={{ paddingHorizontal: 30, textAlign: 'center', paddingTop: 15, paddingBottom: 25 }}>
+                            The email ID that you used to sign in will be sent along with your feedback.
+                        This will help us reach out to you if we need to after reading your feedback!</Text>
                         <Item stackedLabel>
                             <Label>How can we improve?</Label>
                             <Input value={this.state.message} onChangeText={(e) => { this.handleMessageChange(e) }} name="message" />
@@ -231,12 +236,10 @@ export default class Help extends Component {
                             <Text style={styles.buttonText}>{this.state.isLoading ? 'Submitting... Give Us A Sec!' : 'Submit'}</Text>
                         </TouchableOpacity>
 
-                        <Text style={{ paddingHorizontal: 40, textAlign: 'center', paddingVertical: 25 }}>
-                            The email ID that you used to sign into the app will be sent along with your feedback.
-                        This will help us reach out to you if we need to after hearing from you!</Text>
-
                     </Form>
-
+                    <View style={styles.bottom}>
+                        <Text style={styles.buildStyle}>Build Number: 2.1.10</Text>
+                    </View>
                 </ScrollView>
             );
         }
@@ -267,5 +270,21 @@ const styles = StyleSheet.create({
     },
     formView: {
         paddingTop: 40,
+    },
+
+    bottom1: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+    },
+    bottom: {
+        flex: 1,
+    },
+
+    buildStyle: {
+        textAlign: 'center',
+        //justifyContent: 'space-between',
+        // bottom: 0,
+        color: 'grey'
     }
 });

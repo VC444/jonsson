@@ -142,6 +142,15 @@ export default class Qrcode extends Component {
   //   }
   // }
 
+  // rsvpCheckRefGotData = (myData) => {
+  //   var someData = myData.val()
+  //   console.log("CHECKING &&&&&&&&&&&&&&^%$#: " + JSON.stringify(someData))
+  // }
+
+  // rsvpCheckRefErrData = (errData) => {
+  //   console.log("ERROR!: " + errData)
+  // }
+
   async _handleBarCodeRead(data) {
     var temp = JSON.stringify(data);
     var temp2 = temp.split(':');
@@ -223,6 +232,7 @@ export default class Qrcode extends Component {
       var finalAttendedCheck = true;
       var finalGeoLocationCheck = true;
       var finalValidSecretKeyCheck = true;
+      var finalRSVPCheck = true;
 
       try {
         var userPosition = await this.getUserLocation(); // gets user's current location
@@ -244,7 +254,29 @@ export default class Qrcode extends Component {
         console.log(error);
       }
 
-      if (distance > 0.0852273) {
+      /////////////////////////////////////////////////////////////////////////////////////////////////
+      var userHasRSVPd = false;
+      var rsvpCheckRef = firebase.database().ref("Events/" + this.state.ourEventID + "/usersRsvp/" + this.state.usrLinkedInID + '/');
+      rsvpCheckRef.on('value', function (snapshot) {
+        var exists = (snapshot.val() !== null)
+        console.log("Has User RSVP'd?:" + exists)
+        userHasRSVPd = exists;
+      });
+      ////////////////////////////////////////////////////////////////////////////////////////////////
+
+      if (!userHasRSVPd) {
+        Alert.alert(
+          'RSVP DAWG!.',
+          'Y u try to cheat system? \n \nsmh',
+          [
+            { text: 'Damn It', onPress: () => console.log('User tried to cheat the system') },
+          ],
+          { cancelable: false }
+        )
+        finalRSVPCheck = false;
+        this.props.navigation.goBack(null);
+      }
+      else if (distance > 0.0852273) {
         Alert.alert(
           'You are more than 50 yards from the event.',
           'Y u try to cheat system dawg. \n \nsmh',
@@ -282,7 +314,7 @@ export default class Qrcode extends Component {
         finalValidSecretKeyCheck = false;
         this.props.navigation.goBack(null);
       }
-      else if (finalAttendedCheck && finalValidSecretKeyCheck && finalGeoLocationCheck) {
+      else if (finalAttendedCheck && finalValidSecretKeyCheck && finalGeoLocationCheck && finalRSVPCheck) {
         Alert.alert(
           this.state.whooshBits + ' Whoosh Bits Redeemed!',
           'Thanks for attending! \n \nWe look forward to seeing you again!',
