@@ -159,7 +159,14 @@ export default class Help extends Component {
                 isLoading: true
             })
 
-            Alert.alert("Feedback has been submitted! Thank you");
+            Alert.alert(
+                "Awesome!",
+                "We've recieved your feedback! Thanks!",
+                [
+                    { text: 'Awesome!', onPress: () => console.log('Feedback Submitted!') },
+                ],
+                { cancelable: false }
+                )
             this.setState({
                 isLoading: true
             })
