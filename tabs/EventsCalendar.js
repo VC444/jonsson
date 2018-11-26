@@ -146,16 +146,7 @@ export default class EventsCalendar extends Component {
 
     gotData = (data) => {
         var dates = data.val()
-        var keys
-        if (Object.keys(dates) === null)
-        {
-            console.log("NULL ERROR CAUGHT!")
-        }
-        else
-        {
-            keys = Object.keys(dates)
-        }
-        
+        var keys = Object.keys(dates)
         var formattedDate = []
 
         for (var i = 0; i < keys.length; i++) {
@@ -249,6 +240,8 @@ export default class EventsCalendar extends Component {
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
 
+        var classificationToBePassedToAgenda = this.state.classi.toString()
+
         return (
             <View>
                 <CalendarList
@@ -277,7 +270,7 @@ export default class EventsCalendar extends Component {
                             }
                         }
                         if (hasEvent) {
-                            this.props.navigation.navigate("Agenda", { day });
+                            this.props.navigation.navigate("Agenda", { day, classificationToBePassedToAgenda });
                         } else {
                             alert('Aw Snap! We don\'t have any events to show for this date. Sorry!');
                         }
