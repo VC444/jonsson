@@ -255,12 +255,15 @@ export default class Qrcode extends Component {
         console.log(error);
       }
 
-      var isUserAlumni = false;
+      var isUserAlumni = null;
       var userAlumniCheck = firebase.database().ref("Users/" + this.state.usrLinkedInID + '/classification/');
       userAlumniCheck.on('value', function (snapshot) {
         if (snapshot.val() == 'alumni')
         {
           isUserAlumni = true;
+        }
+        else if (snapshot.val() == 'student'){
+          isUserAlumni = false;
         }
         console.log("Is User an Alumni?:" + isUserAlumni)
       });
@@ -275,8 +278,22 @@ export default class Qrcode extends Component {
       });
       ////////////////////////////////////////////////////////////////////////////////////////////////
 
-      if (!isUserAlumni)
+      var isAlumniEvent = null;
+      var alumniEventRef = firebase.database().ref("Events/" + this.state.ourEventID + "/eventClassification/");
+      alumniEventRef.on('value', function (snapshot) {
+        if (snapshot.val() == 'alumni')
+        {
+          isAlumniEvent = true;
+        }
+        else if (snapshot.val() == 'student'){
+          isAlumniEvent = false;
+        }
+        console.log("Is the event open to Alumni Only?:" + isAlumniEvent)
+      });
+
+      if (isAlumniEvent && !isUserAlumni)
       {
+        
         Alert.alert(
           'Oops!',
           "This event is open to Alumni only. If you are an Alumnus but are unable to scan the QR code, please speak to an event coordinator.",
@@ -286,6 +303,7 @@ export default class Qrcode extends Component {
           { cancelable: false }
         )
         finalAlumniCheck = false;
+
         this.props.navigation.goBack(null);
       }
       else if (!userHasRSVPd) {
@@ -300,7 +318,7 @@ export default class Qrcode extends Component {
         finalRSVPCheck = false;
         this.props.navigation.goBack(null);
       }
-      else if (distance > 0.0852273) {
+      else if (distance > 0.170455) { //300 YARDS
         Alert.alert(
           'Oops!',
           "Looks like you're more than 150 yards away from the event. Maybe try getting closer and scanning again?",
