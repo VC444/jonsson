@@ -38,7 +38,7 @@ export default class Events extends Component {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
     var hardcodeDate = this.props.navigation.state.params.day.dateString
 
-    console.log("CLASSIFICATION FROM EVENTS CALENDAR: " + this.props.navigation.state.params.classificationToBePassedToAgenda.toString())
+    // console.log("CLASSIFICATION FROM EVENTS CALENDAR: " + this.props.navigation.state.params.classificationToBePassedToAgenda.toString())
 
     var myDates = hardcodeDate.split("-")
             var yearKalasala = myDates[0]
@@ -79,7 +79,7 @@ export default class Events extends Component {
         for (var i = 0; i < keys.length; i++) 
         {
             var k = keys[i];
-            if(dates[k].eventClassification === this.props.navigation.state.params.classificationToBePassedToAgenda.toString() || dates[k].eventClassification === 'both')
+            if(dates[k].eventClassification === this.props.navigation.state.params.classificationToBePassedToAgenda.toString() || dates[k].eventClassification === 'both') //ADD RAP SONG INPLACE OF STUDENT FROM LINE 41
             {
               filteredObjects.push(dates[k])
               // console.log("FILTERED OBJECTS: "+JSON.stringify(dates[k]))
