@@ -24,6 +24,8 @@ export default class Home extends Component {
   studentUser = () => 
   {
     console.log('Current Student Pressed!')
+    var fName = this.state.firstName
+    var lName = this.state.lastName
     let userRef = firebase.database().ref('Users/' + this.state.userID + '/');
     console.log("USER ID FROM STUDENT USER FUNC IN HOME.JS: " + this.state.userID)
       userRef.update({
@@ -31,7 +33,9 @@ export default class Home extends Component {
         userStatus: "approved",
         isAdmin: "false",
         numOfEvents: 0,
-        points: 0
+        points: 0,
+        firstName: fName,
+        lastName: lName
       }).then(function () {
         console.log('STUDENT CLASSIFICATION SUCCEEDED');
       })
@@ -43,6 +47,8 @@ export default class Home extends Component {
   alumniUser = () =>
   {
     console.log('Alumni Pressed!')
+    var fName = this.state.firstName
+    var lName = this.state.lastName
     let userRef = firebase.database().ref('Users/' + this.state.userID + "/");
     console.log("USER ID FROM ALUMNI USER FUNC IN HOME.JS: " + this.state.userID)
       userRef.update({
@@ -50,7 +56,9 @@ export default class Home extends Component {
         userStatus: "waiting",
         isAdmin: "false",
         numOfEvents: 0,
-        points: 0
+        points: 0,
+        firstName: fName,
+        lastName: lName
       }).then(function () {
         console.log('ALUMNI CLASSIFICATION SUCCEEDED');
       })
