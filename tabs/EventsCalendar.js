@@ -68,20 +68,20 @@ export default class EventsCalendar extends Component {
 
         console.log("CLALASLSDA: " + this.state.classi)
 
-        var bothEventsRef = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("both").endAt("both" + "\uf8ff");
+        var bothEventsRef = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("alumni").endAt("alumni" + "\uf8ff");
         bothEventsRef.on('value', this.gotBothClassificationEventData, this.bothClassificationerrData);
 
 
         
 
-        if (this.state.classi === null) {
+        // if (this.state.classi === null) {
             var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
             dateOfEvent.on('value', this.gotData, this.errData);
-        }
-        else {
-            var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classi.toString()).endAt(this.state.classi.toString() + "\uf8ff");
-            dateOfEvent.on('value', this.gotData, this.errData);
-        }
+        // }
+        // else {
+        //     var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classi.toString()).endAt(this.state.classi.toString() + "\uf8ff");
+        //     dateOfEvent.on('value', this.gotData, this.errData);
+        // }
 
 
 
@@ -99,18 +99,18 @@ export default class EventsCalendar extends Component {
             var k = keys[i];
             var date_of_event = bothdates[k].modifiedDate;
 
-            var myDates = date_of_event.split("-")
-            var yearKalasala = myDates[0]
-            var moKalasala = myDates[1]
-            var daKalasala = myDates[2]
+            // var myDates = date_of_event.split("-")
+            // var yearKalasala = myDates[0]
+            // var moKalasala = myDates[1]
+            // var daKalasala = myDates[2]
 
 
-            if (parseInt(moKalasala) <= 9)
-                moKalasala = '0' + moKalasala;
-            if (parseInt(daKalasala) <= 9)
-                daKalasala = '0' + daKalasala;
+            // if (parseInt(moKalasala) <= 9)
+            //     moKalasala = '0' + moKalasala;
+            // if (parseInt(daKalasala) <= 9)
+            //     daKalasala = '0' + daKalasala;
 
-                date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
+            //     date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
 
             var format_res = date_of_event;
             formattedBothDate[i] = format_res
@@ -146,34 +146,25 @@ export default class EventsCalendar extends Component {
 
     gotData = (data) => {
         var dates = data.val()
-        var keys
-        if (Object.keys(dates) === null)
-        {
-            console.log("NULL ERROR CAUGHT!")
-        }
-        else
-        {
-            keys = Object.keys(dates)
-        }
-        
+        var keys = Object.keys(dates)
         var formattedDate = []
 
         for (var i = 0; i < keys.length; i++) {
             var k = keys[i];
             var date_of_event = dates[k].modifiedDate;
 
-            var myDates = date_of_event.split("-")
-            var yearKalasala = myDates[0]
-            var moKalasala = myDates[1]
-            var daKalasala = myDates[2]
+            // var myDates = date_of_event.split("-")
+            // var yearKalasala = myDates[0]
+            // var moKalasala = myDates[1]
+            // var daKalasala = myDates[2]
 
 
-            if (parseInt(moKalasala) <= 9)
-                moKalasala = '0' + moKalasala;
-            if (parseInt(daKalasala) <= 9)
-                daKalasala = '0' + daKalasala;
+            // // if (parseInt(moKalasala) <= 9)
+            // //     moKalasala = '0' + moKalasala;
+            // // if (parseInt(daKalasala) <= 9)
+            // //     daKalasala = '0' + daKalasala;
 
-                date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
+            //     date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
 
             var format_res = date_of_event;
             formattedDate[i] = format_res
@@ -240,11 +231,11 @@ export default class EventsCalendar extends Component {
         const date = new Date()
         var year = date.getFullYear()
         var month = date.getMonth() + 1;
-        if (month <= 9)
-            month = '0' + month;
+        // if (month <= 9)
+        //     month = '0' + month;
         var day = date.getDate();
-        if (day <= 9)
-            day = '0' + day;
+        // if (day <= 9)
+        //     day = '0' + day;
         var fullDate = year + '-' + month + '-' + day;
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);

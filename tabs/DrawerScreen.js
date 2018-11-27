@@ -209,7 +209,6 @@ export default class DrawerScreen extends Component {
 
             <TouchableOpacity style={styles.sidebar}
               onPress={() => { Linking.openURL('https://giving.utdallas.edu/ECS') }}>
-              {/* <Icon type="FontAwesome" name='dollar' size={10} /> */}
               <Image
               source={require('../images/dicon.png')}
               fadeDuration={0}
@@ -221,7 +220,6 @@ export default class DrawerScreen extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}>
-              {/* <Icon name='help-circle' size={10} /> */}
               <Image
               source={require('../images/hicon.png')}
               fadeDuration={0}
@@ -233,12 +231,6 @@ export default class DrawerScreen extends Component {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.sidebar}>
-              {/* <Icon name='help-circle' size={10} /> */}
-              <Image
-              //source={require('../images/hicon.png')}
-              fadeDuration={0}
-              style={{width: 30, height: 30}}
-              />
               <Icon type="MaterialCommunityIcons" name='qrcode-scan' style={{color: '#c75b12'}}/>
               <Text style={styles.settingsStyle} onPress={() => this.props.navigation.navigate('Qrcode', {theUserID, kaiser})}>
                 Scan QR Code

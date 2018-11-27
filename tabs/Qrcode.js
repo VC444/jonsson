@@ -233,6 +233,7 @@ export default class Qrcode extends Component {
       var finalGeoLocationCheck = true;
       var finalValidSecretKeyCheck = true;
       var finalRSVPCheck = true;
+      var finalAlumniCheck = true;
 
       try {
         var userPosition = await this.getUserLocation(); // gets user's current location
@@ -254,6 +255,16 @@ export default class Qrcode extends Component {
         console.log(error);
       }
 
+      var isUserAlumni = false;
+      var userAlumniCheck = firebase.database().ref("Users/" + this.state.usrLinkedInID + '/classification/');
+      userAlumniCheck.on('value', function (snapshot) {
+        if (snapshot.val() == 'alumni')
+        {
+          isUserAlumni = true;
+        }
+        console.log("Is User an Alumni?:" + isUserAlumni)
+      });
+
       /////////////////////////////////////////////////////////////////////////////////////////////////
       var userHasRSVPd = false;
       var rsvpCheckRef = firebase.database().ref("Events/" + this.state.ourEventID + "/usersRsvp/" + this.state.usrLinkedInID + '/');
@@ -264,7 +275,20 @@ export default class Qrcode extends Component {
       });
       ////////////////////////////////////////////////////////////////////////////////////////////////
 
-      if (!userHasRSVPd) {
+      if (!isUserAlumni)
+      {
+        Alert.alert(
+          'Oops!',
+          "This event is open to Alumni only. If you are an Alumnus but are unable to scan the QR code, please speak to an event coordinator.",
+          [
+            { text: 'Oh Ok', onPress: () => console.log('User tried to cheat the system') },
+          ],
+          { cancelable: false }
+        )
+        finalAlumniCheck = false;
+        this.props.navigation.goBack(null);
+      }
+      else if (!userHasRSVPd) {
         Alert.alert(
           'Oops!',
           "Looks like you haven't RSVP'd for this event. Try to RSVP and scan again!",
@@ -314,7 +338,7 @@ export default class Qrcode extends Component {
         finalValidSecretKeyCheck = false;
         this.props.navigation.goBack(null);
       }
-      else if (finalAttendedCheck && finalValidSecretKeyCheck && finalGeoLocationCheck && finalRSVPCheck) {
+      else if (finalAttendedCheck && finalValidSecretKeyCheck && finalGeoLocationCheck && finalRSVPCheck && finalAlumniCheck) {
         Alert.alert(
           this.state.whooshBits + ' Whoosh Bits Redeemed!',
           'Thanks for attending! \n \nWe look forward to seeing you again!',

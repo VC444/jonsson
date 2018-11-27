@@ -38,9 +38,21 @@ export default class Events extends Component {
     console.log("This is Date string from EventCalendar.js in componentDID: " + this.props.navigation.state.params.day.dateString)
     var hardcodeDate = this.props.navigation.state.params.day.dateString
 
-    var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
+    var myDates = hardcodeDate.split("-")
+            var yearKalasala = myDates[0]
+            var moKalasala = myDates[1]
+            var daKalasala = myDates[2]
 
 
+            // // if (parseInt(moKalasala) <= 9)
+            //     moKalasala = moKalasala[1];
+            // // if (parseInt(daKalasala) <= 9)
+            //     daKalasala = daKalasala[1];
+
+                hardcodeDate = yearKalasala + "-" + moKalasala + "-" + daKalasala
+
+    console.log("HARDCODED DATE FROM AGENDA: " + hardcodeDate)
+    var dateOfEvent = firebase.database().ref("Events/").orderByChild("modifiedDate").startAt(hardcodeDate).endAt(hardcodeDate + "\uf8ff");
     dateOfEvent.on('value', this.gotData, this.errData);
 
     this.setState({
@@ -54,13 +66,32 @@ export default class Events extends Component {
   gotData = (data) => {
     const { goBack } = this.props.navigation;
     var dates = data.val()
+    console.log("DATES TEST: "+JSON.stringify(dates))
 
-    console.log("The Dates by child: " + JSON.stringify(dates))
+
+    var keys = Object.keys(dates)
+    var filteredObjects = new Array();
+
+        for (var i = 0; i < keys.length; i++) 
+        {
+            var k = keys[i];
+            if(dates[k].eventClassification === 'student' || dates[k].eventClassification === 'alumni') //ADD RAP SONG INPLACE OF STUDENT FROM LINE 41
+            {
+              filteredObjects.push(dates[k])
+              // console.log("FILTERED OBJECTS: "+JSON.stringify(dates[k]))
+            }
+        }
+
+console.log("OBJECT TESTERERE:"+ JSON.stringify(filteredObjects));
+
+        console.log("FILTERED OBJECTS poRGU3U 5-9U]53 : "+JSON.stringify(filteredObjects))
+
+    // console.log("The Dates by child: " + JSON.stringify(dates))
     let ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
     this.setState({
       isLoading: false,
-      dataSource: ds.cloneWithRows(dates),
+      dataSource: ds.cloneWithRows(filteredObjects),
     }, function () {
       // do something with new state
     });
@@ -117,7 +148,7 @@ export default class Events extends Component {
 
   isAdminData = (data) => {
     this.state.isAdminCheck = data.val()
-    console.log("@@@@@@@@@@ The admin  is " + this.state.isAdminCheck)
+    // console.log("@@@@@@@@@@ The admin  is " + this.state.isAdminCheck)
     //this.state.isAdminCheck = isAdmin;
     
   }
@@ -125,6 +156,12 @@ export default class Events extends Component {
   isAdminerrData = (err) => {
     console.log(err);
   }
+
+  // formatTimeHHMMA = (d) => {
+  //   function z(n){return (n<10?'0':'')+n}
+  //   var h = d.getHours();
+  //   return (h%12 || 12) + ':' + z(d.getMinutes()) + ' ' + (h<12? 'AM' :'PM');
+  // }
 
   render() {
     var isAdminRef = firebase.database().ref("Users/" + this.state.userID + "/isAdmin/");
@@ -170,6 +207,17 @@ export default class Events extends Component {
             dataSource={this.state.dataSource}
             renderRow={(rowData) => {
               const { uri } = rowData;
+
+              var myDates = rowData.modifiedDate.toString().split("-")
+            // var yearKalasala = myDates[0]
+            // var moKalasala = myDates[1]
+            // var daKalasala = myDates[2]
+            var dates = new Date (rowData.eventDate)
+
+            var eventDay = monthNames[parseInt(dates.getMonth())] + ' ' + dates.getDate() + ', ' + dates.getFullYear()
+            var eventTime = this.utcToLocal(rowData.eventDate.toString())
+            // var eventTime = dates.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+
               return (
                 <Content>
                   <List style={{ backgroundColor: '#FFFFFF' }}>
@@ -178,10 +226,10 @@ export default class Events extends Component {
                         <Body>
                           <Text style={{ fontWeight: '800', fontSize: 16 }}>{rowData.eventTitle}</Text>
                           <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5 }}>
-                            <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {monthNames[parseInt(rowData.eventDate.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(rowData.eventDate.toString().substr(8, 2))}, {rowData.eventDate.toString().substr(0, 4)}
+                            <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {eventDay}
                           </Text>
                           <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5 }}>
-                            <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {this.utcToLocal(rowData.eventDate.toString())}
+                            <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {eventTime}
                           </Text>
                           <Text style={{ fontWeight: '100', fontSize: 12, color: '#757575', paddingTop: 5 }}><Icon name='ios-pin-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {rowData.eventLocation}</Text>
                           <Text style={{ fontWeight: '800', fontSize: 22 }}></Text>
@@ -192,7 +240,7 @@ export default class Events extends Component {
                           </View>
                           <TouchableHighlight
                             onPress={
-                              () => this.props.navigation.navigate("EventDetails", { rowData })}
+                              () => this.props.navigation.navigate("EventDetails", { rowData, eventDay, eventTime })}
                           >
                             <Image
                               style={{ height: 200, width: null, borderRadius: 10, position: 'relative', resizeMode: 'stretch' }}

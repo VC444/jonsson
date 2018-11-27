@@ -123,12 +123,12 @@ export default class EventDetails extends Component {
     Linking.openURL("https://www.google.com/maps/search/?api=1&query=" + url);
   };
 
-  utcToLocal = (time) => {
-    var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm a");
-    var splitTime = localTime.split(',');
-    console.log(splitTime[2]);
-    return splitTime[2];
-  }
+  // utcToLocal = (time) => {
+  //   var localTime = moment(time).local().format("dddd, MMMM Do YYYY, h:mm a");
+  //   var splitTime = localTime.split(',');
+  //   console.log(splitTime[2]);
+  //   return splitTime[2];
+  // }
 
   render() {
 
@@ -156,10 +156,10 @@ export default class EventDetails extends Component {
               </Body>
             </CardItem>
             <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5, paddingLeft: 20 }}>
-              <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {monthNames[parseInt(this.props.navigation.state.params.rowData.eventDate.toString().substr(5, 5).substr(0, 2)) - 1]} {parseInt(this.props.navigation.state.params.rowData.eventDate.toString().substr(8, 2))}, {this.props.navigation.state.params.rowData.eventDate.toString().substr(0, 4)}
+              <Icon name='ios-calendar-outline' style={{ fontSize: 12, color: '#5d5d5d' }} /> {this.props.navigation.state.params.eventDay.toString()}
             </Text>
             <Text style={{ fontWeight: '200', fontSize: 12, paddingTop: 5, paddingLeft: 20 }}>
-              <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {this.utcToLocal(this.props.navigation.state.params.rowData.eventDate.toString())}
+              <Icon name='md-time' style={{ fontSize: 12, color: '#5d5d5d' }} /> {this.props.navigation.state.params.eventTime.toString()}
             </Text>
             <CardItem>
               <Body>
