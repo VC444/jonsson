@@ -22,7 +22,6 @@ const dot_color = { color: 'white' }; // Constant dot color
 // const blah = { color: 'yellow'};
 // const fee = { color: 'black'};
 
-var myGlobalVar = [];
 
 export default class EventsCalendar extends Component {
 
@@ -34,14 +33,11 @@ export default class EventsCalendar extends Component {
             formattedDate: [],
             'classi': '',
             formattedBothDate: [],
-            classificationMAMA: null,
         }
 
         this.gotClassificationData = this.gotClassificationData.bind(this)
 
     }
-
-
 
 
     async componentWillMount() {
@@ -60,77 +56,36 @@ export default class EventsCalendar extends Component {
         //     }
         // });
         // When you press calendar symbol, it logs the event dates formatted in the form of "formattedDate" list.
-        /************************************ */
-        // this.setState({
-        //     userID: await AsyncStorage.getItem('userID'),
-        //     classi: await AsyncStorage.getItem('classi')
-        // });
-        // console.log("OUR USER ID@%$&$^%$^$: " + this.state.userID)
+        /******************************************************************************************************** */
+        this.setState({
+            userID: await AsyncStorage.getItem('userID'),
+            classi: await AsyncStorage.getItem('classi')
+        });
+        console.log("OUR USER ID@%$&$^%*$^*$: " + this.state.userID)
 
-        // var userClassificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
-        // userClassificationRef.on('value', this.gotClassificationData, this.classificationerrData);
+        var userClassificationRef = firebase.database().ref("Users/" + this.state.userID + "/classification/");
+        userClassificationRef.on('value', this.gotClassificationData, this.classificationerrData);
 
-        // console.log("CLALASLSDA: " + this.state.classi)
+        console.log("CLALASLSDA: " + this.state.classi)
 
-        var bothEventsRef = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("both").endAt("both" + "\uf8ff");
+        var bothEventsRef = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("alumni").endAt("alumni" + "\uf8ff");
         bothEventsRef.on('value', this.gotBothClassificationEventData, this.bothClassificationerrData);
 
-        const value = await AsyncStorage.getItem('userID');
-        console.log("ASYNC VALUE IN EVENTS CALENDAR: " + value)
 
-
-        var bothEventsRef = firebase.database().ref("Users/" + value + "/classification/")
-        bothEventsRef.on('value', this.gotrefData, this.referrData);
         
-        this.state.classificationMAMA = await AsyncStorage.getItem('userClass');
-        console.log("MAMA CLASSIFICATION OUTSIDE VARIABLE:"+ this.state.classificationMAMA);
 
-
-        if (value == null) {
-        var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
-        dateOfEvent.on('value', this.gotData, this.errData);
-        }
-        else {  //ADD CLASS MAMA PARAMETER FOR START AT & END AT
-            var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classificationMAMA.toString()).endAt(this.state.classificationMAMA.toString() + "\uf8ff");
+        // if (this.state.classi === null) {
+            var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
             dateOfEvent.on('value', this.gotData, this.errData);
-        }
-
-
-
-        /********************************** */
-    }
-
-    async gotrefData (data) {
-        myGlobalVar[0] = JSON.stringify(data.val())
-        console.log("THAARU MAARU THAAKALI SOORU: " + myGlobalVar[0])
-        AsyncStorage.setItem('userClass', JSON.stringify(data.val()))
-        // this.setState({
-        //     classificationMAMA: myGlobalVar });
-    //    this.state.classificationMAMA = myGlobalVar
-        // var bothdates = data.val()
-        // myGlobalVar = bothdates.toString()
-        // console.log("")
-        // var keys = Object.keys(bothdates)
-        // var classificationMAMA = []
-
-        // for (var i = 0; i < keys.length; i++) {
-        //     var k = keys[i];
-        //     var date_of_event = bothdates[k].classification;
-
-        //     var format_res = date_of_event;
-        //     classificationMAMA[i] = format_res
+        // }
+        // else {
+        //     var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classi.toString()).endAt(this.state.classi.toString() + "\uf8ff");
+        //     dateOfEvent.on('value', this.gotData, this.errData);
         // }
 
-        // // Set formattedDate array that is initialized in state to values of local formattedDate array 
-        // // and then call anotherFunc
-        // this.setState({ classificationMAMA: classificationMAMA });
 
-        // console.log('THAARU MAMA TRRRUUUU: ' + this.state.classificationMAMA);
 
-    }
-
-    referrData = (err) =>{
-        console.log("ERROR" + err)
+        /************************************************************************************************** */
     }
 
     gotBothClassificationEventData = (data) => {
@@ -144,18 +99,18 @@ export default class EventsCalendar extends Component {
             var k = keys[i];
             var date_of_event = bothdates[k].modifiedDate;
 
-            var myDates = date_of_event.split("-")
-            var yearKalasala = myDates[0]
-            var moKalasala = myDates[1]
-            var daKalasala = myDates[2]
+            // var myDates = date_of_event.split("-")
+            // var yearKalasala = myDates[0]
+            // var moKalasala = myDates[1]
+            // var daKalasala = myDates[2]
 
 
-            if (parseInt(moKalasala) <= 9)
-                moKalasala = '0' + moKalasala;
-            if (parseInt(daKalasala) <= 9)
-                daKalasala = '0' + daKalasala;
+            // if (parseInt(moKalasala) <= 9)
+            //     moKalasala = '0' + moKalasala;
+            // if (parseInt(daKalasala) <= 9)
+            //     daKalasala = '0' + daKalasala;
 
-            date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
+            //     date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
 
             var format_res = date_of_event;
             formattedBothDate[i] = format_res
@@ -198,18 +153,18 @@ export default class EventsCalendar extends Component {
             var k = keys[i];
             var date_of_event = dates[k].modifiedDate;
 
-            var myDates = date_of_event.split("-")
-            var yearKalasala = myDates[0]
-            var moKalasala = myDates[1]
-            var daKalasala = myDates[2]
+            // var myDates = date_of_event.split("-")
+            // var yearKalasala = myDates[0]
+            // var moKalasala = myDates[1]
+            // var daKalasala = myDates[2]
 
 
-            if (parseInt(moKalasala) <= 9)
-                moKalasala = '0' + moKalasala;
-            if (parseInt(daKalasala) <= 9)
-                daKalasala = '0' + daKalasala;
+            // // if (parseInt(moKalasala) <= 9)
+            // //     moKalasala = '0' + moKalasala;
+            // // if (parseInt(daKalasala) <= 9)
+            // //     daKalasala = '0' + daKalasala;
 
-            date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
+            //     date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
 
             var format_res = date_of_event;
             formattedDate[i] = format_res
@@ -276,16 +231,14 @@ export default class EventsCalendar extends Component {
         const date = new Date()
         var year = date.getFullYear()
         var month = date.getMonth() + 1;
-        if (month <= 9)
-            month = '0' + month;
+        // if (month <= 9)
+        //     month = '0' + month;
         var day = date.getDate();
-        if (day <= 9)
-            day = '0' + day;
+        // if (day <= 9)
+        //     day = '0' + day;
         var fullDate = year + '-' + month + '-' + day;
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
-
-        var classificationToBePassedToAgenda = this.state.classificationMAMA.toString()  //CHANGE TO THIS STATE CLASS MAMA
 
         return (
             <View>
@@ -315,7 +268,7 @@ export default class EventsCalendar extends Component {
                             }
                         }
                         if (hasEvent) {
-                            this.props.navigation.navigate("Agenda", { day, classificationToBePassedToAgenda });  //ALSO PASS classificationToBePassedToAgenda
+                            this.props.navigation.navigate("Agenda", { day });
                         } else {
                             alert('Aw Snap! We don\'t have any events to show for this date. Sorry!');
                         }
