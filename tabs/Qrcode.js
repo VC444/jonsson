@@ -59,43 +59,43 @@ export default class Qrcode extends Component {
   // Get event's location
   // Reads Firebase for event info and passes the address to geocode()
   // Returns coordinates received from geocode()
-  getEventLocation = () => {
-    Geocoder.init('AIzaSyAb53PEyP1lP9m4X4BUTpBUbA-7hxAcPmc');
-    let eventRef = firebase.database().ref('Events/' + this.state.ourEventID);
+  // getEventLocation = () => {
+  //   Geocoder.init('AIzaSyAb53PEyP1lP9m4X4BUTpBUbA-7hxAcPmc');
+  //   let eventRef = firebase.database().ref('Events/' + this.state.ourEventID);
 
-    return new Promise((resolve, reject) => {
-      // Read the scanned event's data from firebase and get the event address
-      eventRef.once('value', snapshot => {
-        let eventLocation;
-        let data = snapshot.val();
-        eventLocation = data.eventLocation;
-        this.geocode(eventLocation).then((eventCoordinates) => {
-          resolve(eventCoordinates);
-        });
-      })
-    });
-  }
+  //   return new Promise((resolve, reject) => {
+  //     // Read the scanned event's data from firebase and get the event address
+  //     eventRef.once('value', snapshot => {
+  //       let eventLocation;
+  //       let data = snapshot.val();
+  //       eventLocation = data.eventLocation;
+  //       this.geocode(eventLocation).then((eventCoordinates) => {
+  //         resolve(eventCoordinates);
+  //       });
+  //     })
+  //   });
+  // }
 
-  // Transform event address to coordinates and return (lat,lng)
-  geocode = (eventLocation) => {
-    return new Promise((resolve, reject) => {
-      Geocoder.from(eventLocation)
-        .then(json => {
-          var location = json.results[0].geometry.location;
-          return location;
-        }).then((location) => {
-          if (location) {
-            console.log('Promise resolved');
-            resolve(location);
-          }
-          else {
-            console.log('Promise error');
-            reject('Error in promise');
-          }
-        })
-        .catch(error => console.warn(error));
-    })
-  }
+  // // Transform event address to coordinates and return (lat,lng)
+  // geocode = (eventLocation) => {
+  //   return new Promise((resolve, reject) => {
+  //     Geocoder.from(eventLocation)
+  //       .then(json => {
+  //         var location = json.results[0].geometry.location;
+  //         return location;
+  //       }).then((location) => {
+  //         if (location) {
+  //           console.log('Promise resolved');
+  //           resolve(location);
+  //         }
+  //         else {
+  //           console.log('Promise error');
+  //           reject('Error in promise');
+  //         }
+  //       })
+  //       .catch(error => console.warn(error));
+  //   })
+  // }
 
   // Given user's and event's location, calculate and return the distance
   distance = (userlat, userlng, eventlat, eventlng) => {
@@ -213,10 +213,16 @@ export default class Qrcode extends Component {
         userHasAttended = exists;
       });
 
-
+      let eventLatitude;
+      let eventLongitude;
       var secretKeyRef = firebase.database().ref("Events/" + this.state.ourEventID + "/eventSecretKey/");
       secretKeyRef.on('value', this.secretKeyData, this.errData);
-
+      let eventRef = firebase.database().ref('Events/' + this.state.ourEventID + "/");
+      eventRef.once('value', snapshot => {
+              let data = snapshot.val();
+              eventLatitude = data.eventLatitude;
+              eventLongitude = data.eventLongitude;
+      });
 
       console.log("IS VALID SECRET KEY:" + this.state.isValidSecretKey)
 
@@ -237,12 +243,12 @@ export default class Qrcode extends Component {
 
       try {
         var userPosition = await this.getUserLocation(); // gets user's current location
-        var eventPosition = await this.getEventLocation(); // gets event's location
+        // var eventPosition = await this.getEventLocation(); // gets event's location
 
         var userlat = userPosition.coords.latitude;
         var userlng = userPosition.coords.longitude;
-        var eventlat = eventPosition.lat;
-        var eventlng = eventPosition.lng;
+        var eventlat = eventLatitude;
+        var eventlng = eventLongitude;
 
         // get the distance between userPosition and eventPosition
         var distance = await this.distance(userlat, userlng, eventlat, eventlng);
@@ -318,7 +324,7 @@ export default class Qrcode extends Component {
         finalRSVPCheck = false;
         this.props.navigation.goBack(null);
       }
-      else if (distance > 0.170455) { //300 YARDS
+      else if (distance > 0.0852273) { //150 YARDS
         Alert.alert(
           'Oops!',
           "Looks like you're more than 150 yards away from the event. Maybe try getting closer and scanning again?",
