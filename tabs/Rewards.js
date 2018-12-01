@@ -12,6 +12,7 @@ import firebaseApp from './EventDetails';
 import config from './EventDetails'
 import moment from 'moment';
 
+var tempVal = 0;
 export default class Rewards extends Component {
 
     constructor(props) {
@@ -115,7 +116,7 @@ export default class Rewards extends Component {
 
     onRedeemPressed = () => {
         var localPoints = this.state.points
-        this.props.navigation.navigate('Redeem', { localPoints });
+        this.props.navigation.navigate('Redeem', { localPoints, tempVal });
     }
 
     utcToLocal = (time) => {
@@ -124,6 +125,12 @@ export default class Rewards extends Component {
     }
 
     render() {
+        var firebasePointsRef = firebase.database().ref("Users/" + this.state.userID + "/points/");
+        firebasePointsRef.on('value', function (snapshot) {
+            tempVal = snapshot.val()
+            console.log("TEMP VAL REDEEM.JS: " + tempVal)
+            // this.state.ourPoints = tempVal;
+        });
 
         // var numOfEventsRef = firebase.database().ref("Users/" + this.state.userID + "/numOfEvents/");
         // var whooshBitsRef = firebase.database().ref("Users/" + this.state.userID + "/points/");
@@ -139,7 +146,7 @@ export default class Rewards extends Component {
                 </View>
             );
         }
-        console.log('this is user id from rewards component' + this.state.userID);
+        console.log('this is user id from rewards component: ' + this.state.userID);
 
         return (
             <ScrollView>
@@ -274,8 +281,8 @@ export default class Rewards extends Component {
                                 }}>
                                     {this.utcToLocal(events.eventDate.toString())}
                                 </Text>
-                                </View>
-                                <View style={{
+                            </View>
+                            <View style={{
                                 display: 'flex',
                                 justifyContent: 'flex-end',
                                 flexDirection: 'row'
@@ -287,16 +294,16 @@ export default class Rewards extends Component {
                                     fontSize: 14,
                                 }}>
                                     {events.whooshBits + '\t'}
-                                    
+
                                 </Text>
                                 <Image
-                                        source={require('../images/wbicon.png')}
-                                        fadeDuration={0}
-                                        style={{
-                                            width: 20,
-                                            height: 20,
-                                        }}
-                                    />
+                                    source={require('../images/wbicon.png')}
+                                    fadeDuration={0}
+                                    style={{
+                                        width: 20,
+                                        height: 20,
+                                    }}
+                                />
                             </View>
                         </View>
                         <View style={{
