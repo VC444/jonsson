@@ -17,7 +17,7 @@ export default class Qrcode extends Component {
     usrLinkedInID: '',
     attendedFlag: false,
     isValidSecretKey: '',
-    //isAdminCheck: false,
+    remWhooshBits: 0
   };
 
   async componentDidMount() {
@@ -151,6 +151,38 @@ export default class Qrcode extends Component {
   //   console.log("ERROR!: " + errData)
   // }
 
+  // getCurrentWhooshBits = () => {
+
+  // }
+
+  whooshBitsCheck = (ourUserID, whooshBitsRequest) => {
+    
+    // var remPoints = this.getCurrentWhooshBits(ourUserID);
+    var remPoints = 0;
+    var remPointsCheck = false;
+    var firebasePointsRef = firebase.database().ref("Users/" + ourUserID + "/points/");
+        firebasePointsRef.on('value', function (snapshot) {
+          remPoints = snapshot.val()
+            console.log("QRCode.js WHOOSHBITS CHECK INSIDE FUNCTION: " + remPoints)
+          });
+
+          this.state.remWhooshBits = remPoints;
+          console.log("QRCode.js State Rem Whoosh Bits Val 1: " + this.state.remWhooshBits)
+
+          if (remPoints > 0 && remPoints >= parseInt(whooshBitsRequest))
+          {
+            remPointsCheck = true;
+            console.log("QRCode.js User has enough whoosh bits")
+          }
+          else
+          {
+            remPointsCheck = false;
+            console.log("QRCode.js User does not have enough whoosh bits")
+          }
+
+          return remPointsCheck;
+  }
+  
   async _handleBarCodeRead(data) {
     var temp = JSON.stringify(data);
     var temp2 = temp.split(':');
@@ -181,24 +213,45 @@ export default class Qrcode extends Component {
       console.log("EMAIL ID FROM QRCODE.JS: " + this.state.emailID)
     }
 
-
+    var isWhooshBitsZero = this.whooshBitsCheck(splitData[1], splitData[2]);
+    console.log("QRCode.js State Rem Whoosh Bits Val 2: " + this.state.remWhooshBits)
     var data1 = 'userID: ' + splitData[1];  //COMES FROM Agenda.js
     this.state.usrLinkedInID = this.props.navigation.state.params.theUserID.toString();
-    var data2 = 'Whoosh Bits: ' + this.state.whooshBits;
+    var data2 = 'Whoosh Bits Redeeming: ' + this.state.whooshBits;
+    var data3 = 'Whoosh Bits Remaining: ' + this.state.remWhooshBits;
 
     if (this.state.mode == 'app' && (this.props.navigation.state.params.kaiser.toString() === 'true')) //YET TO ADD CHECK IN FIREBASE FOR ADMIN ==> USE isAdmin IN FIREBASE UNDER USERID UNDER USERS
     {
-      Alert.alert(
-        'Admin Approval!',
-        'Please approve the following redeem request: \n' + data1 + '\n ' + data2,
-        [
-
-          { text: 'Deny', style: 'cancel', onPress: () => this.denyWhooshBitsRedeem() },
-          { text: 'Approve', onPress: () => this.approveWhooshBitsRedeem(this.state.whooshBits, splitData[1]) },
-        ],
-        { cancelable: false }
-      )
-      this.props.navigation.goBack(null);
+      // var isWhooshBitsZero = this.whooshBitsCheck(splitData[1], splitData[2]);
+      
+      console.log("QRCODE.JS After WhooshBits Function Call: " + isWhooshBitsZero)
+      if (isWhooshBitsZero)
+      {
+        console.log("Asking for Admin Approval")
+        Alert.alert(
+          'Admin Approval!',
+          'Please approve the following redeem request: \n ' + data1 + '\n ' + data3 + '\n ' + data2,
+          [
+            { text: 'Deny', style: 'cancel', onPress: () => this.denyWhooshBitsRedeem() },
+            { text: 'Approve', onPress: () => this.approveWhooshBitsRedeem(this.state.whooshBits, splitData[1]) },
+          ],
+          { cancelable: false }
+        )
+        this.props.navigation.goBack(null);
+      }
+      else
+      {
+        console.log("Informing Admin User has insufficient WB remaining")
+        Alert.alert(
+          'Error Redeeming!',
+          'It looks like this user has insufficient Whoosh Bits to complete transaction: \n ' + data1 + '\n ' + data3 + '\n ' + data2,
+          [
+            { text: 'Ok'},
+          ],
+          { cancelable: false }
+        )
+        this.props.navigation.goBack(null);
+      }
     }
     else if (this.state.mode == 'web' && (!this.state.hasRedeemed)) {
       let userId = this.props.navigation.state.params.theUserID.toString();

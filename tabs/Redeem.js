@@ -153,7 +153,7 @@ export default class Redeem extends Component {
                     <Text style={styles.bodyStyle}>3. And you're done! That's it!</Text>
                     <Text style={styles.bodyStyle}>4. Just show this QR code to an attendant to approve your redeem points request!</Text>
                 </View>
-                <View>
+                {/* <View>
                     <Text style={{
                         textAlign: 'center',
                         fontSize: 20,
@@ -162,11 +162,11 @@ export default class Redeem extends Component {
                         fontWeight: 'bold'
                     }}>
                         FYI, You Have {this.props.navigation.state.params.tempVal.toString()} Whoosh Bits Remaining!</Text>
-                </View>
+                </View> */}
                 <Form style={styles.formView}>
                 {/* "FYI, you have " + this.props.navigation.state.params.tempVal.toString() + " Whoosh Bits remaining!" */}
                     <Item stackedLabel>
-                        <Input placeholder= {"Whoosh Bits to Redeem..."} keyboardType='numeric' onChangeText={(w) => { (this.redeemPointsUpdater(w)) }} name="whooshBits" />
+                        <Input placeholder= {"FYI, you have " + this.props.navigation.state.params.tempVal.toString() + " Whoosh Bits!"} keyboardType='numeric' onChangeText={(w) => { (this.redeemPointsUpdater(w)) }} name="whooshBits" />
                         {console.log('Whoosh Bits value entered: ' + this.state.whooshBitsValue)}
                     </Item>
                     <TouchableOpacity
