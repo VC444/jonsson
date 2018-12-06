@@ -102,7 +102,7 @@ export default class Login extends React.Component {
     }
     else {
       console.log('Login token has been found');
-      let category = await this.chooseCategory(); 
+      let category = await this.chooseCategory();
       console.log(category);
       this.props.navigation.navigate("DrawerNavigator");
     }
@@ -189,16 +189,20 @@ export default class Login extends React.Component {
           blurRadius={1}>
           <View alignItems='center'>
             <Image source={require('../images/Temoc_Orange.png')} style={{ height: 180, width: 150, paddingTop: 100 }}></Image>
-            <Text style={{ fontSize: 32, fontWeight: '800'}}>
+            <Text style={{ fontSize: 32, fontWeight: '800', color: "#C75B12"}}>
               Jonsson Connect
             </Text>
-            <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingTop: 80 }}>
+            <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingVertical: 40, fontWeight: "bold" }}>
               {/* Begin exploring oppotunities only offered by the Jonsson School. */}
               The Erik Jonsson School of Engineering & Computer Science
             </Text>
-            <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingTop: 20}}>
+            <Text style={{ textAlign: 'center', fontSize: 16, paddingHorizontal: 20, paddingVertical: 20, color: "#008542" }}>
               {/* Begin exploring oppotunities only offered by the Jonsson School. */}
-              Fearless Engineering.
+              <Text style={{ fontSize: 22, color: "#008542", fontWeight: "bold" }}>
+              FEARLESS
+              </Text>
+              {" "}engineering
+              <Text style={{ color: "#008542", fontSize: 8}}>®</Text>
             </Text>
           </View>
         </ImageBackground>
@@ -221,7 +225,7 @@ export default class Login extends React.Component {
           )}
         <View style={styles.container}>
           <TouchableHighlight onPress={() => this.modal.open()}>
-            <Button transparent onPress={() => this.modal.open()} style={{width: 500 }} full light >
+            <Button transparent onPress={() => this.modal.open()} style={{ width: 500 }} full light >
               <Image source={require('../images/linkedin-logo.png')} style={{ width: 25, height: 25 }}></Image>
               <Text style={{ color: '#c75b12', fontSize: 16 }}>
                 Sign in with LinkedIn
@@ -237,8 +241,16 @@ export default class Login extends React.Component {
               </Text>
             </Button>
           </TouchableHighlight>
+          <TouchableHighlight style={{ paddingVertical: 40 }}>
+            <Button transparent onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }} style={{ width: 500 }} full light>
+              <Image style={{ width: 25, height: 25 }}></Image>
+              <Text style={{ color: '#c75b12', fontSize: 16, fontWeight: "bold" }}>
+                View Privacy Policy
+              </Text>
+            </Button>
+          </TouchableHighlight>
         </View>
-        <Text style={{ fontSize: 8, fontWeight: '100', position: "absolute", bottom: 20 }}>Copyright © 2018, The University of Texas at Dallas, all rights reserved.</Text>
+        <Text style={{ fontSize: 8, fontWeight: '100', position: "relative", paddingVertical: 20 }}>Copyright © 2018, The University of Texas at Dallas, all rights reserved.</Text>
       </View>
     )
   }
