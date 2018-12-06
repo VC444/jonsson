@@ -73,7 +73,7 @@ export default class Redeem extends Component {
 
     displayQRCode() {
         // console.log("&&&&& RAP SONG POINTS: " + this.props.navigation.state.params.localPoints.toString());
-        if (this.state.whooshBitsValue !== null && this.hasWhitespace(this.state.whooshBitsValue) == false && this.validWhooshBitsRedeemValue(this.props.navigation.state.params.localPoints.toString())) {
+        if (this.state.whooshBitsValue !== null && this.hasWhitespace(this.state.whooshBitsValue) == false && this.validWhooshBitsRedeemValue(this.props.navigation.state.params.tempVal.toString())) {
             var woosh = this.state.whooshBitsValue;
             var ourUserID = this.state.userID;
             console.log("FROM REDEEM PAGE: " + woosh);
@@ -83,7 +83,7 @@ export default class Redeem extends Component {
         else if (this.state.whooshBitsValue == null) {
             Alert.alert(
                 "Hmm...",
-                "That doesn't seem right. Did you mean to enter some other value?\n\nYou have " + this.props.navigation.state.params.localPoints.toString() + " whoosh bits remaining!",
+                "That doesn't seem right. Did you mean to enter some other value?\n\nYou have " + this.props.navigation.state.params.tempVal.toString() + " whoosh bits remaining!",
                 [
                     { text: 'Got it!', onPress: () => console.log('User tried to scam us!') },
                 ],
@@ -91,10 +91,10 @@ export default class Redeem extends Component {
             )
             this.props.navigation.goBack(null);
         }
-        else if (!this.validWhooshBitsRedeemValue(this.props.navigation.state.params.localPoints.toString())) {
+        else if (!this.validWhooshBitsRedeemValue(this.props.navigation.state.params.tempVal.toString())) {
             Alert.alert(
                 "That's wayy too much!",
-                'We noticed that you\'re trying to redeem more whoosh bits than available!\n\nYou can only redeem ' + this.props.navigation.state.params.localPoints.toString() + ' whoosh bits!',
+                'We noticed that you\'re trying to redeem more whoosh bits than available!\n\nYou can only redeem ' + this.props.navigation.state.params.tempVal.toString() + ' whoosh bits!',
                 [
                     { text: 'Got it!', onPress: () => console.log('User tried to scam us!') },
                 ],
@@ -154,18 +154,19 @@ export default class Redeem extends Component {
                     <Text style={styles.bodyStyle}>4. Just show this QR code to an attendant to approve your redeem points request!</Text>
                 </View>
                 <View>
-                    {/* <Text style={{
+                    <Text style={{
                         textAlign: 'center',
                         fontSize: 20,
-                        paddingVertical: 20,
+                        paddingTop: 30,
                         color: '#008542',
                         fontWeight: 'bold'
                     }}>
-                        FYI, You Have {this.props.navigation.state.params.tempVal.toString()} Whoosh Bits Remaining!</Text> */}
+                        FYI, You Have {this.props.navigation.state.params.tempVal.toString()} Whoosh Bits Remaining!</Text>
                 </View>
                 <Form style={styles.formView}>
+                {/* "FYI, you have " + this.props.navigation.state.params.tempVal.toString() + " Whoosh Bits remaining!" */}
                     <Item stackedLabel>
-                        <Input placeholder= {"FYI, you have " + this.props.navigation.state.params.tempVal.toString() + " Whoosh Bits remaining!"} keyboardType='numeric' onChangeText={(w) => { (this.redeemPointsUpdater(w)) }} name="whooshBits" />
+                        <Input placeholder= {"Whoosh Bits to Redeem..."} keyboardType='numeric' onChangeText={(w) => { (this.redeemPointsUpdater(w)) }} name="whooshBits" />
                         {console.log('Whoosh Bits value entered: ' + this.state.whooshBitsValue)}
                     </Item>
                     <TouchableOpacity
