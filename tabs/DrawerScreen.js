@@ -172,14 +172,14 @@ export default class DrawerScreen extends Component {
                 <View style={styles.industryInfo}>
                   <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} >
                   <Icon name='ios-pin' style={{ fontSize: 14, color: '#FFFFFF' }} />
-                  {this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}
+                  {" "}{this.state.location.toString().replace(/{"name":"/g, '').replace(/"}/g, '')}
                   </Text>
                 </View>
 
                 <View style={styles.industryInfo}>
                   <Text style={{ fontSize: 14, fontWeight: '300', color: '#FFFFFF' }} >
                   <Icon name='ios-globe' style={{ fontSize: 14, color: '#FFFFFF' }} />
-                  {this.state.industry.toString()}
+                  {" "}{this.state.industry.toString()}
                   </Text>
                 </View>
                 </ImageBackground>

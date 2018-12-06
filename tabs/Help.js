@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Button, TouchableOpacity, Alert, AsyncStorage, Linking } from 'react-native';
 import { Container, Header, Content, Accordion, Form, Item, Input, Label } from "native-base";
 import * as firebase from 'firebase';
 import Axios from 'axios';
@@ -166,7 +166,7 @@ export default class Help extends Component {
                     { text: 'Awesome!', onPress: () => console.log('Feedback Submitted!') },
                 ],
                 { cancelable: false }
-                )
+            )
             this.setState({
                 isLoading: true
             })
@@ -184,10 +184,24 @@ export default class Help extends Component {
             console.log("USER EMAIL ID: " + this.state.userEmail)
             return (
                 <ScrollView style={styles.masterView}>
+                    <Text style={{ fontSize: 20, paddingHorizontal: 20, textAlign: 'center', paddingVertical: 25, fontWeight: 'bold', color: "#C75B12" }}>
+                        PRIVACY POLICY
+                    </Text>
+                    <TouchableOpacity>
+                        <Text style={{ textAlign: 'center', paddingVertical: 5, fontStyle: "italic" }} onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }}>
+                            <Text>We take your privacy seriously.</Text>
+                        </Text>
+                        <Text style={{ textAlign: 'center', paddingVertical: 5, fontStyle: "italic" }} onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }}>
+                            <Text>You can view our Privacy Policy by tapping here.</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 20, textAlign: 'center', paddingTop: 25, fontWeight: 'bold', color: "#C75B12" }}>
+                        FREQUENTLY ASKED QUESTIONS
+                    </Text>
                     <Text style={{ paddingHorizontal: 20, textAlign: 'left', paddingVertical: 25, fontWeight: 'bold' }}>
-                        Below, you will find some of the most Frequently Asked Questions (hence, FAQ) and their answers.
-                        If you don't find the answers you are looking for, scroll down to the bottom and fill out the feedback form
-            and we'll get back to you ASAP.</Text>
+                        Below, you will find some of the most Frequently Asked Questions (hence, FAQ) and our answers.
+                        If you don't find the answers you are looking for, fill out the feedback form at the bottom
+                        and we'll get back to you ASAP.</Text>
                     <View>
                         <Accordion
 
@@ -195,7 +209,6 @@ export default class Help extends Component {
                             headerStyle={{ backgroundColor: "#FFFFFF" }}
                         />
                     </View>
-
                     <TouchableOpacity
                         onPress={this.giveFeedbackPressed}
                         style={styles.button}
