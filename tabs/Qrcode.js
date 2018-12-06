@@ -220,9 +220,8 @@ export default class Qrcode extends Component {
     var data2 = 'Whoosh Bits Redeeming: ' + this.state.whooshBits;
     var data3 = 'Whoosh Bits Remaining: ' + this.state.remWhooshBits;
 
-    if (this.state.mode == 'app' && (this.props.navigation.state.params.kaiser.toString() === 'true')) //YET TO ADD CHECK IN FIREBASE FOR ADMIN ==> USE isAdmin IN FIREBASE UNDER USERID UNDER USERS
+    if (this.state.mode == 'app' && (this.props.navigation.state.params.kaiser.toString() === 'true'))
     {
-      // var isWhooshBitsZero = this.whooshBitsCheck(splitData[1], splitData[2]);
       
       console.log("QRCODE.JS After WhooshBits Function Call: " + isWhooshBitsZero)
       if (isWhooshBitsZero)
@@ -350,9 +349,9 @@ export default class Qrcode extends Component {
         console.log("Is the event open to Alumni Only?:" + isAlumniEvent)
       });
 
-      if (isAlumniEvent && !isUserAlumni)
+      if (isAlumniEvent && (this.props.navigation.state.params.kaiser.toString() === 'false') && !isUserAlumni)
       {
-        
+        console.log("ADMIN CHECK WITHIN OPEN TO ALUMNI ONLY: " + this.props.navigation.state.params.kaiser.toString())
         Alert.alert(
           'Oops!',
           "This event is open to Alumni only. If you are an Alumnus but are unable to scan the QR code, please speak to an event coordinator.",
