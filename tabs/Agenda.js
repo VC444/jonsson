@@ -112,7 +112,7 @@ console.log("OBJECT TESTERERE:"+ JSON.stringify(filteredObjects));
     var kaiser = this.state.isAdminCheck;
     this.props.navigation.navigate('Qrcode', { theUserID, kaiser });
   }
-
+  
   tConvert = (time) => {
     // Check correct time format and split into components
     time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -139,11 +139,11 @@ console.log("OBJECT TESTERERE:"+ JSON.stringify(filteredObjects));
     if (day <= 9)
       day = '0' + day;
     var fullDate = year + '-' + month + '-' + day;
-    var splitTime = this.tConvert(date.toLocaleTimeString())
-
-    var splitTimeByColon = splitTime.split(":")
-    var stringDate = splitTimeByColon[0] + ":" + splitTimeByColon[1] + " "+splitTimeByColon[3]
-    return stringDate;
+    //var splitTime = this.tConvert(date.toLocaleTimeString())
+    var splitTime = moment(time).local().format("h:mm A");
+    //var splitTimeByColon = splitTime.split(":")
+    //var stringDate = splitTimeByColon[0] + ":" + splitTimeByColon[1] + " "+splitTimeByColon[3]
+    return splitTime;
   }
 
   isAdminData = (data) => {
