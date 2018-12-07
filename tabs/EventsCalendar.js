@@ -290,6 +290,7 @@ export default class EventsCalendar extends Component {
         var stringDate = fullDate.toString();
         console.log('this is fulldateeeeeee' + stringDate);
 
+        console.log("msg for filter:" + JSON.stringify(this.state.marked))
         return (
             <View>
                 <CalendarList
