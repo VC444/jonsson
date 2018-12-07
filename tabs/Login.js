@@ -12,8 +12,8 @@ import {
   StatusBar,
   TouchableHighlight,
 } from 'react-native'
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Ionicons } from '@expo/vector-icons';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Tab, Tabs, Text, Title, Button, Left, Body, Right, H1, H2, H3, } from 'native-base';
 
 
@@ -29,6 +29,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     backgroundColor: '#ffffff',
+  },
+  responsiveBox: {
+    width: wp('98%'),
+    height: hp('98%'),
+    // borderWidth: 2,
+    // flexDirection: 'column',
+    // justifyContent: 'space-around' 
   },
   backdrop: {
     height: 475,
@@ -81,13 +88,47 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
+  buttonCircle: {
+    width: 40,
+    height: 40,
+    backgroundColor: 'transparent',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   image: {
-    height: hp("80%"),
-    width: wp("80%")
-  }
+    height: 100,
+    width: 100
+  },
+  introTitleStyle: {
+
+    color: "#C75B12",
+    fontSize: 30,
+    fontWeight: "bold",
+  },
+  introTextStyle: {
+    textAlign: "center",
+    fontSize: 20,
+    color: "#C75B12",
+  },
+  // activeDot: {
+  //   color: "#C75B12"
+  // },
+  // allDotStyle: {
+  //   color: "blue"
+  // },
 });
 
 const slides = [
+  {
+    key: 'Welcome',
+    title: 'Hey There!',
+    titleStyle: styles.introTitleStyle,
+    text: "Here's a quick tutorial to get you started!",
+    textStyle: styles.introTextStyle,
+    image: require('../images/appicon.png'),
+    imageStyle: styles.image,
+  },
   {
     key: 'Login',
     // text: "Make sure you've got your LinkedIn Creds with you!",
@@ -104,7 +145,7 @@ const slides = [
     // backgroundColor: '#008542',
   },
   {
-    key: 'somethun1',
+    key: 'RSVP',
     // title: 'Rocket guy',
     // text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
     image: require('../assets/image3.png'),
@@ -112,7 +153,7 @@ const slides = [
     // backgroundColor: '#0039A6',
   },
   {
-    key: 'somethun',
+    key: 'Redeem',
     // title: 'Title 1',
     // text: 'Description.\nSay something cool',
     image: require('../assets/image4.png'),
@@ -120,7 +161,7 @@ const slides = [
     // backgroundColor: '#FFB612',
   },
   {
-    key: 'somethun-dos',
+    key: 'Rewards',
     // title: 'Title 2',
     // text: 'Other cool stuff',
     image: require('../assets/image5.png'),
@@ -128,7 +169,7 @@ const slides = [
     // backgroundColor: '#69BE28',
   },
   {
-    key: 'somethun1',
+    key: 'Jobs',
     // title: 'Rocket guy',
     // text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
     image: require('../assets/image6.png'),
@@ -136,7 +177,7 @@ const slides = [
     // backgroundColor: '#C75B12',
   },
   {
-    key: 'somethun-dos',
+    key: 'Calendar',
     // title: 'Title 2',
     // text: 'Other cool stuff',
     image: require('../assets/image7.png'),
@@ -144,7 +185,7 @@ const slides = [
     // backgroundColor: '#008542',
   },
   {
-    key: 'somethun1',
+    key: 'Drawer',
     // title: 'Rocket guy',
     // text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
     image: require('../assets/image8.png'),
@@ -164,14 +205,14 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props)
     // StatusBar.setHidden(true)
-    this.state = { isLoggedIn: false};
+    this.state = { isLoggedIn: false };
   }
 
   // This will see if the login token already exists - If it does, go to Main App Screen
   async componentWillMount() {
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
     const sliderState = await AsyncStorage.getItem('sliderState');
-    this.setState({sliderState});
+    this.setState({ sliderState });
     if (LOGIN_TOKEN == null) {
       // DO nothing and continue login process
       console.log('Login token not found');
@@ -256,7 +297,32 @@ export default class Login extends React.Component {
     // User finished the introduction. Show real app through
     // navigation or simply by controlling state
     AsyncStorage.setItem('sliderState', 'shown');
-    this.setState({sliderState: 'shown'})
+    this.setState({ sliderState: 'shown' })
+  }
+
+  _renderNextButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <Ionicons
+          name="md-arrow-round-forward"
+          color="#000000"
+          size={40}
+          style={{ backgroundColor: 'transparent' }}
+        />
+      </View>
+    );
+  }
+  _renderDoneButton = () => {
+    return (
+      <View style={styles.buttonCircle}>
+        <Ionicons
+          name="md-checkmark"
+          color="#000000"
+          size={40}
+          style={{ backgroundColor: 'transparent' }}
+        />
+      </View>
+    );
   }
 
   render() {
@@ -266,78 +332,86 @@ export default class Login extends React.Component {
       this.props.navigation.navigate("HomeFeedStack")
     }
     if (!this.state.sliderState) {
-      return <AppIntro slides={slides} onDone={this._onDone}/>;
+      return <AppIntro
+        slides={slides}
+        // dotStyle={styles.allDotStyle}
+        // activeDotStyle={styles.activeDot}
+        renderDoneButton={this._renderDoneButton}
+        renderNextButton={this._renderNextButton}
+        onDone={this._onDone} />;
     }
     return (
       <View style={styles.container}>
-        <ImageBackground
-          style={{ height: 475, width: 500 }}
-          style={styles.backdrop}
-          blurRadius={1}>
-          <View alignItems='center'>
-            <Image source={require('../images/Temoc_Orange.png')} style={{ height: 180, width: 150, paddingTop: 100 }}></Image>
-            <Text style={{ fontSize: 32, fontWeight: '800', color: "#C75B12"}}>
-              Jonsson Connect
+        <View style={styles.responsiveBox}>
+          <ImageBackground
+            style={{ height: 475, width: 500 }}
+            style={styles.backdrop}
+            blurRadius={1}>
+            <View alignItems='center'>
+              <Image source={require('../images/Temoc_Orange.png')} style={{ height: 180, width: 150, paddingTop: 100 }}></Image>
+              <Text style={{ fontSize: 32, fontWeight: '800', color: "#C75B12" }}>
+                Jonsson Connect
             </Text>
-            <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingVertical: 40, fontWeight: "bold" }}>
-              {/* Begin exploring oppotunities only offered by the Jonsson School. */}
-              The Erik Jonsson School of Engineering & Computer Science
+              <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingVertical: 40, fontWeight: "bold" }}>
+                {/* Begin exploring oppotunities only offered by the Jonsson School. */}
+                The Erik Jonsson School of Engineering & Computer Science
             </Text>
-            <Text style={{ textAlign: 'center', fontSize: 16, paddingHorizontal: 20, paddingVertical: 20, color: "#008542" }}>
-              {/* Begin exploring oppotunities only offered by the Jonsson School. */}
-              <Text style={{ fontSize: 22, color: "#008542", fontWeight: "bold" }}>
-              FEARLESS
+              <Text style={{ textAlign: 'center', fontSize: 16, paddingHorizontal: 20, paddingVertical: 20, color: "#008542" }}>
+                {/* Begin exploring oppotunities only offered by the Jonsson School. */}
+                <Text style={{ fontSize: 22, color: "#008542", fontWeight: "bold" }}>
+                  FEARLESS
               </Text>
-              {" "}engineering
-              <Text style={{ color: "#008542", fontSize: 8}}>®</Text>
-            </Text>
-          </View>
-        </ImageBackground>
-        {!emailAddress &&
-          !refreshing && (
-            <View style={styles.linkedInContainer}>
-              <LinkedInModal
-                ref={ref => {
-                  this.modal = ref
-                }}
-                linkText=""
-                clientID="78ssigjikq1vry"
-                clientSecret="w994WmnW8KCgOVts"
-                redirectUri="https://engineering.utdallas.edu" // HAVE TO CHANGE
-                onSuccess={
-                  data => this.getUser(data)
-                }
-              />
+                {" "}engineering
+              <Text style={{ color: "#008542", fontSize: 8 }}>®</Text>
+              </Text>
             </View>
-          )}
-        <View style={styles.container}>
-          <TouchableHighlight onPress={() => this.modal.open()}>
-            <Button transparent onPress={() => this.modal.open()} style={{ width: 500 }} full light >
-              <Image source={require('../images/linkedin-logo.png')} style={{ width: 25, height: 25 }}></Image>
-              <Text style={{ color: '#c75b12', fontSize: 16 }}>
-                Sign in with LinkedIn
+          </ImageBackground>
+          {!emailAddress &&
+            !refreshing && (
+              <View style={styles.linkedInContainer}>
+                <LinkedInModal
+                  ref={ref => {
+                    this.modal = ref
+                  }}
+                  linkText=""
+                  clientID="78ssigjikq1vry"
+                  clientSecret="w994WmnW8KCgOVts"
+                  redirectUri="https://engineering.utdallas.edu" // HAVE TO CHANGE
+                  onSuccess={
+                    data => this.getUser(data)
+                  }
+                />
+              </View>
+            )}
+          <View style={styles.container}>
+            <TouchableHighlight onPress={() => this.modal.open()}>
+              <Button transparent onPress={() => this.modal.open()} style={{ width: 500 }} full light >
+                <Image source={require('../images/linkedin-logo.png')} style={{ width: 25, height: 25 }}></Image>
+                <Text style={{ color: '#c75b12', fontSize: 16 }}>
+                  Sign in with LinkedIn
               </Text>
-            </Button>
-          </TouchableHighlight>
-          <Text style={{ fontSize: 10, fontWeight: '100' }}></Text>
-          <TouchableHighlight>
-            <Button transparent onPress={() => { Linking.openURL('https://engineering.utdallas.edu') }} style={{ width: 500 }} full light>
-              <Image style={{ width: 25, height: 25 }} source={require('../images/Temoc_Secondary_Blue.png')}></Image>
-              <Text style={{ color: '#c75b12', fontSize: 16 }}>
-                Visit the Erik Jonsson School Website
+              </Button>
+            </TouchableHighlight>
+            <Text style={{ fontSize: 10, fontWeight: '100' }}></Text>
+            <TouchableHighlight>
+              <Button transparent onPress={() => { Linking.openURL('https://engineering.utdallas.edu') }} style={{ width: 500 }} full light>
+                <Image style={{ width: 25, height: 25 }} source={require('../images/Temoc_Secondary_Blue.png')}></Image>
+                <Text style={{ color: '#c75b12', fontSize: 16 }}>
+                  Visit the Erik Jonsson School Website
               </Text>
-            </Button>
-          </TouchableHighlight>
-          <TouchableHighlight style={{ paddingVertical: 40 }}>
-            <Button transparent onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }} style={{ width: 500 }} full light>
-              <Image style={{ width: 25, height: 25 }}></Image>
-              <Text style={{ color: '#c75b12', fontSize: 16, fontWeight: "bold" }}>
-                View Privacy Policy
+              </Button>
+            </TouchableHighlight>
+            <TouchableHighlight style={{ paddingVertical: 40 }}>
+              <Button transparent onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }} style={{ width: 500 }} full light>
+                <Image style={{ width: 25, height: 25 }}></Image>
+                <Text style={{ color: '#c75b12', fontSize: 16, fontWeight: "bold" }}>
+                  View Privacy Policy
               </Text>
-            </Button>
-          </TouchableHighlight>
+              </Button>
+            </TouchableHighlight>
+          </View>
+          <Text style={{ fontSize: 8, fontWeight: '100', position: "relative", paddingVertical: 20, textAlign: "center" }}>Copyright © 2018, The University of Texas at Dallas, all rights reserved.</Text>
         </View>
-        <Text style={{ fontSize: 8, fontWeight: '100', position: "relative", paddingVertical: 20 }}>Copyright © 2018, The University of Texas at Dallas, all rights reserved.</Text>
       </View>
     )
   }

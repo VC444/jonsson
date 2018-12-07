@@ -225,6 +225,20 @@ export default class Help extends Component {
             console.log("USER EMAIL ID: " + this.state.userEmail)
             return (
                 <ScrollView style={styles.masterView}>
+                <Text style={{ fontSize: 20, paddingHorizontal: 20, textAlign: 'center', paddingVertical: 25, fontWeight: 'bold', color: "#C75B12" }}>
+                        PRIVACY POLICY
+                    </Text>
+                    <TouchableOpacity>
+                        <Text style={{ textAlign: 'center', paddingVertical: 5, fontStyle: "italic" }} onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }}>
+                            <Text>We take your privacy seriously.</Text>
+                        </Text>
+                        <Text style={{ textAlign: 'center', paddingVertical: 5, fontStyle: "italic" }} onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }}>
+                            <Text>You can view our Privacy Policy by tapping here.</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 20, textAlign: 'center', paddingTop: 25, fontWeight: 'bold', color: "#C75B12" }}>
+                        FREQUENTLY ASKED QUESTIONS
+                    </Text>
                     <Text style={{ paddingHorizontal: 20, textAlign: 'left', paddingVertical: 25, fontWeight: 'bold' }}>
                         Below, you will find some of the most Frequently Asked Questions (hence, FAQ) and their answers.
                         If you don't find the answers you are looking for, scroll down to the bottom and fill out the feedback form
@@ -241,14 +255,14 @@ export default class Help extends Component {
                             <Label>Email ID (@utdallas.edu is preferred!)</Label>
                             <Input value={this.state.email} onChangeText={(e)=>{this.handleEmailChange(e)}} name="email"/>
                         </Item> */}
-                        <Text style={{ paddingHorizontal: 30, textAlign: 'center', paddingTop: 15, paddingBottom: 25 }}>
-                            The email ID that you used to sign in will be sent along with your feedback.
-                        This will help us reach out to you if we need to after reading your feedback!</Text>
+                        
                         <Item stackedLabel>
                             <Label>How can we improve?</Label>
                             <Input value={this.state.message} onChangeText={(e) => { this.handleMessageChange(e) }} name="message" />
                         </Item>
-
+                        <Text style={{ paddingHorizontal: 30, textAlign: 'center', paddingTop: 35}}>
+                            Note: The email ID that you used to sign in will be sent along with your feedback.
+                        This will help us reach out to you if we need to after reading your feedback!</Text>
                         <TouchableOpacity
                             onPress={this.feedbackSubmitted}
                             style={styles.button}
