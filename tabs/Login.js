@@ -12,6 +12,7 @@ import {
   StatusBar,
   TouchableHighlight,
 } from 'react-native'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Tab, Tabs, Text, Title, Button, Left, Body, Right, H1, H2, H3, } from 'native-base';
 
@@ -81,35 +82,74 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   image: {
-    width: 320,
-    height: 320,
+    height: hp("80%"),
+    width: wp("80%")
   }
 });
 
 const slides = [
   {
-    key: 'somethun',
-    title: 'Title 1',
-    text: 'Description.\nSay something cool',
-    image: require('../assets/image1.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#59b2ab',
+    key: 'Login',
+    // text: "Make sure you've got your LinkedIn Creds with you!",
+    image: require('../assets/image1.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#C75B12',
   },
   {
-    key: 'somethun-dos',
-    title: 'Title 2',
-    text: 'Other cool stuff',
-    image: require('../assets/image2.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#febe29',
+    key: 'Home',
+    // title: 'Home Sweet Home!',
+    // text: "Check the latest news here!\nPro Tip: Double tap on the bottom tabs to go back to the primary screen!",
+    image: require('../assets/image2.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#008542',
   },
   {
     key: 'somethun1',
-    title: 'Rocket guy',
-    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
-    image: require('../assets/image3.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#22bcb5',
+    // title: 'Rocket guy',
+    // text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+    image: require('../assets/image3.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#0039A6',
+  },
+  {
+    key: 'somethun',
+    // title: 'Title 1',
+    // text: 'Description.\nSay something cool',
+    image: require('../assets/image4.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#FFB612',
+  },
+  {
+    key: 'somethun-dos',
+    // title: 'Title 2',
+    // text: 'Other cool stuff',
+    image: require('../assets/image5.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#69BE28',
+  },
+  {
+    key: 'somethun1',
+    // title: 'Rocket guy',
+    // text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+    image: require('../assets/image6.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#C75B12',
+  },
+  {
+    key: 'somethun-dos',
+    // title: 'Title 2',
+    // text: 'Other cool stuff',
+    image: require('../assets/image7.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#008542',
+  },
+  {
+    key: 'somethun1',
+    // title: 'Rocket guy',
+    // text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+    image: require('../assets/image8.png'),
+    // imageStyle: styles.image,
+    // backgroundColor: '#0039A6',
   }
 ];
 
