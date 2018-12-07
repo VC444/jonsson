@@ -2,7 +2,7 @@
   "expo": {
     "name": "Jonsson Connect",
     "splash": {
-      "image": "./images/sscreen.png"
+      "image": "./images/appicon.png"
     },
     "icon": "./images/appicon.png",
     "orientation": "portrait",
