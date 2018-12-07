@@ -72,11 +72,11 @@ export default class EventsCalendar extends Component {
         bothEventsRef.on('value', this.gotBothClassificationEventData, this.bothClassificationerrData);
 
 
-
+        
 
         // if (this.state.classi === null) {
-        var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
-        dateOfEvent.on('value', this.gotData, this.errData);
+            var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt("student").endAt("student" + "\uf8ff");
+            dateOfEvent.on('value', this.gotData, this.errData);
         // }
         // else {
         //     var dateOfEvent = firebase.database().ref("Events/").orderByChild("eventClassification").startAt(this.state.classi.toString()).endAt(this.state.classi.toString() + "\uf8ff");
@@ -94,19 +94,6 @@ export default class EventsCalendar extends Component {
         var bothdates = data.val()
         var keys = Object.keys(bothdates)
         var formattedBothDate = []
-
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        var today = yyyy + '-' + mm + '-' + dd;
 
         for (var i = 0; i < keys.length; i++) {
             var k = keys[i];
@@ -126,17 +113,7 @@ export default class EventsCalendar extends Component {
             //     date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
 
             var format_res = date_of_event;
-
-            if (format_res < today || format_res === null) {
-                console.log('lesser');
-             }
-             else if (format_res >= today) {
-                 
-                 formattedBothDate[i] = format_res
-             }
-
-            
-            
+            formattedBothDate[i] = format_res
         }
 
         // Set formattedDate array that is initialized in state to values of local formattedDate array 
@@ -172,22 +149,6 @@ export default class EventsCalendar extends Component {
         var keys = Object.keys(dates)
         var formattedDate = []
 
-
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth() + 1; //January is 0!
-
-        var yyyy = today.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        var today = yyyy + '-' + mm + '-' + dd;
-        
-        
-
         for (var i = 0; i < keys.length; i++) {
             var k = keys[i];
             var date_of_event = dates[k].modifiedDate;
@@ -206,18 +167,7 @@ export default class EventsCalendar extends Component {
             //     date_of_event = yearKalasala + "-" + moKalasala + "-" + daKalasala
 
             var format_res = date_of_event;
-
-
-            if (format_res < today || format_res === null) {
-               console.log('lesser');
-            }
-            else if (format_res >= today) {
-                
-                formattedDate[i] = format_res
-            }
-
-
-            
+            formattedDate[i] = format_res
         }
 
         // Set formattedDate array that is initialized in state to values of local formattedDate array 
