@@ -15,6 +15,9 @@ import {
 
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Tab, Tabs, Text, Title, Button, Left, Body, Right, H1, H2, H3, } from 'native-base';
 
+
+import AppIntro from 'rn-app-intro-screen';
+
 //import { CLIENT_ID, CLIENT_SECRET } from './config'
 
 import LinkedInModal from 'react-native-linkedin'
@@ -77,7 +80,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-})
+  image: {
+    width: 320,
+    height: 320,
+  }
+});
+
+const slides = [
+  {
+    key: 'somethun',
+    title: 'Title 1',
+    text: 'Description.\nSay something cool',
+    image: require('../assets/image1.jpg'),
+    imageStyle: styles.image,
+    backgroundColor: '#59b2ab',
+  },
+  {
+    key: 'somethun-dos',
+    title: 'Title 2',
+    text: 'Other cool stuff',
+    image: require('../assets/image2.jpg'),
+    imageStyle: styles.image,
+    backgroundColor: '#febe29',
+  },
+  {
+    key: 'somethun1',
+    title: 'Rocket guy',
+    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
+    image: require('../assets/image3.jpg'),
+    imageStyle: styles.image,
+    backgroundColor: '#22bcb5',
+  }
+];
 
 export default class Login extends React.Component {
 
@@ -90,12 +124,14 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props)
     // StatusBar.setHidden(true)
-    this.state = { isLoggedIn: false };
+    this.state = { isLoggedIn: false};
   }
 
   // This will see if the login token already exists - If it does, go to Main App Screen
   async componentWillMount() {
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
+    const sliderState = await AsyncStorage.getItem('sliderState');
+    this.setState({sliderState});
     if (LOGIN_TOKEN == null) {
       // DO nothing and continue login process
       console.log('Login token not found');
@@ -176,10 +212,21 @@ export default class Login extends React.Component {
     )
   }
 
+  _onDone = () => {
+    // User finished the introduction. Show real app through
+    // navigation or simply by controlling state
+    AsyncStorage.setItem('sliderState', 'shown');
+    this.setState({sliderState: 'shown'})
+  }
+
   render() {
     const { emailAddress, pictureUrl, refreshing, firstName, lastName, summary, id, headline, location } = this.state;
+    console.log('sliderstate is ' + this.state.sliderState);
     if (this.state.loggedInStatus === 'loggedIn') {
       this.props.navigation.navigate("HomeFeedStack")
+    }
+    if (!this.state.sliderState) {
+      return <AppIntro slides={slides} onDone={this._onDone}/>;
     }
     return (
       <View style={styles.container}>
