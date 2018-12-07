@@ -14,6 +14,7 @@ import {
 } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Ionicons } from '@expo/vector-icons';
+import RF from 'react-native-responsive-fontsize';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Tab, Tabs, Text, Title, Button, Left, Body, Right, H1, H2, H3, } from 'native-base';
 
 
@@ -31,11 +32,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   responsiveBox: {
-    width: wp('98%'),
-    height: hp('98%'),
+    width: wp('90%'),
+    height: hp('90%'),
     // borderWidth: 2,
-    // flexDirection: 'column',
-    // justifyContent: 'space-around' 
+    flexDirection: 'column',
+    justifyContent: 'space-around' 
   },
   backdrop: {
     height: 475,
@@ -343,20 +344,16 @@ export default class Login extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.responsiveBox}>
-          <ImageBackground
-            style={{ height: 475, width: 500 }}
-            style={styles.backdrop}
-            blurRadius={1}>
             <View alignItems='center'>
-              <Image source={require('../images/Temoc_Orange.png')} style={{ height: 180, width: 150, paddingTop: 100 }}></Image>
-              <Text style={{ fontSize: 32, fontWeight: '800', color: "#C75B12" }}>
+              <Image source={require('../images/Temoc_Orange.png')} style={{ height: 150, width: 110 }}></Image>
+              <Text style={{ fontSize: RF(4), fontWeight: '800', color: "#C75B12" }}>
                 Jonsson Connect
             </Text>
-              <Text style={{ textAlign: 'center', fontSize: 22, paddingHorizontal: 20, paddingVertical: 40, fontWeight: "bold" }}>
+              <Text style={{ textAlign: 'center', fontSize: RF(2), paddingHorizontal: 20, fontWeight: "bold" }}>
                 {/* Begin exploring oppotunities only offered by the Jonsson School. */}
                 The Erik Jonsson School of Engineering & Computer Science
             </Text>
-              <Text style={{ textAlign: 'center', fontSize: 16, paddingHorizontal: 20, paddingVertical: 20, color: "#008542" }}>
+              <Text style={{ textAlign: 'center', fontSize: 16, paddingHorizontal: 20, color: "#008542", paddingVertical: 30 }}>
                 {/* Begin exploring oppotunities only offered by the Jonsson School. */}
                 <Text style={{ fontSize: 22, color: "#008542", fontWeight: "bold" }}>
                   FEARLESS
@@ -365,7 +362,6 @@ export default class Login extends React.Component {
               <Text style={{ color: "#008542", fontSize: 8 }}>®</Text>
               </Text>
             </View>
-          </ImageBackground>
           {!emailAddress &&
             !refreshing && (
               <View style={styles.linkedInContainer}>
@@ -387,24 +383,23 @@ export default class Login extends React.Component {
             <TouchableHighlight onPress={() => this.modal.open()}>
               <Button transparent onPress={() => this.modal.open()} style={{ width: 500 }} full light >
                 <Image source={require('../images/linkedin-logo.png')} style={{ width: 25, height: 25 }}></Image>
-                <Text style={{ color: '#c75b12', fontSize: 16 }}>
+                <Text style={{ color: '#c75b12', fontSize: RF(2) }}>
                   Sign in with LinkedIn
               </Text>
               </Button>
             </TouchableHighlight>
-            <Text style={{ fontSize: 10, fontWeight: '100' }}></Text>
             <TouchableHighlight>
-              <Button transparent onPress={() => { Linking.openURL('https://engineering.utdallas.edu') }} style={{ width: 500 }} full light>
-                <Image style={{ width: 25, height: 25 }} source={require('../images/Temoc_Secondary_Blue.png')}></Image>
-                <Text style={{ color: '#c75b12', fontSize: 16 }}>
+              <Button transparent onPress={() => { Linking.openURL('https://engineering.utdallas.edu') }} style={{ width: 400 }} full light>
+                {/* <Image style={{ width: 25, height: 25 }} source={require('../images/Temoc_Secondary_Blue.png')}></Image> */}
+                <Text style={{ color: '#c75b12', fontSize: RF(2) }}>
                   Visit the Erik Jonsson School Website
               </Text>
               </Button>
             </TouchableHighlight>
-            <TouchableHighlight style={{ paddingVertical: 40 }}>
+            <TouchableHighlight style={{ paddingVertical: 20 }}>
               <Button transparent onPress={() => { Linking.openURL('https://utdallas.edu/privacy/') }} style={{ width: 500 }} full light>
                 <Image style={{ width: 25, height: 25 }}></Image>
-                <Text style={{ color: '#c75b12', fontSize: 16, fontWeight: "bold" }}>
+                <Text style={{ color: '#c75b12', fontSize: RF(2), fontWeight: "bold" }}>
                   View Privacy Policy
               </Text>
               </Button>
