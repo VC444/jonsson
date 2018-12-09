@@ -10,7 +10,8 @@
     "slug": "jonsson",
     "sdkVersion": "27.0.0",
     "ios": {
-      "bundleIdentifier": "edu.utdallas.jonsson.connect"
+      "bundleIdentifier": "edu.utdallas.jonsson.connect",
+	"buildNumber": "3"
     },
     "android": {
       "package": "edu.utdallas.jonsson.connect"

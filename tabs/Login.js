@@ -16,8 +16,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { Ionicons } from '@expo/vector-icons';
 import RF from 'react-native-responsive-fontsize';
 import { Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Icon, Item, Input, Tab, Tabs, Text, Title, Button, Left, Body, Right, H1, H2, H3, } from 'native-base';
-
-
+import { Segment } from 'expo';
 import AppIntro from 'rn-app-intro-screen';
 
 //import { CLIENT_ID, CLIENT_SECRET } from './config'
@@ -211,6 +210,10 @@ export default class Login extends React.Component {
 
   // This will see if the login token already exists - If it does, go to Main App Screen
   async componentWillMount() {
+
+    //DISABLING DATA COLLECTION Ref: https://docs.expo.io/versions/latest/sdk/segment.html
+    Segment.setEnabledAsync(false);
+    
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
     const sliderState = await AsyncStorage.getItem('sliderState');
     this.setState({ sliderState });
