@@ -253,24 +253,24 @@ export default class EventsCalendar extends Component {
             }
         }
 
-        console.log(results);
+        console.log("RESULTS ARRAY: "+results);
         //var orginal_dates = ["2018-11-14", "2019-01-01", "2018-10-18"]
 
         var b1 = new Set(results);
         var difference = [...new Set([...nextDay].filter(x => !b1.has(x)))];
 
-        console.log(difference);
+        console.log("DIFFERENCE ARRAY  : "+difference);
 
-        var dot_color_array = Array(2).fill(eval('dot_color')) // creating array of variable names
+        var dot_color_array = Array(1).fill(eval('dot_color')) // creating array of variable names
 
-        var obj = results.reduce((c, v) => Object.assign(c, { [v]: { dots: dot_color_array, selected: true, selectedColor: '#c75b12' } }), {});
+        var obj = sorted_arr.reduce((c, v) => Object.assign(c, { [v]: { dots: dot_color_array, selected: true, selectedColor: '#c75b12' } }), {});
 
-        var dottom = Array(1).fill(eval('dot_color')) // creating array of variable names
+        // var dottom = Array(1).fill(eval('dot_color')) // creating array of variable names
 
-        for (var i = 0; i < difference.length; i++) {
-            obj[difference[i]] = { dots: dottom, selected: true, selectedColor: '#c75b12' }
-            //Do something
-        }
+        // for (var i = 0; i < difference.length; i++) {
+        //     obj[difference[i]] = { dots: dottom, selected: true, selectedColor: '#c75b12' }
+        //     //Do something
+        // }
 
 
 
