@@ -211,8 +211,8 @@ export default class Login extends React.Component {
   // This will see if the login token already exists - If it does, go to Main App Screen
   async componentWillMount() {
 
-    //DISABLING DATA COLLECTION Ref: https://docs.expo.io/versions/latest/sdk/segment.html
-    Segment.setEnabledAsync(false);
+    // //DISABLING DATA COLLECTION Ref: https://docs.expo.io/versions/latest/sdk/segment.html
+    // Segment.setEnabledAsync(false);
     
     let LOGIN_TOKEN = await AsyncStorage.getItem('LOGIN_TOKEN');
     const sliderState = await AsyncStorage.getItem('sliderState');
